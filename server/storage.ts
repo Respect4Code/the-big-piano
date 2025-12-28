@@ -1,31 +1,36 @@
-import { db } from "./db";
-import {
-  songs,
-  type Song,
-  type InsertSong
-} from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { type User, type InsertUser } from "@shared/schema";
 
 export interface IStorage {
-  getSongs(): Promise<Song[]>;
-  getSong(id: number): Promise<Song | undefined>;
-  createSong(song: InsertSong): Promise<Song>;
+  getUser(id: number): Promise<User | undefined>;
+  getUserByUsername(username: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
 }
 
-export class DatabaseStorage implements IStorage {
-  async getSongs(): Promise<Song[]> {
-    return await db.select().from(songs);
+export class MemStorage implements IStorage {
+  private users: Map<number, User>;
+  private currentId: number;
+
+  constructor() {
+    this.users = new Map();
+    this.currentId = 1;
   }
 
-  async getSong(id: number): Promise<Song | undefined> {
-    const [song] = await db.select().from(songs).where(eq(songs.id, id));
-    return song;
+  async getUser(id: number): Promise<User | undefined> {
+    return this.users.get(id);
   }
 
-  async createSong(insertSong: InsertSong): Promise<Song> {
-    const [song] = await db.insert(songs).values(insertSong).returning();
-    return song;
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.username === username,
+    );
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const id = this.currentId++;
+    const user: User = { ...insertUser, id };
+    this.users.set(id, user);
+    return user;
   }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new MemStorage();

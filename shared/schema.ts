@@ -1,19 +1,17 @@
-import { pgTable, text, serial, jsonb, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const songs = pgTable("songs", {
+// We keep the schema simple as the recording is stored in IndexedDB (client-side)
+// according to the provided code logic.
+export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  type: text("type").notNull(), // 'toy', 'small', 'big'
-  notes: jsonb("notes").notNull(), // Array of note events
-  createdAt: timestamp("created_at").defaultNow(),
+  username: text("username").notNull().unique(),
 });
 
-export const insertSongSchema = createInsertSchema(songs).omit({ 
-  id: true, 
-  createdAt: true 
+export const insertUserSchema = createInsertSchema(users).omit({ 
+  id: true 
 });
 
-export type Song = typeof songs.$inferSelect;
-export type InsertSong = z.infer<typeof insertSongSchema>;
+export type User = typeof users.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;

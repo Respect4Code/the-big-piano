@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Big Piano</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-neutral-950 text-neutral-100 min-h-screen">
+  <div class="max-w-2xl mx-auto px-4 py-6">
+    <header class="flex items-center justify-between gap-3">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight" id="appTitle">The Big Piano</h1>
+        <p class="text-sm text-neutral-300" id="appSub">A small story about something big.</p>
+      </div>
+
+      <!-- Language switch -->
+      <div class="flex items-center gap-2">
+        <button id="btnEN" class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-sm">English</button>
+        <button id="btnZH" class="px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-sm border border-neutral-700">中文</button>
+      </div>
+    </header>
+
+    <main class="mt-6 space-y-4">
+      <!-- Story card -->
+      <section class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-4">
+        <div class="flex items-center justify-between">
+          <div class="text-sm text-neutral-300">
+            <span id="pageLabel">Page</span>
+            <span id="pageNum">1</span>
+            <span class="text-neutral-500">/</span>
+            <span id="pageTotal">1</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="prevBtn" class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-sm">←</button>
+            <button id="nextBtn" class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-sm">→</button>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h2 class="text-lg font-semibold" id="pageTitle"> </h2>
+          <p class="mt-2 text-neutral-100 leading-relaxed whitespace-pre-wrap" id="pageText"></p>
+        </div>
+      </section>
+
+      <!-- Record & playback -->
+      <section class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-4">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex-1">
+            <h3 class="font-semibold" id="recordTitle">Record your voice</h3>
+            <p class="text-sm text-neutral-300 mt-1" id="recordHint">
+              Read it like you’re sitting next to them. Perfect is not required.
+            </p>
+          </div>
+
+          <div class="text-right text-sm text-neutral-300" id="micStatus">Mic: not started</div>
+        </div>
+
+        <div class="mt-4 flex flex-col sm:flex-row gap-3">
+          <button id="recordBtn" class="flex-1 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold">
+            🎙️ Hold to record
+          </button>
+
+          <button id="playBtn" class="flex-1 px-4 py-3 rounded-xl bg-neutral-800 hover:bg-neutral-700 font-semibold disabled:opacity-40 disabled:hover:bg-neutral-800" disabled>
+            ▶️ Play my recording
+          </button>
+
+          <button id="deleteBtn" class="px-4 py-3 rounded-xl bg-neutral-800 hover:bg-neutral-700 font-semibold disabled:opacity-40 disabled:hover:bg-neutral-800" disabled>
+            🗑️ Delete
+          </button>
+        </div>
+
+        <div class="mt-3 text-xs text-neutral-400" id="storageNote">
+          Saved privately on this device (IndexedDB). Nothing is uploaded.
+        </div>
+
+        <audio id="player" class="hidden" controls></audio>
+      </section>
+
+      <!-- Optional: quick CTA -->
+      <section class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-4">
+        <p class="text-sm text-neutral-200" id="cta">
+          After you finish, you can record each page. Your child will hear your voice inside the story.
+        </p>
+      </section>
+    </main>
+
+    <footer class="mt-8 text-xs text-neutral-500">
+      Privacy-first • Works best over HTTPS • Microphone permission required
+    </footer>
+  </div>
+
+<script>
+/**
+ * The Big Piano — Minimal Working MVP
+ * - Language switch
+ * - Page navigation
+ * - Record parent voice per page
+ * - Store audio in IndexedDB
+ */
+
+const STORY = {
+  en: {
+    appTitle: "The Big Piano",
+    appSub: "A small story about something big.",
+    pageLabel: "Page",
+    recordTitle: "Record your voice",
+    recordHint: "Read it like you’re sitting next to them. Perfect is not required.",
+    cta: "After you finish, you can record each page. Your child will hear your voice inside the story.",
+    pages: [
+      {
+        title: "At Home",
+        text:
+`My three-year-old has an electronic piano keyboard. It's theirs—always there, sometimes played, sometimes ignored.
+
+I have a small weighted piano too. I share it with my toddler so they can feel something bigger—keys with weight and response.`
+      },
+      {
+        title: "The Surprise",
+        text:
+`Yesterday my toddler played on my piano. They didn’t look at the keys. They looked at me. Then at their mother.
+
+The tune they were improvising sounded amazing.
+
+They turned back, smiled, and applauded themselves.
+
+Of course we applauded too.`
+      },
+      {
+        title: "The Big Piano",
+        text:
+`Later we went to my sister’s house.
+
+In her study sat a full-sized piano.
+
+I pressed the keys and the sound filled the room.
+
+“This is a big piano,” I said.
+
+My toddler repeated: “Big Piano.”`
+      },
+      {
+        title: "The Duet",
+        text:
+`Their cousin lifted them onto the stool, then sat beside them.
+
+They played together—one finger, then one finger—copying each other in time.
+
+They both looked up, laughed, and we cheered.
+
+Grandmother offered a high five, and my toddler slapped it with glee.`
+      },
+      {
+        title: "Scarcity",
+        text:
+`It was time to go, but my toddler twisted and wriggled in my arms:
+
+“Big Piano… Big Piano…”
+
+They didn’t want to leave.
+
+In my toddler’s world, the big piano was scarce. Special. Unique.`
+      },
+      {
+        title: "Mozart",
+        text:
+`Eventually, I buckled them into the buggy.
+
+As we left, I played Mozart on my phone.
+
+The music flowed.
+
+And my toddler drifted off to sleep.`
+      }
+    ]
+  },
+  zh: {
+    appTitle: "《大钢琴》",
+    appSub: "一个关于“大”的小故事。",
+    pageLabel: "第",
+    recordTitle: "录下你的声音",
+    recordHint: "像坐在孩子身边那样读就好。不需要完美。",
+    cta: "读完后，你可以为每一页录音。孩子会在故事里听见你的声音。",
+    pages: [
+      {
+        title: "在家",
+        text:
+`我三岁的孩子有一架自己的电子琴。它总在那儿，有时被弹响，有时被遗忘。
+
+我也有一架小小的配重键盘琴。我愿意和孩子分享，只希望他能摸到更“真实”的琴键——有分量、有回应。`
+      },
+      {
+        title: "惊喜",
+        text:
+`昨天，孩子在我的琴上弹奏。他没有看琴键，却回过头来看我，又看向妈妈。
+
+那段即兴旋律，美妙得让人惊讶。
+
+他转回来，笑着为自己鼓掌。
+
+我们当然也一起鼓掌。`
+      },
+      {
+        title: "大钢琴",
+        text:
+`后来我们去了姐姐家。
+
+书房里有一架真正的大钢琴。
+
+我按下琴键，浑厚的声音充满房间。
+
+“这是大钢琴。”我说。
+
+孩子跟着重复：“大钢琴。”`
+      },
+      {
+        title: "二重奏",
+        text:
+`表哥把他抱上琴凳，又坐到他身旁。
+
+他们你一下、我一下，用一根手指相互模仿，节奏竟然很默契。
+
+他们抬头相视而笑，我们欢呼鼓掌。
+
+奶奶伸手击掌，孩子开心地拍了上去。`
+      },
+      {
+        title: "稀缺",
+        text:
+`该回家了，可孩子在我怀里扭来扭去：
+
+“大钢琴……大钢琴……”
+
+他不想走。
+
+在他的世界里，这架大钢琴是稀缺的、特别的、独一无二的。`
+      },
+      {
+        title: "莫扎特",
+        text:
+`最终，我把他放进婴儿车。
+
+离开时，我在手机上放起莫扎特。
+
+琴声流淌。
+
+孩子在乐声里慢慢睡着了。`
+      }
+    ]
+  }
+};
+
+// ---------- IndexedDB audio store ----------
+const DB_NAME = "bigpiano_audio_v1";
+const STORE_NAME = "recordings";
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME);
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function idbSet(key, blob) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    tx.objectStore(STORE_NAME).put(blob, key);
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function idbGet(key) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readonly");
+    const req = tx.objectStore(STORE_NAME).get(key);
+    req.onsuccess = () => resolve(req.result || null);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function idbDel(key) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    tx.objectStore(STORE_NAME).delete(key);
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+// ---------- App State ----------
+let lang = "en";
+let pageIndex = 0;
+
+const els = {
+  appTitle: document.getElementById("appTitle"),
+  appSub: document.getElementById("appSub"),
+  pageLabel: document.getElementById("pageLabel"),
+  pageNum: document.getElementById("pageNum"),
+  pageTotal: document.getElementById("pageTotal"),
+  pageTitle: document.getElementById("pageTitle"),
+  pageText: document.getElementById("pageText"),
+  recordTitle: document.getElementById("recordTitle"),
+  recordHint: document.getElementById("recordHint"),
+  cta: document.getElementById("cta"),
+  btnEN: document.getElementById("btnEN"),
+  btnZH: document.getElementById("btnZH"),
+  prevBtn: document.getElementById("prevBtn"),
+  nextBtn: document.getElementById("nextBtn"),
+  recordBtn: document.getElementById("recordBtn"),
+  playBtn: document.getElementById("playBtn"),
+  deleteBtn: document.getElementById("deleteBtn"),
+  micStatus: document.getElementById("micStatus"),
+  player: document.getElementById("player"),
+};
+
+function pageKey() {
+  return `${lang}::page::${pageIndex}`;
+}
+
+function render() {
+  const copy = STORY[lang];
+  const pages = copy.pages;
+
+  els.appTitle.textContent = copy.appTitle;
+  els.appSub.textContent = copy.appSub;
+  els.pageLabel.textContent = copy.pageLabel;
+  els.pageNum.textContent = String(pageIndex + 1);
+  els.pageTotal.textContent = String(pages.length);
+
+  els.pageTitle.textContent = pages[pageIndex].title;
+  els.pageText.textContent = pages[pageIndex].text;
+
+  els.recordTitle.textContent = copy.recordTitle;
+  els.recordHint.textContent = copy.recordHint;
+  els.cta.textContent = copy.cta;
+
+  // Button styles for active language
+  if (lang === "en") {
+    els.btnEN.className = "px-3 py-1.5 rounded-lg bg-neutral-700 text-sm";
+    els.btnZH.className = "px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-sm border border-neutral-700";
+  } else {
+    els.btnZH.className = "px-3 py-1.5 rounded-lg bg-neutral-700 text-sm";
+    els.btnEN.className = "px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-sm border border-neutral-700";
+  }
+}
+
+async function refreshRecordingState() {
+  const blob = await idbGet(pageKey());
+  const has = !!blob;
+  els.playBtn.disabled = !has;
+  els.deleteBtn.disabled = !has;
+  if (!has) {
+    els.player.classList.add("hidden");
+    els.player.removeAttribute("src");
+  }
+}
+
+function clampPage() {
+  const max = STORY[lang].pages.length - 1;
+  pageIndex = Math.max(0, Math.min(pageIndex, max));
+}
+
+// ---------- Recording ----------
+let mediaStream = null;
+let mediaRecorder = null;
+let chunks = [];
+let isRecording = false;
+
+async function ensureMic() {
+  if (mediaStream) return mediaStream;
+  // Must be HTTPS (Replit deploy is HTTPS)
+  mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  els.micStatus.textContent = "Mic: ready";
+  return mediaStream;
+}
+
+function pickMimeType() {
+  // Prefer webm/opus if available
+  const candidates = [
+    "audio/webm;codecs=opus",
+    "audio/webm",
+    "audio/mp4",
+    "audio/ogg;codecs=opus",
+  ];
+  for (const t of candidates) {
+    if (window.MediaRecorder && MediaRecorder.isTypeSupported(t)) return t;
+  }
+  return ""; // let browser decide
+}
+
+async function startRecording() {
+  if (isRecording) return;
+  await ensureMic();
+
+  chunks = [];
+  const mimeType = pickMimeType();
+  mediaRecorder = new MediaRecorder(mediaStream, mimeType ? { mimeType } : undefined);
+
+  mediaRecorder.ondataavailable = (e) => {
+    if (e.data && e.data.size > 0) chunks.push(e.data);
+  };
+
+  mediaRecorder.onstop = async () => {
+    try {
+      const blob = new Blob(chunks, { type: mediaRecorder.mimeType || "audio/webm" });
+      await idbSet(pageKey(), blob);
+      els.micStatus.textContent = "Mic: saved ✓";
+      await refreshRecordingState();
+    } catch (err) {
+      console.error(err);
+      els.micStatus.textContent = "Mic: save failed";
+    }
+  };
+
+  mediaRecorder.start();
+  isRecording = true;
+  els.recordBtn.textContent = "🔴 Recording… release to stop";
+  els.micStatus.textContent = "Mic: recording…";
+}
+
+async function stopRecording() {
+  if (!isRecording) return;
+  isRecording = false;
+  els.recordBtn.textContent = "🎙️ Hold to record";
+  try {
+    mediaRecorder.stop();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function playRecording() {
+  const blob = await idbGet(pageKey());
+  if (!blob) return;
+
+  const url = URL.createObjectURL(blob);
+  els.player.src = url;
+  els.player.classList.remove("hidden");
+  els.player.play().catch(()=>{});
+}
+
+async function deleteRecording() {
+  await idbDel(pageKey());
+  els.micStatus.textContent = "Mic: deleted";
+  await refreshRecordingState();
+}
+
+// ---------- Events ----------
+els.btnEN.addEventListener("click", async () => {
+  lang = "en";
+  clampPage();
+  render();
+  await refreshRecordingState();
+});
+
+els.btnZH.addEventListener("click", async () => {
+  lang = "zh";
+  clampPage();
+  render();
+  await refreshRecordingState();
+});
+
+els.prevBtn.addEventListener("click", async () => {
+  pageIndex--;
+  clampPage();
+  render();
+  await refreshRecordingState();
+});
+
+els.nextBtn.addEventListener("click", async () => {
+  pageIndex++;
+  clampPage();
+  render();
+  await refreshRecordingState();
+});
+
+// Hold to record (mouse + touch)
+els.recordBtn.addEventListener("mousedown", startRecording);
+els.recordBtn.addEventListener("touchstart", (e) => { e.preventDefault(); startRecording(); }, { passive: false });
+
+document.addEventListener("mouseup", stopRecording);
+document.addEventListener("touchend", stopRecording);
+
+els.playBtn.addEventListener("click", playRecording);
+els.deleteBtn.addEventListener("click", deleteRecording);
+
+// ---------- Init ----------
+(async function init() {
+  if (!("MediaRecorder" in window)) {
+    els.micStatus.textContent = "Mic: not supported in this browser";
+    els.recordBtn.disabled = true;
+    els.recordBtn.classList.add("opacity-40");
+  } else {
+    els.micStatus.textContent = "Mic: tap record when ready";
+  }
+  render();
+  await refreshRecordingState();
+})();
+</script>
+</body>
+</html>
