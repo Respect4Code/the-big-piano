@@ -9,6 +9,7 @@ export function Navigation() {
     { href: "/play/toy", label: "Toy", icon: Music },
     { href: "/play/small", label: "Small", icon: Music },
     { href: "/play/big", label: "Big", icon: Music },
+    { href: "/story", label: "Reader", icon: BookOpen },
   ];
 
   return (
