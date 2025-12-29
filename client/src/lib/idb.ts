@@ -1,45 +1,59 @@
-const DB_NAME = "bigpiano_audio_v1";
-const STORE_NAME = "recordings";
+const DB_NAME = "bigpiano_db_v1";
+const DB_STORE = "audio";
+
+let dbPromise: Promise<IDBDatabase> | null = null;
 
 function openDB(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, 1);
     req.onupgradeneeded = () => {
       const db = req.result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME);
+      if (!db.objectStoreNames.contains(DB_STORE)) {
+        db.createObjectStore(DB_STORE, { keyPath: "id" });
       }
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
   });
+  return dbPromise;
 }
 
-export async function idbSet(key: string, blob: Blob): Promise<boolean> {
+export async function dbPutAudio(id: string, blob: Blob, mime: string): Promise<boolean> {
   const db = await openDB();
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, "readwrite");
-    tx.objectStore(STORE_NAME).put(blob, key);
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).put({ id, blob, mime });
     tx.oncomplete = () => resolve(true);
     tx.onerror = () => reject(tx.error);
   });
 }
 
-export async function idbGet(key: string): Promise<Blob | null> {
+export async function dbGetAudio(id: string): Promise<{ id: string; blob: Blob; mime: string } | null> {
   const db = await openDB();
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, "readonly");
-    const req = tx.objectStore(STORE_NAME).get(key);
+    const tx = db.transaction(DB_STORE, "readonly");
+    const req = tx.objectStore(DB_STORE).get(id);
     req.onsuccess = () => resolve(req.result || null);
     req.onerror = () => reject(req.error);
   });
 }
 
-export async function idbDel(key: string): Promise<boolean> {
+export async function dbDeleteAudio(id: string): Promise<boolean> {
   const db = await openDB();
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, "readwrite");
-    tx.objectStore(STORE_NAME).delete(key);
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).delete(id);
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+export async function dbWipeAllAudio(): Promise<boolean> {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).clear();
     tx.oncomplete = () => resolve(true);
     tx.onerror = () => reject(tx.error);
   });

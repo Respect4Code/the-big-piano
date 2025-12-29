@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Big Piano — Resonance MVP</title>
+  <meta name="description" content="A bilingual story with one question: Why is the big piano special? Capture a child’s answer over time. Local-only." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="title">The Big Piano</div>
+      <div class="subtitle">Story → One Question → Local Timeline</div>
+    </div>
+
+    <div class="header-actions">
+      <div class="segmented" role="tablist" aria-label="Language toggle">
+        <button id="langEnBtn" class="seg-btn active" type="button">English</button>
+        <button id="langZhBtn" class="seg-btn" type="button">中文</button>
+      </div>
+
+      <button id="parentBtn" class="ghost" type="button" aria-label="Open parent layer">Parent</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card" aria-label="Story">
+      <div class="card-header">
+        <h2 id="storyTitle">The Big Piano</h2>
+        <div class="muted" id="storyHint">Read together. No lesson. Just the moment.</div>
+      </div>
+
+      <div id="storyBody" class="story-body"></div>
+
+      <div class="divider"></div>
+
+      <div class="question-block" aria-label="Question">
+        <h3 id="questionTitle">One Question</h3>
+        <div class="question" id="questionText">Why is the big piano special?</div>
+        <div class="muted" id="questionHint">Let your child answer in any way: words, pointing, or silence.</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="capture-grid" aria-label="Capture response">
+        <section class="capture">
+          <h4 id="recordTitle">Record the child</h4>
+          <div class="muted" id="recordHint">Press start, then stop. Audio stays on this device only.</div>
+          <div class="row">
+            <button id="recStartBtn" class="primary" type="button">Start recording</button>
+            <button id="recStopBtn" class="secondary" type="button" disabled>Stop</button>
+          </div>
+          <div class="row">
+            <audio id="livePlayback" controls class="audio" hidden></audio>
+          </div>
+        </section>
+
+        <section class="capture">
+          <h4 id="noteTitle">Write one line</h4>
+          <div class="muted" id="noteHint">Type the child’s words as they said them (no interpretation).</div>
+
+          <label class="label" for="childAgeInput" id="ageLabel">Child age (optional)</label>
+          <input id="childAgeInput" class="input" placeholder="e.g., 3 / 5 / 8" inputmode="numeric" />
+
+          <label class="label" for="noteInput" id="noteLabel">One line</label>
+          <textarea id="noteInput" class="textarea" rows="3" placeholder="e.g., “Big. Cousin. Don’t go.”"></textarea>
+        </section>
+
+        <section class="capture">
+          <h4 id="iconsTitle">Optional icons</h4>
+          <div class="muted" id="iconsHint">For pointing / pre-verbal kids. Tap any that fit.</div>
+
+          <div id="iconsWrap" class="icons-wrap"></div>
+          <div class="row">
+            <button id="clearIconsBtn" class="ghost" type="button">Clear icons</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="row between">
+        <div class="muted" id="saveHint">When ready, save the moment to your local timeline.</div>
+        <button id="saveEntryBtn" class="primary" type="button">Save to timeline</button>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <section class="card" aria-label="Timeline">
+      <div class="card-header">
+        <h2 id="timelineTitle">Timeline</h2>
+        <div class="muted" id="timelineHint">Same question, different ages. Answers become the artifact.</div>
+      </div>
+
+      <div class="row between">
+        <button id="exportBtn" class="secondary" type="button">Export notes (JSON)</button>
+        <button id="wipeBtn" class="danger" type="button">Wipe local data</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div id="timelineList" class="timeline-list" aria-label="Saved entries"></div>
+      <div id="timelineEmpty" class="empty" hidden>
+        No saved moments yet. Read the story, ask the question, capture the reply, and save.
+      </div>
+    </section>
+  </main>
+
+  <!-- Parent Layer Modal -->
+  <dialog id="parentDialog" class="modal">
+    <form method="dialog" class="modal-inner">
+      <div class="modal-header">
+        <h3 id="parentTitle">Parent Layer</h3>
+        <button class="ghost" value="cancel" aria-label="Close">Close</button>
+      </div>
+
+      <div id="parentGate" class="gate">
+        <p class="muted" id="parentGateText">
+          This area is for adults. Enter your PIN to continue.
+        </p>
+        <div class="row">
+          <input id="pinInput" class="input" inputmode="numeric" placeholder="PIN (default 1234)" />
+          <button id="pinGoBtn" class="primary" type="button">Unlock</button>
+        </div>
+        <p class="muted small">
+          You can change the PIN inside once unlocked. PIN is stored locally on this device.
+        </p>
+      </div>
+
+      <div id="parentContent" hidden>
+        <section class="parent-section">
+          <h4>What you’re observing (the three-piano ladder)</h4>
+          <div class="table">
+            <div class="trow thead">
+              <div>Instrument</div><div>Access</div><div>Attachment signal</div>
+            </div>
+            <div class="trow">
+              <div>Toy piano</div><div>Always there</div><div>Often discarded easily</div>
+            </div>
+            <div class="trow">
+              <div>37-key weighted (yours)</div><div>Shared / permission</div><div>Played with intention; looks for approval</div>
+            </div>
+            <div class="trow">
+              <div>Big piano</div><div>Rare / time-limited / socially mediated</div><div>Resists leaving; wants continuity and co-presence</div>
+            </div>
+          </div>
+          <p class="muted">
+            The key data point is not “scarcity as a fact.” It is the emotional signal:
+            “I don’t want to leave.” That is value formation in the wild.
+          </p>
+        </section>
+
+        <section class="parent-section">
+          <h4>How to ask without leading</h4>
+          <ul class="bullets">
+            <li><strong>Neutral:</strong> “Why was it special?” “What do you remember?”</li>
+            <li><strong>Reflect:</strong> “You really didn’t want to leave, did you?”</li>
+            <li><strong>If stuck (offer options lightly):</strong> “Was it the sound, or who was there?”</li>
+            <li><strong>Avoid:</strong> “Because it’s rare, right?” (that answers it for them)</li>
+          </ul>
+        </section>
+
+        <section class="parent-section">
+          <h4>Contrarian prompts (parent-only, optional)</h4>
+          <ul class="bullets">
+            <li>“If we had a big piano at home, would it still feel special?”</li>
+            <li>“Was it special because it was big — or because cousin joined?”</li>
+            <li>“Was the best part the sound, or the moment?”</li>
+            <li>“What changed when grandma came to the door?”</li>
+          </ul>
+        </section>
+
+        <section class="parent-section">
+          <h4>Bridge layer placeholder: “What is a piano?” (later)</h4>
+          <p class="muted">
+            This is where your next chapter/app lives: ivory → ebony → strings → constraints → innovation →
+            notation as shared interpretability → decentralised trust → the Bitcoin whitepaper continuum.
+          </p>
+          <details>
+            <summary>Paste / store the “Ivory → Bitcoin” transcript locally (not implemented yet)</summary>
+            <p class="muted small">
+              MVP ships without this. When you add it, store it locally as a “Study Room” artifact
+              behind the parent layer, and optionally age-gate it again.
+            </p>
+          </details>
+        </section>
+
+        <section class="parent-section">
+          <h4>Parent settings</h4>
+          <div class="row">
+            <input id="newPinInput" class="input" inputmode="numeric" placeholder="New PIN" />
+            <button id="setPinBtn" class="secondary" type="button">Set PIN</button>
+          </div>
+          <p class="muted small">Default PIN is 1234 until you change it.</p>
+        </section>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1220 @@
+Below is a **Replit-ready, privacy-first MVP** (no backend) with:
+
+* **Bilingual story (English / Mandarin toggle)**
+* **One question:** “Why is the big piano special?”
+* **Capture modes:**
+
+  1. **Record child audio** (stored locally in **IndexedDB**)
+  2. **Parent writes one line** (stored locally in **localStorage**)
+  3. **Optional icon taps** (stored locally in **localStorage**)
+* **Timeline replay** (plays audio + shows the one-line note + icons)
+* **Parent-only layer** (hidden behind a simple **PIN gate**) with:
+
+  * 3-piano ladder
+  * non-leading prompt guidance
+  * **Bridge placeholder** (“What is a piano?” / Ivory→Bitcoin transcript room)
+
+You can paste these files into a Replit static site (or any simple HTML hosting).
+
+---
+
+## 1) `index.html`
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Big Piano — Resonance MVP</title>
+  <meta name="description" content="A bilingual story with one question: Why is the big piano special? Capture a child’s answer over time. Local-only." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="title">The Big Piano</div>
+      <div class="subtitle">Story → One Question → Local Timeline</div>
+    </div>
+
+    <div class="header-actions">
+      <div class="segmented" role="tablist" aria-label="Language toggle">
+        <button id="langEnBtn" class="seg-btn active" type="button">English</button>
+        <button id="langZhBtn" class="seg-btn" type="button">中文</button>
+      </div>
+
+      <button id="parentBtn" class="ghost" type="button" aria-label="Open parent layer">Parent</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card" aria-label="Story">
+      <div class="card-header">
+        <h2 id="storyTitle">The Big Piano</h2>
+        <div class="muted" id="storyHint">Read together. No lesson. Just the moment.</div>
+      </div>
+
+      <div id="storyBody" class="story-body"></div>
+
+      <div class="divider"></div>
+
+      <div class="question-block" aria-label="Question">
+        <h3 id="questionTitle">One Question</h3>
+        <div class="question" id="questionText">Why is the big piano special?</div>
+        <div class="muted" id="questionHint">Let your child answer in any way: words, pointing, or silence.</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="capture-grid" aria-label="Capture response">
+        <section class="capture">
+          <h4 id="recordTitle">Record the child</h4>
+          <div class="muted" id="recordHint">Press start, then stop. Audio stays on this device only.</div>
+          <div class="row">
+            <button id="recStartBtn" class="primary" type="button">Start recording</button>
+            <button id="recStopBtn" class="secondary" type="button" disabled>Stop</button>
+          </div>
+          <div class="row">
+            <audio id="livePlayback" controls class="audio" hidden></audio>
+          </div>
+        </section>
+
+        <section class="capture">
+          <h4 id="noteTitle">Write one line</h4>
+          <div class="muted" id="noteHint">Type the child’s words as they said them (no interpretation).</div>
+
+          <label class="label" for="childAgeInput" id="ageLabel">Child age (optional)</label>
+          <input id="childAgeInput" class="input" placeholder="e.g., 3 / 5 / 8" inputmode="numeric" />
+
+          <label class="label" for="noteInput" id="noteLabel">One line</label>
+          <textarea id="noteInput" class="textarea" rows="3" placeholder="e.g., “Big. Cousin. Don’t go.”"></textarea>
+        </section>
+
+        <section class="capture">
+          <h4 id="iconsTitle">Optional icons</h4>
+          <div class="muted" id="iconsHint">For pointing / pre-verbal kids. Tap any that fit.</div>
+
+          <div id="iconsWrap" class="icons-wrap"></div>
+          <div class="row">
+            <button id="clearIconsBtn" class="ghost" type="button">Clear icons</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="row between">
+        <div class="muted" id="saveHint">When ready, save the moment to your local timeline.</div>
+        <button id="saveEntryBtn" class="primary" type="button">Save to timeline</button>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <section class="card" aria-label="Timeline">
+      <div class="card-header">
+        <h2 id="timelineTitle">Timeline</h2>
+        <div class="muted" id="timelineHint">Same question, different ages. Answers become the artifact.</div>
+      </div>
+
+      <div class="row between">
+        <button id="exportBtn" class="secondary" type="button">Export notes (JSON)</button>
+        <button id="wipeBtn" class="danger" type="button">Wipe local data</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div id="timelineList" class="timeline-list" aria-label="Saved entries"></div>
+      <div id="timelineEmpty" class="empty" hidden>
+        No saved moments yet. Read the story, ask the question, capture the reply, and save.
+      </div>
+    </section>
+  </main>
+
+  <!-- Parent Layer Modal -->
+  <dialog id="parentDialog" class="modal">
+    <form method="dialog" class="modal-inner">
+      <div class="modal-header">
+        <h3 id="parentTitle">Parent Layer</h3>
+        <button class="ghost" value="cancel" aria-label="Close">Close</button>
+      </div>
+
+      <div id="parentGate" class="gate">
+        <p class="muted" id="parentGateText">
+          This area is for adults. Enter your PIN to continue.
+        </p>
+        <div class="row">
+          <input id="pinInput" class="input" inputmode="numeric" placeholder="PIN (default 1234)" />
+          <button id="pinGoBtn" class="primary" type="button">Unlock</button>
+        </div>
+        <p class="muted small">
+          You can change the PIN inside once unlocked. PIN is stored locally on this device.
+        </p>
+      </div>
+
+      <div id="parentContent" hidden>
+        <section class="parent-section">
+          <h4>What you’re observing (the three-piano ladder)</h4>
+          <div class="table">
+            <div class="trow thead">
+              <div>Instrument</div><div>Access</div><div>Attachment signal</div>
+            </div>
+            <div class="trow">
+              <div>Toy piano</div><div>Always there</div><div>Often discarded easily</div>
+            </div>
+            <div class="trow">
+              <div>37-key weighted (yours)</div><div>Shared / permission</div><div>Played with intention; looks for approval</div>
+            </div>
+            <div class="trow">
+              <div>Big piano</div><div>Rare / time-limited / socially mediated</div><div>Resists leaving; wants continuity and co-presence</div>
+            </div>
+          </div>
+          <p class="muted">
+            The key data point is not “scarcity as a fact.” It is the emotional signal:
+            “I don’t want to leave.” That is value formation in the wild.
+          </p>
+        </section>
+
+        <section class="parent-section">
+          <h4>How to ask without leading</h4>
+          <ul class="bullets">
+            <li><strong>Neutral:</strong> “Why was it special?” “What do you remember?”</li>
+            <li><strong>Reflect:</strong> “You really didn’t want to leave, did you?”</li>
+            <li><strong>If stuck (offer options lightly):</strong> “Was it the sound, or who was there?”</li>
+            <li><strong>Avoid:</strong> “Because it’s rare, right?” (that answers it for them)</li>
+          </ul>
+        </section>
+
+        <section class="parent-section">
+          <h4>Contrarian prompts (parent-only, optional)</h4>
+          <ul class="bullets">
+            <li>“If we had a big piano at home, would it still feel special?”</li>
+            <li>“Was it special because it was big — or because cousin joined?”</li>
+            <li>“Was the best part the sound, or the moment?”</li>
+            <li>“What changed when grandma came to the door?”</li>
+          </ul>
+        </section>
+
+        <section class="parent-section">
+          <h4>Bridge layer placeholder: “What is a piano?” (later)</h4>
+          <p class="muted">
+            This is where your next chapter/app lives: ivory → ebony → strings → constraints → innovation →
+            notation as shared interpretability → decentralised trust → the Bitcoin whitepaper continuum.
+          </p>
+          <details>
+            <summary>Paste / store the “Ivory → Bitcoin” transcript locally (not implemented yet)</summary>
+            <p class="muted small">
+              MVP ships without this. When you add it, store it locally as a “Study Room” artifact
+              behind the parent layer, and optionally age-gate it again.
+            </p>
+          </details>
+        </section>
+
+        <section class="parent-section">
+          <h4>Parent settings</h4>
+          <div class="row">
+            <input id="newPinInput" class="input" inputmode="numeric" placeholder="New PIN" />
+            <button id="setPinBtn" class="secondary" type="button">Set PIN</button>
+          </div>
+          <p class="muted small">Default PIN is 1234 until you change it.</p>
+        </section>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
+```
+
+---
+
+## 2) `style.css`
+
+```css
+:root{
+  --bg:#0b0c10;
+  --card:#12131a;
+  --text:#f3f4f6;
+  --muted:#a7adbb;
+  --line:#232636;
+  --primary:#ffffff;
+  --accent:#6ee7ff;
+  --danger:#ff5a5f;
+  --ok:#34d399;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 18px;
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  background: radial-gradient(1000px 500px at 20% 0%, rgba(110,231,255,.09), transparent 60%),
+              radial-gradient(900px 500px at 80% 10%, rgba(52,211,153,.06), transparent 60%),
+              var(--bg);
+  color: var(--text);
+}
+
+.app-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding:16px 18px;
+  position:sticky;
+  top:0;
+  background: rgba(11,12,16,.7);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid rgba(35,38,54,.6);
+  z-index:10;
+}
+
+.brand .title{
+  font-weight:700;
+  letter-spacing:.2px;
+  font-size:18px;
+}
+.brand .subtitle{
+  color: var(--muted);
+  font-size:12px;
+  margin-top:2px;
+}
+
+.header-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.segmented{
+  display:flex;
+  border:1px solid rgba(35,38,54,.8);
+  background: rgba(18,19,26,.6);
+  border-radius: 999px;
+  padding:4px;
+}
+.seg-btn{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:8px 12px;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:13px;
+}
+.seg-btn.active{
+  background: rgba(255,255,255,.10);
+  color: var(--text);
+}
+
+.layout{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:16px;
+  padding:16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 980px){
+  .layout{ grid-template-columns: 1fr; }
+}
+
+.card{
+  background: rgba(18,19,26,.85);
+  border: 1px solid rgba(35,38,54,.8);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+
+.card-header{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-bottom: 10px;
+}
+
+h2,h3,h4{ margin:0; }
+h2{ font-size:18px; }
+h3{ font-size:16px; }
+h4{ font-size:14px; }
+
+.muted{ color: var(--muted); font-size: 13px; line-height: 1.45; }
+.small{ font-size: 12px; }
+
+.divider{
+  height:1px;
+  background: rgba(35,38,54,.9);
+  margin: 12px 0;
+}
+
+.story-body{
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(243,244,246,.96);
+}
+.story-body p{
+  margin: 0 0 10px 0;
+}
+
+.question-block .question{
+  font-size: 18px;
+  margin: 6px 0;
+  letter-spacing: .2px;
+}
+
+.capture-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 980px){
+  .capture-grid{ grid-template-columns: 1fr; }
+}
+
+.capture{
+  border:1px solid rgba(35,38,54,.7);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(11,12,16,.35);
+}
+
+.row{ display:flex; gap:10px; align-items:center; }
+.between{ justify-content: space-between; }
+
+.label{
+  display:block;
+  margin: 10px 0 6px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.input, .textarea{
+  width:100%;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border:1px solid rgba(35,38,54,.9);
+  background: rgba(18,19,26,.8);
+  color: var(--text);
+  outline: none;
+}
+.textarea{ resize: vertical; }
+
+button{
+  border:1px solid rgba(35,38,54,.9);
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor:pointer;
+  background: rgba(18,19,26,.8);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 13px;
+}
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.primary{
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.22);
+}
+.secondary{
+  background: rgba(110,231,255,.08);
+  border-color: rgba(110,231,255,.22);
+}
+.ghost{
+  background: transparent;
+}
+.danger{
+  background: rgba(255,90,95,.12);
+  border-color: rgba(255,90,95,.25);
+}
+
+.audio{
+  width: 100%;
+}
+
+.icons-wrap{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.icon-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(35,38,54,.9);
+  background: rgba(18,19,26,.7);
+  color: var(--text);
+  font-size: 12px;
+  user-select:none;
+}
+.icon-chip[aria-pressed="true"]{
+  border-color: rgba(52,211,153,.55);
+  background: rgba(52,211,153,.12);
+}
+
+.timeline-list{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+.entry{
+  border: 1px solid rgba(35,38,54,.85);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(11,12,16,.35);
+}
+.entry-top{
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+.entry-date{
+  font-size: 12px;
+  color: var(--muted);
+}
+.entry-meta{
+  font-size: 12px;
+  color: var(--muted);
+}
+.entry-note{
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.entry-icons{
+  margin-top: 10px;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.badge{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border:1px solid rgba(35,38,54,.85);
+  background: rgba(18,19,26,.65);
+}
+
+.empty{
+  padding: 16px;
+  border: 1px dashed rgba(35,38,54,.9);
+  border-radius: 14px;
+  color: var(--muted);
+}
+
+.toast{
+  margin-top: 12px;
+  border:1px solid rgba(52,211,153,.35);
+  background: rgba(52,211,153,.10);
+  color: rgba(243,244,246,.95);
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.modal{
+  border:1px solid rgba(35,38,54,.9);
+  border-radius: 18px;
+  background: rgba(18,19,26,.95);
+  color: var(--text);
+  width: min(760px, calc(100% - 24px));
+  box-shadow: var(--shadow);
+}
+.modal::backdrop{
+  background: rgba(0,0,0,.55);
+}
+.modal-inner{
+  padding: 14px;
+}
+.modal-header{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid rgba(35,38,54,.7);
+  padding-bottom: 10px;
+}
+.parent-section{
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(35,38,54,.7);
+  background: rgba(11,12,16,.35);
+}
+.bullets{
+  margin: 8px 0 0 18px;
+  color: rgba(243,244,246,.95);
+}
+.table{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top: 10px;
+}
+.trow{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap:10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border:1px solid rgba(35,38,54,.7);
+  background: rgba(18,19,26,.55);
+  font-size: 12px;
+  color: rgba(243,244,246,.95);
+}
+.thead{
+  color: var(--muted);
+  background: rgba(18,19,26,.35);
+}
+```
+
+---
+
+## 3) `app.js`
+
+```javascript
+/* The Big Piano — Resonance MVP
+   Local-only storage:
+   - Metadata in localStorage
+   - Audio blobs in IndexedDB
+*/
+
+const LS_KEY = "bigpiano_entries_v1";
+const LS_PIN = "bigpiano_parent_pin_v1";
+
+const DEFAULT_PIN = "1234";
+
+const els = {
+  langEnBtn: document.getElementById("langEnBtn"),
+  langZhBtn: document.getElementById("langZhBtn"),
+  storyTitle: document.getElementById("storyTitle"),
+  storyHint: document.getElementById("storyHint"),
+  storyBody: document.getElementById("storyBody"),
+  questionTitle: document.getElementById("questionTitle"),
+  questionText: document.getElementById("questionText"),
+  questionHint: document.getElementById("questionHint"),
+
+  recStartBtn: document.getElementById("recStartBtn"),
+  recStopBtn: document.getElementById("recStopBtn"),
+  livePlayback: document.getElementById("livePlayback"),
+
+  childAgeInput: document.getElementById("childAgeInput"),
+  noteInput: document.getElementById("noteInput"),
+
+  iconsWrap: document.getElementById("iconsWrap"),
+  clearIconsBtn: document.getElementById("clearIconsBtn"),
+
+  saveEntryBtn: document.getElementById("saveEntryBtn"),
+  toast: document.getElementById("toast"),
+
+  timelineList: document.getElementById("timelineList"),
+  timelineEmpty: document.getElementById("timelineEmpty"),
+  exportBtn: document.getElementById("exportBtn"),
+  wipeBtn: document.getElementById("wipeBtn"),
+
+  parentBtn: document.getElementById("parentBtn"),
+  parentDialog: document.getElementById("parentDialog"),
+  parentGate: document.getElementById("parentGate"),
+  parentContent: document.getElementById("parentContent"),
+  pinInput: document.getElementById("pinInput"),
+  pinGoBtn: document.getElementById("pinGoBtn"),
+  newPinInput: document.getElementById("newPinInput"),
+  setPinBtn: document.getElementById("setPinBtn"),
+};
+
+const copy = {
+  en: {
+    storyTitle: "The Big Piano",
+    storyHint: "Read together. No lesson. Just the moment.",
+    questionTitle: "One Question",
+    questionText: "Why is the big piano special?",
+    questionHint: "Let your child answer in any way: words, pointing, or silence.",
+    recordTitle: "Record the child",
+  },
+  zh: {
+    storyTitle: "《大钢琴》",
+    storyHint: "一起读。没有道理。只有当下。",
+    questionTitle: "一个问题",
+    questionText: "为什么大钢琴很特别？",
+    questionHint: "让孩子用任何方式回答：说话、指认、或沉默。",
+  }
+};
+
+// Use your refined English + Mandarin story text.
+// You can swap these strings anytime.
+const STORY = {
+  en: [
+    "My three-year-old has their own little keyboard. It’s always there—sometimes played, sometimes forgotten. It makes bright, happy sounds. They can press keys whenever they want. It’s close. It’s easy. It’s abundant.",
+    "I also have a keyboard—wooden, weighted keys, about a quarter of a real piano. I bought it for practice. Now I share it, because I want my child to feel something with weight—something that answers back.",
+    "Yesterday, my child played my keyboard without looking at the keys. They looked at me. Then they looked at their mum—mouth open in surprise. The little melody sounded beautiful. They turned back, paused, turned to me again, smiled… and clapped for themselves. We clapped too. It was magnificent.",
+    "The next day we went to my sister’s house so my child could play with their cousin. In her study stood a real piano.",
+    "My child walked up to it. I pressed one key and the sound filled the room. “This is the big piano,” I said. My child repeated: “Big piano.”",
+    "Their cousin lifted them onto the stool—but that wasn’t enough. My child patted the empty space beside them, asking their cousin to sit too. So the cousin sat, began to play, and my child joined in. The room filled with sound. A duet—imperfect, joyful, real.",
+    "Even Grandma came to the doorway, amazed. My child lifted a hand, palm up. Grandma understood, and gently tapped their hand. Then the cousin played one note with one finger. My child copied. Back and forth, five or six times, until they looked at each other and burst out laughing. Perfect ending. We applauded.",
+    "Then it was time to go. My child didn’t want to leave. In my arms they twisted like a little fish and kept saying, “Big piano… big piano.”",
+    "I realised: in my child’s world, the big piano was rare. Special. Unique. So they couldn’t bear to leave.",
+    "On the way home, I played Mozart softly on my phone. The music flowed, and my child fell asleep."
+  ],
+  zh: [
+    "我三岁的孩子有一架自己的电子琴。它总在那儿，有时被弹响，有时被遗忘。琴键会发出叮叮咚咚的欢快声响。想按就按，想玩就玩。它近在手边，轻松可得——它是“充足”的。",
+    "我也有一架琴：木质的，37键配重键盘，大约只有真正钢琴的四分之一。我当初为练习而买，如今与孩子共享，因为我希望他能摸到更“真实”的东西——那种有分量、有回应的琴键。",
+    "昨天，孩子在我的琴上弹奏。他没有看琴键，却回过头来看我；又看向妈妈——她站在那儿，惊讶得张大了嘴。那段即兴旋律美极了。小家伙停顿一下，转向我笑了，然后为自己鼓起掌来。我们也鼓掌。那一刻，真是壮丽。",
+    "第二天，我们去了姐姐家，让孩子和表哥一起玩。姐姐的书房里，立着一架真正的钢琴。",
+    "孩子走近它。我按下一个琴键，浑厚的声音在房间里回荡。“这是大钢琴。”我说。孩子跟着重复：“大钢琴。”",
+    "表哥把他抱上琴凳，但这还不够。孩子拍拍身旁的空位，示意表哥也坐下。于是表哥坐定开始弹奏，孩子也加入进来。乐声充满整个房间——一段不完美却真实、快乐的二重奏。",
+    "连奶奶也被琴声吸引到门口。孩子抬起手掌，奶奶会意，带着喜悦轻轻拍了拍他的手。表哥用一根手指按下一个音，孩子也学着按。你一下，我一下，五六次后，两人相视大笑。我们热烈鼓掌。",
+    "该回家了。孩子不想走。在我怀里扭来扭去，像条想挣脱的小鱼，嘴里不停说：“大钢琴……大钢琴。”",
+    "我忽然意识到：在孩子的世界里，这架大钢琴是稀缺的、特别的、独一无二的。所以，他舍不得离开。",
+    "回家的路上，我在手机上轻轻放出莫扎特。琴声流淌，孩子在乐声中渐渐睡去。"
+  ]
+};
+
+const ICONS = [
+  { key: "big", en: "It’s big", zh: "它很大" },
+  { key: "loud", en: "It’s loud", zh: "它很响" },
+  { key: "rare", en: "I can’t have it every day", zh: "不是每天都有" },
+  { key: "cousin", en: "Cousin played with me", zh: "和表哥一起" },
+  { key: "grandma", en: "Grandma came", zh: "奶奶来了" },
+  { key: "feel", en: "It felt different", zh: "感觉不一样" },
+  { key: "moment", en: "I didn’t want to leave", zh: "我不想走" },
+];
+
+let state = {
+  lang: "en",
+  selectedIcons: new Set(),
+  recorded: {
+    blob: null,
+    mime: null,
+    objectUrl: null,
+  },
+  media: {
+    stream: null,
+    recorder: null,
+    chunks: [],
+  }
+};
+
+// ---------- IndexedDB (audio storage) ----------
+const DB_NAME = "bigpiano_db_v1";
+const DB_STORE = "audio";
+let dbPromise = null;
+
+function openDB() {
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(DB_STORE)) {
+        db.createObjectStore(DB_STORE, { keyPath: "id" });
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+  return dbPromise;
+}
+
+async function dbPutAudio(id, blob, mime) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).put({ id, blob, mime });
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function dbGetAudio(id) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readonly");
+    const req = tx.objectStore(DB_STORE).get(id);
+    req.onsuccess = () => resolve(req.result || null);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function dbDeleteAudio(id) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).delete(id);
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function dbWipeAllAudio() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).clear();
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+// ---------- localStorage (entries metadata) ----------
+function loadEntries() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return [];
+    const arr = JSON.parse(raw);
+    if (!Array.isArray(arr)) return [];
+    return arr;
+  } catch {
+    return [];
+  }
+}
+
+function saveEntries(entries) {
+  localStorage.setItem(LS_KEY, JSON.stringify(entries));
+}
+
+function getPin() {
+  return localStorage.getItem(LS_PIN) || DEFAULT_PIN;
+}
+
+function setPin(pin) {
+  localStorage.setItem(LS_PIN, pin);
+}
+
+// ---------- UI rendering ----------
+function setLang(lang) {
+  state.lang = lang;
+
+  els.langEnBtn.classList.toggle("active", lang === "en");
+  els.langZhBtn.classList.toggle("active", lang === "zh");
+
+  els.storyTitle.textContent = copy[lang].storyTitle;
+  els.storyHint.textContent = copy[lang].storyHint;
+  els.questionTitle.textContent = copy[lang].questionTitle;
+  els.questionText.textContent = copy[lang].questionText;
+  els.questionHint.textContent = copy[lang].questionHint;
+
+  renderStory();
+  renderIcons();
+  renderTimeline();
+}
+
+function renderStory() {
+  els.storyBody.innerHTML = "";
+  const parts = STORY[state.lang];
+  for (const para of parts) {
+    const p = document.createElement("p");
+    p.textContent = para;
+    els.storyBody.appendChild(p);
+  }
+}
+
+function renderIcons() {
+  els.iconsWrap.innerHTML = "";
+  ICONS.forEach(icon => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "icon-chip";
+    btn.setAttribute("aria-pressed", state.selectedIcons.has(icon.key) ? "true" : "false");
+    btn.textContent = state.lang === "zh" ? icon.zh : icon.en;
+
+    btn.addEventListener("click", () => {
+      if (state.selectedIcons.has(icon.key)) state.selectedIcons.delete(icon.key);
+      else state.selectedIcons.add(icon.key);
+      renderIcons();
+    });
+
+    els.iconsWrap.appendChild(btn);
+  });
+}
+
+function showToast(msg) {
+  els.toast.hidden = false;
+  els.toast.textContent = msg;
+  setTimeout(() => { els.toast.hidden = true; }, 2200);
+}
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleString(undefined, { year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+
+async function renderTimeline() {
+  const entries = loadEntries().sort((a,b) => b.createdAt - a.createdAt);
+
+  els.timelineList.innerHTML = "";
+  els.timelineEmpty.hidden = entries.length !== 0;
+
+  for (const e of entries) {
+    const wrap = document.createElement("div");
+    wrap.className = "entry";
+
+    const top = document.createElement("div");
+    top.className = "entry-top";
+
+    const left = document.createElement("div");
+    left.className = "entry-date";
+    left.textContent = formatDate(e.createdAt);
+
+    const right = document.createElement("div");
+    right.className = "entry-meta";
+    right.textContent = [
+      e.lang === "zh" ? "中文" : "English",
+      e.childAge ? `Age: ${e.childAge}` : null,
+      e.hasAudio ? "Audio" : null
+    ].filter(Boolean).join(" • ");
+
+    top.appendChild(left);
+    top.appendChild(right);
+
+    const note = document.createElement("div");
+    note.className = "entry-note";
+    note.textContent = e.note && e.note.trim().length ? e.note.trim() : (e.lang === "zh" ? "（未填写文字）" : "(No note)");
+
+    const icons = document.createElement("div");
+    icons.className = "entry-icons";
+    if (Array.isArray(e.icons) && e.icons.length) {
+      for (const key of e.icons) {
+        const iconObj = ICONS.find(i => i.key === key);
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = iconObj ? (e.lang === "zh" ? iconObj.zh : iconObj.en) : key;
+        icons.appendChild(badge);
+      }
+    }
+
+    wrap.appendChild(top);
+    wrap.appendChild(note);
+    if (icons.childNodes.length) wrap.appendChild(icons);
+
+    if (e.hasAudio) {
+      const audioRow = document.createElement("div");
+      audioRow.className = "row";
+      audioRow.style.marginTop = "10px";
+
+      const playBtn = document.createElement("button");
+      playBtn.type = "button";
+      playBtn.className = "secondary";
+      playBtn.textContent = state.lang === "zh" ? "播放录音" : "Play recording";
+
+      const delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "danger";
+      delBtn.textContent = state.lang === "zh" ? "删除录音" : "Delete audio";
+
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.className = "audio";
+      audio.style.display = "none";
+
+      playBtn.addEventListener("click", async () => {
+        const rec = await dbGetAudio(e.id);
+        if (!rec || !rec.blob) {
+          showToast(state.lang === "zh" ? "找不到录音（可能已删除）" : "Audio not found (maybe deleted).");
+          return;
+        }
+        const url = URL.createObjectURL(rec.blob);
+        audio.src = url;
+        audio.style.display = "block";
+        audio.play().catch(()=>{});
+        audio.onended = () => URL.revokeObjectURL(url);
+      });
+
+      delBtn.addEventListener("click", async () => {
+        const ok = confirm(state.lang === "zh" ? "删除这条录音？（本地操作）" : "Delete this audio? (local only)");
+        if (!ok) return;
+        await dbDeleteAudio(e.id);
+        // update metadata
+        const all = loadEntries();
+        const idx = all.findIndex(x => x.id === e.id);
+        if (idx >= 0) {
+          all[idx].hasAudio = false;
+          saveEntries(all);
+        }
+        renderTimeline();
+        showToast(state.lang === "zh" ? "已删除录音" : "Audio deleted");
+      });
+
+      audioRow.appendChild(playBtn);
+      audioRow.appendChild(delBtn);
+
+      wrap.appendChild(audioRow);
+      wrap.appendChild(audio);
+    }
+
+    els.timelineList.appendChild(wrap);
+  }
+}
+
+// ---------- Recording ----------
+async function startRecording() {
+  // Reset prior
+  cleanupRecordedPreview();
+
+  state.media.chunks = [];
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    state.media.stream = stream;
+
+    const mimeCandidates = [
+      "audio/webm;codecs=opus",
+      "audio/webm",
+      "audio/ogg;codecs=opus",
+      "audio/ogg"
+    ];
+    let chosen = "";
+    for (const m of mimeCandidates) {
+      if (MediaRecorder.isTypeSupported(m)) { chosen = m; break; }
+    }
+
+    const recorder = chosen ? new MediaRecorder(stream, { mimeType: chosen }) : new MediaRecorder(stream);
+    state.media.recorder = recorder;
+
+    recorder.ondataavailable = (evt) => {
+      if (evt.data && evt.data.size > 0) state.media.chunks.push(evt.data);
+    };
+
+    recorder.onstop = () => {
+      const blob = new Blob(state.media.chunks, { type: recorder.mimeType || "audio/webm" });
+      state.recorded.blob = blob;
+      state.recorded.mime = recorder.mimeType || blob.type || "audio/webm";
+      state.recorded.objectUrl = URL.createObjectURL(blob);
+
+      els.livePlayback.src = state.recorded.objectUrl;
+      els.livePlayback.hidden = false;
+    };
+
+    recorder.start();
+
+    els.recStartBtn.disabled = true;
+    els.recStopBtn.disabled = false;
+
+    showToast(state.lang === "zh" ? "开始录音…" : "Recording started…");
+  } catch (err) {
+    console.error(err);
+    showToast(state.lang === "zh" ? "无法访问麦克风" : "Microphone permission denied");
+  }
+}
+
+function stopRecording() {
+  const recorder = state.media.recorder;
+  if (recorder && recorder.state !== "inactive") recorder.stop();
+
+  // stop tracks
+  if (state.media.stream) {
+    state.media.stream.getTracks().forEach(t => t.stop());
+  }
+
+  state.media.stream = null;
+  state.media.recorder = null;
+
+  els.recStartBtn.disabled = false;
+  els.recStopBtn.disabled = true;
+
+  showToast(state.lang === "zh" ? "录音已停止" : "Recording stopped");
+}
+
+function cleanupRecordedPreview() {
+  if (state.recorded.objectUrl) URL.revokeObjectURL(state.recorded.objectUrl);
+  state.recorded = { blob: null, mime: null, objectUrl: null };
+  els.livePlayback.hidden = true;
+  els.livePlayback.src = "";
+}
+
+// ---------- Save entry ----------
+async function saveEntry() {
+  const note = (els.noteInput.value || "").trim();
+  const childAge = (els.childAgeInput.value || "").trim();
+
+  const icons = Array.from(state.selectedIcons);
+  const hasAudio = !!state.recorded.blob;
+
+  if (!note && icons.length === 0 && !hasAudio) {
+    showToast(state.lang === "zh" ? "请录音、写一句话或选择图标" : "Add audio, a one-line note, or icons");
+    return;
+  }
+
+  const id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2);
+  const createdAt = Date.now();
+
+  const entry = {
+    id,
+    createdAt,
+    lang: state.lang,
+    childAge: childAge || null,
+    note: note || "",
+    icons,
+    hasAudio
+  };
+
+  // write audio to indexedDB
+  if (hasAudio) {
+    try {
+      await dbPutAudio(id, state.recorded.blob, state.recorded.mime);
+    } catch (err) {
+      console.error(err);
+      showToast(state.lang === "zh" ? "保存录音失败" : "Failed to save audio");
+      return;
+    }
+  }
+
+  const all = loadEntries();
+  all.push(entry);
+  saveEntries(all);
+
+  // reset capture UI for next time
+  els.noteInput.value = "";
+  els.childAgeInput.value = "";
+  state.selectedIcons.clear();
+  cleanupRecordedPreview();
+  renderIcons();
+  await renderTimeline();
+
+  showToast(state.lang === "zh" ? "已保存到时间线" : "Saved to timeline");
+}
+
+// ---------- Export / Wipe ----------
+function exportNotes() {
+  const entries = loadEntries().sort((a,b) => a.createdAt - b.createdAt);
+  const json = JSON.stringify(entries, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "bigpiano-notes-export.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function wipeAll() {
+  const ok = confirm(state.lang === "zh"
+    ? "这将删除本设备上的所有保存内容（文字、图标、录音）。确定？"
+    : "This will delete all saved data on this device (notes, icons, audio). Continue?");
+  if (!ok) return;
+
+  localStorage.removeItem(LS_KEY);
+  await dbWipeAllAudio();
+
+  // reset state
+  els.noteInput.value = "";
+  els.childAgeInput.value = "";
+  state.selectedIcons.clear();
+  cleanupRecordedPreview();
+  renderIcons();
+  await renderTimeline();
+
+  showToast(state.lang === "zh" ? "已清空本地数据" : "Local data wiped");
+}
+
+// ---------- Parent modal (PIN gate) ----------
+function openParent() {
+  els.parentDialog.showModal();
+  // reset view each open
+  els.parentGate.hidden = false;
+  els.parentContent.hidden = true;
+  els.pinInput.value = "";
+  els.newPinInput.value = "";
+}
+
+function unlockParent() {
+  const pin = (els.pinInput.value || "").trim();
+  if (!pin) return;
+
+  if (pin === getPin()) {
+    els.parentGate.hidden = true;
+    els.parentContent.hidden = false;
+    showToast(state.lang === "zh" ? "已解锁家长层" : "Parent layer unlocked");
+  } else {
+    showToast(state.lang === "zh" ? "PIN错误" : "Incorrect PIN");
+  }
+}
+
+function updatePin() {
+  const newPin = (els.newPinInput.value || "").trim();
+  if (!newPin || newPin.length < 4) {
+    showToast(state.lang === "zh" ? "PIN至少4位" : "PIN must be at least 4 digits");
+    return;
+  }
+  setPin(newPin);
+  els.newPinInput.value = "";
+  showToast(state.lang === "zh" ? "PIN已更新" : "PIN updated");
+}
+
+// ---------- Event wiring ----------
+els.langEnBtn.addEventListener("click", () => setLang("en"));
+els.langZhBtn.addEventListener("click", () => setLang("zh"));
+
+els.clearIconsBtn.addEventListener("click", () => {
+  state.selectedIcons.clear();
+  renderIcons();
+});
+
+els.recStartBtn.addEventListener("click", startRecording);
+els.recStopBtn.addEventListener("click", stopRecording);
+
+els.saveEntryBtn.addEventListener("click", saveEntry);
+
+els.exportBtn.addEventListener("click", exportNotes);
+els.wipeBtn.addEventListener("click", wipeAll);
+
+els.parentBtn.addEventListener("click", openParent);
+els.pinGoBtn.addEventListener("click", unlockParent);
+els.setPinBtn.addEventListener("click", updatePin);
+
+// Close modal cleanup
+els.parentDialog.addEventListener("close", () => {
+  // nothing required
+});
+
+// ---------- Init ----------
+(function init() {
+  // Ensure a pin exists
+  if (!localStorage.getItem(LS_PIN)) setPin(DEFAULT_PIN);
+
+  setLang("en");
+  renderIcons();
+  renderTimeline();
+})();
+```
+
+---
+
+## Replit setup (fast)
+
+1. Create a new Replit project:
+
+* Either **“HTML, CSS, JS”** template, or any static site.
+
+2. Add these files:
+
+* `index.html`
+* `style.css`
+* `app.js`
+
+3. Click **Run**.
+
+That’s it.
+
+---
+
+## Notes (important, practical)
+
+* Audio is stored **locally** in **IndexedDB**, not uploaded anywhere.
+* Notes/icons/timestamps live in **localStorage**.
+* “Export notes” exports **metadata only** (not audio). If you later want audio export too, we can add it safely.
+
+---
+
+If you want the Bridge layer to explicitly accommodate your “What is a piano?” chapter next, the cleanest next step is: **add a Parent-only “Study Room” page** that stores the full transcript locally (as text) and lets you bookmark “turning points” (ivory → gut strings → Mozart/Beethoven pressure → notation-as-code → Satoshi). This can remain separate from the toddler experience while still living in the same app.

@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Big Piano</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="theme-color" content="#0b1220" />
+  <style>
+    /* Small UX helpers */
+    .no-select { -webkit-user-select:none; user-select:none; }
+    .pressing { transform: scale(0.98); filter: brightness(1.05); }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto px-4 py-6">
+    <!-- Header -->
+    <header class="flex items-center justify-between gap-3">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight" id="appTitle">The Big Piano</h1>
+        <p class="text-slate-400 text-sm" id="appSubtitle">Scarcity is felt. Value is discovered. The child explains why.</p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="langToggle" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm">
+          中文 / EN
+        </button>
+
+        <!-- Long-press Parent access -->
+        <button id="parentHoldBtn" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm no-select">
+          Parent
+        </button>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="mt-6 flex gap-2">
+      <button data-tab="toddler" class="tabBtn px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm">Toddler</button>
+      <button data-tab="parent" class="tabBtn px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sm opacity-60">Parent</button>
+      <button data-tab="bridge" class="tabBtn px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sm opacity-60">Later Bridge</button>
+    </nav>
+
+    <!-- Status / toast -->
+    <div id="toast" class="mt-4 hidden">
+      <div class="rounded-xl bg-emerald-900/40 border border-emerald-700/50 px-4 py-3 text-sm text-emerald-100"></div>
+    </div>
+
+    <!-- TODDLER TAB -->
+    <main id="tab-toddler" class="mt-6">
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <div class="flex items-start justify-between gap-4">
+          <h2 class="text-lg font-semibold" id="storyTitle">Story</h2>
+          <button id="resetToddlerBtn" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700">
+            Reset answers
+          </button>
+        </div>
+
+        <article id="storyText" class="mt-4 text-slate-200 leading-relaxed whitespace-pre-wrap"></article>
+
+        <div class="mt-6 border-t border-slate-800 pt-5">
+          <h3 class="text-base font-semibold" id="questionTitle">One question</h3>
+          <p class="text-slate-200 mt-2 text-lg font-medium" id="bigQuestion">Why is the big piano special?</p>
+          <p class="text-slate-400 mt-1 text-sm" id="questionHint">Let your child answer. Don’t explain. Just capture.</p>
+
+          <!-- Quick icons -->
+          <div class="mt-4">
+            <p class="text-slate-300 text-sm mb-2" id="tapHint">Tap an icon your child points to:</p>
+            <div id="iconGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+          </div>
+
+          <!-- Typed line -->
+          <div class="mt-5">
+            <label class="block text-sm text-slate-300" id="typedLabel">Type your child’s words (one line)</label>
+            <div class="mt-2 flex gap-2">
+              <input id="typedAnswer" class="flex-1 rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-500"
+                placeholder="e.g. 'Big!' or 'Cousin with me'"/>
+              <button id="saveTypedBtn" class="px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-sm font-medium">
+                Save
+              </button>
+            </div>
+          </div>
+
+          <!-- Audio record -->
+          <div class="mt-5">
+            <p class="text-sm text-slate-300" id="audioLabel">Press and hold to record your child’s answer (local only)</p>
+            <div class="mt-2 flex items-center gap-3 flex-wrap">
+              <button id="holdToRecordBtn"
+                class="no-select px-5 py-3 rounded-2xl bg-rose-600 hover:bg-rose-500 font-semibold">
+                Hold to record
+              </button>
+              <span id="recordStatus" class="text-sm text-slate-400">Not recording</span>
+              <button id="playLastBtn" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm" disabled>
+                Play last recording
+              </button>
+              <button id="deleteAudioBtn" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm" disabled>
+                Delete recording
+              </button>
+            </div>
+            <audio id="audioPlayer" class="mt-3 w-full hidden" controls></audio>
+          </div>
+
+          <!-- Captured summary -->
+          <div class="mt-6 rounded-2xl bg-slate-950/40 border border-slate-800 p-4">
+            <h4 class="font-semibold text-slate-200" id="capturedTitle">Captured</h4>
+            <div class="mt-2 text-sm text-slate-300 space-y-2">
+              <div><span class="text-slate-400" id="capIconsLabel">Icons:</span> <span id="capIcons">—</span></div>
+              <div><span class="text-slate-400" id="capTypedLabel">Typed:</span> <span id="capTyped">—</span></div>
+              <div><span class="text-slate-400" id="capAudioLabel">Audio:</span> <span id="capAudio">—</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-6 rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <h3 class="text-base font-semibold" id="presenceTitle">Presence note</h3>
+        <p class="mt-2 text-slate-300 leading-relaxed" id="presenceText">
+          Sometimes the best “memory keeper” isn’t a device. It’s presence.
+          This app does not teach. It observes and preserves the child’s meaning.
+        </p>
+      </section>
+    </main>
+
+    <!-- PARENT TAB -->
+    <main id="tab-parent" class="mt-6 hidden">
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-semibold" id="parentTitle">Parent Layer</h2>
+            <p class="text-sm text-slate-400 mt-1" id="parentSubtitle">Hidden by design. Guidance only. No leakage into Toddler Mode.</p>
+          </div>
+          <button id="lockParentBtn" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700">Lock</button>
+        </div>
+
+        <div class="mt-5 grid gap-4">
+          <div class="rounded-2xl bg-slate-950/40 border border-slate-800 p-4">
+            <h3 class="font-semibold text-slate-200" id="observeTitle">What you’re observing</h3>
+            <ul class="mt-2 text-slate-300 text-sm list-disc ml-5 space-y-1" id="observeList">
+              <li>“Mine” forming (shoes, mummy, daddy’s shirt).</li>
+              <li>Sharing and snatching as early social mechanics, not morality.</li>
+              <li>Momentary desire vs lasting value.</li>
+              <li>Value changes with access: abundant → limited → rare.</li>
+              <li>The refusal to leave is the signal: scarcity creating attachment.</li>
+            </ul>
+          </div>
+
+          <div class="rounded-2xl bg-slate-950/40 border border-slate-800 p-4">
+            <h3 class="font-semibold text-slate-200" id="listenTitle">What to listen for</h3>
+            <ul class="mt-2 text-slate-300 text-sm list-disc ml-5 space-y-1" id="listenList">
+              <li>Does the child name it? (“Big piano.”)</li>
+              <li>Do they request replay? (“Again.” “More.”)</li>
+              <li>Do they resist ending? (wriggling, pointing, crying)</li>
+              <li>Do they value the social context? (needs cousin beside them)</li>
+              <li>Do they carry it into new words later (train talk, bedtime talk)?</li>
+            </ul>
+          </div>
+
+          <div class="rounded-2xl bg-slate-950/40 border border-slate-800 p-4">
+            <h3 class="font-semibold text-slate-200" id="promptTitle">Next time prompt</h3>
+            <p class="mt-2 text-slate-300 text-sm leading-relaxed" id="promptText">
+              Do not explain scarcity. Ask one question and wait.
+              <span class="text-slate-200 font-semibold">“Why do you think the big piano felt special?”</span>
+              Capture their answer exactly as they say it.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-slate-950/40 border border-slate-800 p-4">
+            <h3 class="font-semibold text-slate-200" id="parentNotesTitle">Your notes</h3>
+            <textarea id="parentNotes" class="mt-2 w-full min-h-[140px] rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-500"
+              placeholder="Write what you noticed. Keep it simple."></textarea>
+            <div class="mt-2 flex gap-2">
+              <button id="saveParentNotesBtn" class="px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-sm font-medium">Save notes</button>
+              <button id="clearParentNotesBtn" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm">Clear</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- BRIDGE TAB -->
+    <main id="tab-bridge" class="mt-6 hidden">
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/30 p-5">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-semibold" id="bridgeTitle">Later Bridge</h2>
+            <p class="text-sm text-slate-400 mt-1" id="bridgeSubtitle">Optional. Age-gated. For older kids (8–12) or parents.</p>
+          </div>
+          <button id="lockBridgeBtn" class="text-xs px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700">Lock</button>
+        </div>
+
+        <!-- Gate -->
+        <div id="bridgeGate" class="mt-5 rounded-2xl bg-slate-950/40 border border-slate-800 p-4">
+          <h3 class="font-semibold text-slate-200" id="gateTitle">Unlock</h3>
+          <p class="mt-2 text-slate-300 text-sm" id="gateText">
+            This section discusses systems (scarcity, trust, protocols). Not intended for toddlers.
+          </p>
+          <div class="mt-3 flex gap-2 flex-wrap">
+            <button id="gateUnlockBtn" class="px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-sm font-medium">
+              I’m a parent / I’m over 13
+            </button>
+            <button id="gateStayLockedBtn" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm">
+              Keep locked
+            </button>
+          </div>
+        </div>
+
+        <!-- Bridge content -->
+        <div id="bridgeContent" class="mt-5 hidden">
+          <div class="rounded-2xl bg-slate-950/40 border border-slate-800 p-4">
+            <h3 class="font-semibold text-slate-200" id="chainTitle">The chain you built</h3>
+            <ol class="mt-2 text-slate-300 text-sm list-decimal ml-5 space-y-1" id="chainList">
+              <li>Materials → constraints (ivory bans, engineering limits)</li>
+              <li>Disruptors → demand (Mozart/Beethoven pushing capability)</li>
+              <li>Innovation → stronger frames, bigger range, better action</li>
+              <li>Protocols → scores as code; performance as consensus</li>
+              <li>Adoption → spread through publishing, teaching, institutions</li>
+              <li>Money parallel → trust evolution; decentralised verification; scarcity rules</li>
+            </ol>
+          </div>
+
+          <div class="mt-4 rounded-2xl bg-slate-950/40 border border-slate-800 p-4">
+            <h3 class="font-semibold text-slate-200" id="transcriptTitle">Study Room</h3>
+            <p class="mt-2 text-slate-300 text-sm" id="transcriptHint">
+              Paste your “ivory keys → Bitcoin whitepaper” transcript here (optional).
+            </p>
+            <textarea id="transcriptBox" class="mt-2 w-full min-h-[220px] rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-500"
+              placeholder="Paste transcript or notes here..."></textarea>
+            <div class="mt-2 flex gap-2">
+              <button id="saveTranscriptBtn" class="px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-sm font-medium">Save</button>
+              <button id="clearTranscriptBtn" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm">Clear</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-10 text-xs text-slate-500">
+      Local-only. No tracking. No uploads. Built for presence-first learning.
+    </footer>
+  </div>
+
+<script>
+/* ---------------------------
+   Content (EN + Mandarin)
+---------------------------- */
+const CONTENT = {
+  en: {
+    appTitle: "The Big Piano",
+    appSubtitle: "Scarcity is felt. Value is discovered. The child explains why.",
+    tabs: { toddler: "Toddler", parent: "Parent", bridge: "Later Bridge" },
+    storyTitle: "Story",
+    questionTitle: "One question",
+    bigQuestion: "Why is the big piano special?",
+    questionHint: "Let your child answer. Don’t explain. Just capture.",
+    tapHint: "Tap an icon your child points to:",
+    typedLabel: "Type your child’s words (one line)",
+    typedPlaceholder: "e.g. “Big!” or “Cousin with me”",
+    audioLabel: "Press and hold to record your child’s answer (local only)",
+    holdToRecord: "Hold to record",
+    resetAnswers: "Reset answers",
+    capturedTitle: "Captured",
+    capIconsLabel: "Icons:",
+    capTypedLabel: "Typed:",
+    capAudioLabel: "Audio:",
+    presenceTitle: "Presence note",
+    presenceText:
+      "Sometimes the best “memory keeper” isn’t a device. It’s presence. This app does not teach. It observes and preserves the child’s meaning.",
+    parentTitle: "Parent Layer",
+    parentSubtitle: "Hidden by design. Guidance only. No leakage into Toddler Mode.",
+    observeTitle: "What you’re observing",
+    listenTitle: "What to listen for",
+    promptTitle: "Next time prompt",
+    promptText:
+      "Do not explain scarcity. Ask one question and wait. “Why do you think the big piano felt special?” Capture their answer exactly as they say it.",
+    parentNotesTitle: "Your notes",
+    saveNotes: "Save notes",
+    clear: "Clear",
+    lock: "Lock",
+    bridgeTitle: "Later Bridge",
+    bridgeSubtitle: "Optional. Age-gated. For older kids (8–12) or parents.",
+    gateTitle: "Unlock",
+    gateText: "This section discusses systems (scarcity, trust, protocols). Not intended for toddlers.",
+    gateUnlock: "I’m a parent / I’m over 13",
+    gateStayLocked: "Keep locked",
+    chainTitle: "The chain you built",
+    transcriptTitle: "Study Room",
+    transcriptHint: "Paste your “ivory keys → Bitcoin whitepaper” transcript here (optional).",
+    toastSaved: "Saved locally.",
+    toastReset: "Reset completed.",
+    toastLocked: "Locked.",
+    toastUnlocked: "Unlocked."
+  },
+
+  zh: {
+    appTitle: "《大钢琴》",
+    appSubtitle: "稀缺是被感受到的。价值是被发现的。孩子来解释为什么。",
+    tabs: { toddler: "幼儿", parent: "家长", bridge: "延伸" },
+    storyTitle: "故事",
+    questionTitle: "一个问题",
+    bigQuestion: "为什么“大钢琴”很特别？",
+    questionHint: "让孩子回答。不要解释。只要记录。",
+    tapHint: "点一下孩子指向的图标：",
+    typedLabel: "输入孩子的话（一句即可）",
+    typedPlaceholder: "例如：“大！”或“和表哥一起”",
+    audioLabel: "按住录音，录下孩子的回答（仅本地保存）",
+    holdToRecord: "按住录音",
+    resetAnswers: "重置答案",
+    capturedTitle: "已记录",
+    capIconsLabel: "图标：",
+    capTypedLabel: "文字：",
+    capAudioLabel: "音频：",
+    presenceTitle: "关于“在场”",
+    presenceText:
+      "有时最好的“记忆守护者”不是设备，而是陪伴。在这里，我们不教概念，只保存孩子给出的意义。",
+    parentTitle: "家长层（隐藏）",
+    parentSubtitle: "刻意隐藏。只给你提示，不会泄露到幼儿模式。",
+    observeTitle: "你在观察什么",
+    listenTitle: "你在听什么信号",
+    promptTitle: "下次的提示语",
+    promptText:
+      "不要解释稀缺。只问一个问题，然后等待：“你觉得大钢琴为什么特别？”把孩子原话记录下来。",
+    parentNotesTitle: "你的笔记",
+    saveNotes: "保存笔记",
+    clear: "清空",
+    lock: "上锁",
+    bridgeTitle: "延伸（稍后）",
+    bridgeSubtitle: "可选。有年龄门槛。适合大一点的孩子（8–12）或家长。",
+    gateTitle: "解锁",
+    gateText: "这里会讨论系统（稀缺、信任、规则）。不适合幼儿。",
+    gateUnlock: "我是家长 / 我已满13岁",
+    gateStayLocked: "保持上锁",
+    chainTitle: "你建立的链条",
+    transcriptTitle: "学习室",
+    transcriptHint: "可在此粘贴“象牙琴键 → 比特币白皮书”的记录（可选）。",
+    toastSaved: "已本地保存。",
+    toastReset: "已重置。",
+    toastLocked: "已上锁。",
+    toastUnlocked: "已解锁。"
+  }
+};
+
+// Your story text (EN + ZH). Replace/trim freely.
+const STORY = {
+  en:
+`My child has an electronic keyboard. It’s theirs — always there. Sometimes played, sometimes ignored.
+
+I have a small weighted keyboard. It’s not always available. It belongs to me. When I share it, it feels special.
+
+Then we went to my sister’s house. There was a full-sized piano. The room changed. The sound changed. The feel changed. Cousin sat beside them. Grandma came to the door. Everyone joined the moment.
+
+And when it was time to leave… my child didn’t want to.
+“Big piano.”
+
+Why do you think the big piano felt special?`,
+
+  zh:
+`我的孩子有一架自己的电子琴。它总在那儿——随时可以玩，有时被弹响，有时被遗忘。
+
+我也有一架小一点但有配重的琴。它不是随时都能玩到的，它属于我。当我和孩子分享它时，它就变得“特别”。
+
+后来我们去了姐姐家。那里有一架真正的大钢琴。房间不一样了。声音不一样了。触感不一样了。表哥坐在旁边。奶奶也被吸引到门口。大家一起进入了这个瞬间。
+
+可到了要走的时候……孩子不愿意离开。
+“大钢琴。”
+
+你觉得大钢琴为什么特别？`
+};
+
+// Icon options (shared, labels translated via CONTENT)
+const ICONS = [
+  { key: "big",   emoji: "🎹", en: "It’s big", zh: "它很大" },
+  { key: "loud",  emoji: "🔊", en: "It’s loud", zh: "声音很大" },
+  { key: "rare",  emoji: "🗝️", en: "I can’t have it every day", zh: "不是天天都能玩" },
+  { key: "cousin",emoji: "🤝", en: "Cousin played with me", zh: "表哥/表姐陪我" },
+  { key: "grandma",emoji:"👵", en: "Grandma came", zh: "奶奶来了" },
+  { key: "feel",  emoji: "✨", en: "It felt different", zh: "感觉不一样" }
+];
+
+/* ---------------------------
+   Storage keys
+---------------------------- */
+const LS = {
+  lang: "bigPiano.lang",
+  icons: "bigPiano.icons",
+  typed: "bigPiano.typed",
+  audio: "bigPiano.audioWebm",
+  parentUnlocked: "bigPiano.parentUnlocked",
+  parentNotes: "bigPiano.parentNotes",
+  bridgeUnlocked: "bigPiano.bridgeUnlocked",
+  transcript: "bigPiano.transcript"
+};
+
+/* ---------------------------
+   State
+---------------------------- */
+let lang = localStorage.getItem(LS.lang) || "en";
+let parentUnlocked = localStorage.getItem(LS.parentUnlocked) === "true";
+let bridgeUnlocked = localStorage.getItem(LS.bridgeUnlocked) === "true";
+
+/* ---------------------------
+   DOM helpers
+---------------------------- */
+const $ = (id) => document.getElementById(id);
+
+function toast(msg) {
+  const wrap = $("toast");
+  const box = wrap.querySelector("div");
+  box.textContent = msg;
+  wrap.classList.remove("hidden");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => wrap.classList.add("hidden"), 1800);
+}
+
+function setLang(next) {
+  lang = next;
+  localStorage.setItem(LS.lang, lang);
+  render();
+}
+
+function setTab(name) {
+  // name: toddler | parent | bridge
+  ["toddler", "parent", "bridge"].forEach(t => {
+    $("tab-" + t).classList.toggle("hidden", t !== name);
+  });
+
+  // Update tab button styles
+  document.querySelectorAll(".tabBtn").forEach(btn => {
+    const t = btn.getAttribute("data-tab");
+    const active = t === name;
+
+    if (active) {
+      btn.className = "tabBtn px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm";
+    } else {
+      btn.className = "tabBtn px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sm opacity-60";
+    }
+  });
+}
+
+/* ---------------------------
+   Render
+---------------------------- */
+function render() {
+  const C = CONTENT[lang];
+
+  $("appTitle").textContent = C.appTitle;
+  $("appSubtitle").textContent = C.appSubtitle;
+
+  // Tabs labels
+  const tabBtns = document.querySelectorAll(".tabBtn");
+  tabBtns.forEach(btn => {
+    const t = btn.getAttribute("data-tab");
+    btn.textContent = C.tabs[t];
+  });
+
+  // Toddler content
+  $("storyTitle").textContent = C.storyTitle;
+  $("resetToddlerBtn").textContent = C.resetAnswers;
+  $("storyText").textContent = STORY[lang];
+
+  $("questionTitle").textContent = C.questionTitle;
+  $("bigQuestion").textContent = C.bigQuestion;
+  $("questionHint").textContent = C.questionHint;
+  $("tapHint").textContent = C.tapHint;
+
+  $("typedLabel").textContent = C.typedLabel;
+  $("typedAnswer").placeholder = C.typedPlaceholder;
+
+  $("audioLabel").textContent = C.audioLabel;
+  $("holdToRecordBtn").textContent = C.holdToRecord;
+
+  $("capturedTitle").textContent = C.capturedTitle;
+  $("capIconsLabel").textContent = C.capIconsLabel;
+  $("capTypedLabel").textContent = C.capTypedLabel;
+  $("capAudioLabel").textContent = C.capAudioLabel;
+
+  $("presenceTitle").textContent = C.presenceTitle;
+  $("presenceText").textContent = C.presenceText;
+
+  // Parent content
+  $("parentTitle").textContent = C.parentTitle;
+  $("parentSubtitle").textContent = C.parentSubtitle;
+  $("lockParentBtn").textContent = C.lock;
+
+  $("observeTitle").textContent = C.observeTitle;
+  $("listenTitle").textContent = C.listenTitle;
+  $("promptTitle").textContent = C.promptTitle;
+  $("promptText").textContent = C.promptText;
+
+  $("parentNotesTitle").textContent = C.parentNotesTitle;
+  $("saveParentNotesBtn").textContent = C.saveNotes;
+  $("clearParentNotesBtn").textContent = C.clear;
+
+  // Bridge content
+  $("bridgeTitle").textContent = C.bridgeTitle;
+  $("bridgeSubtitle").textContent = C.bridgeSubtitle;
+  $("lockBridgeBtn").textContent = C.lock;
+
+  $("gateTitle").textContent = C.gateTitle;
+  $("gateText").textContent = C.gateText;
+  $("gateUnlockBtn").textContent = C.gateUnlock;
+  $("gateStayLockedBtn").textContent = C.gateStayLocked;
+
+  $("chainTitle").textContent = C.chainTitle;
+  $("transcriptTitle").textContent = C.transcriptTitle;
+  $("transcriptHint").textContent = C.transcriptHint;
+
+  // Build icon grid
+  const grid = $("iconGrid");
+  grid.innerHTML = "";
+  ICONS.forEach(opt => {
+    const label = (lang === "en") ? opt.en : opt.zh;
+    const btn = document.createElement("button");
+    btn.className =
+      "iconBtn rounded-2xl bg-slate-800 hover:bg-slate-700 border border-slate-700 px-4 py-4 text-left flex items-center gap-3";
+    btn.setAttribute("data-key", opt.key);
+    btn.innerHTML = `
+      <div class="text-2xl">${opt.emoji}</div>
+      <div class="text-sm font-medium text-slate-100">${label}</div>
+    `;
+    btn.addEventListener("click", () => toggleIcon(opt.key));
+    grid.appendChild(btn);
+  });
+
+  // Apply captured state
+  syncCaptured();
+  syncParentLockUI();
+  syncBridgeLockUI();
+}
+
+function getSelectedIcons() {
+  try { return JSON.parse(localStorage.getItem(LS.icons) || "[]"); }
+  catch { return []; }
+}
+
+function toggleIcon(key) {
+  const sel = new Set(getSelectedIcons());
+  if (sel.has(key)) sel.delete(key);
+  else sel.add(key);
+  localStorage.setItem(LS.icons, JSON.stringify([...sel]));
+  syncCaptured();
+}
+
+function syncCaptured() {
+  // icons
+  const sel = getSelectedIcons();
+  const labels = sel.map(k => {
+    const opt = ICONS.find(o => o.key === k);
+    if (!opt) return k;
+    return (lang === "en") ? opt.en : opt.zh;
+  });
+
+  $("capIcons").textContent = labels.length ? labels.join(" · ") : "—";
+
+  // highlight selected buttons
+  document.querySelectorAll(".iconBtn").forEach(btn => {
+    const key = btn.getAttribute("data-key");
+    btn.classList.toggle("ring-2", sel.includes(key));
+    btn.classList.toggle("ring-indigo-500", sel.includes(key));
+  });
+
+  // typed
+  const typed = localStorage.getItem(LS.typed) || "";
+  $("capTyped").textContent = typed ? typed : "—";
+  $("typedAnswer").value = typed;
+
+  // audio
+  const hasAudio = !!localStorage.getItem(LS.audio);
+  $("capAudio").textContent = hasAudio ? "Saved" : "—";
+  $("playLastBtn").disabled = !hasAudio;
+  $("deleteAudioBtn").disabled = !hasAudio;
+
+  if (hasAudio) {
+    const dataUrl = localStorage.getItem(LS.audio);
+    $("audioPlayer").src = dataUrl;
+    $("audioPlayer").classList.remove("hidden");
+  } else {
+    $("audioPlayer").removeAttribute("src");
+    $("audioPlayer").classList.add("hidden");
+  }
+}
+
+/* ---------------------------
+   Parent / Bridge locking logic
+---------------------------- */
+function unlockParent() {
+  parentUnlocked = true;
+  localStorage.setItem(LS.parentUnlocked, "true");
+  toast(CONTENT[lang].toastUnlocked);
+  // allow switching
+  setTab("parent");
+  syncParentLockUI();
+}
+
+function lockParent() {
+  parentUnlocked = false;
+  localStorage.setItem(LS.parentUnlocked, "false");
+  toast(CONTENT[lang].toastLocked);
+  setTab("toddler");
+  syncParentLockUI();
+}
+
+function syncParentLockUI() {
+  // Prevent entering parent tab when locked
+  const parentBtn = document.querySelector('[data-tab="parent"]');
+  if (!parentUnlocked) {
+    parentBtn.classList.add("opacity-60");
+  }
+}
+
+function unlockBridge() {
+  bridgeUnlocked = true;
+  localStorage.setItem(LS.bridgeUnlocked, "true");
+  toast(CONTENT[lang].toastUnlocked);
+  syncBridgeLockUI();
+}
+
+function lockBridge() {
+  bridgeUnlocked = false;
+  localStorage.setItem(LS.bridgeUnlocked, "false");
+  toast(CONTENT[lang].toastLocked);
+  setTab("toddler");
+  syncBridgeLockUI();
+}
+
+function syncBridgeLockUI() {
+  $("bridgeGate").classList.toggle("hidden", bridgeUnlocked);
+  $("bridgeContent").classList.toggle("hidden", !bridgeUnlocked);
+}
+
+/* ---------------------------
+   Audio recording (press & hold)
+---------------------------- */
+let mediaRecorder = null;
+let chunks = [];
+let stream = null;
+let isRecording = false;
+
+async function startRecording() {
+  if (isRecording) return;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    toast("Recording not supported on this device/browser.");
+    return;
+  }
+
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    chunks = [];
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) chunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: "audio/webm" });
+      // Convert blob -> dataURL to store in localStorage (simple, local-only)
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        localStorage.setItem(LS.audio, reader.result);
+        stopStream();
+        syncCaptured();
+        toast(CONTENT[lang].toastSaved);
+      };
+      reader.readAsDataURL(blob);
+    };
+
+    mediaRecorder.start();
+    isRecording = true;
+    $("recordStatus").textContent = "Recording…";
+  } catch (err) {
+    toast("Microphone permission denied.");
+    stopStream();
+  }
+}
+
+function stopStream() {
+  if (stream) {
+    stream.getTracks().forEach(t => t.stop());
+    stream = null;
+  }
+}
+
+function stopRecording() {
+  if (!isRecording) return;
+  isRecording = false;
+  $("recordStatus").textContent = "Saved";
+  try {
+    mediaRecorder.stop();
+  } catch {}
+}
+
+function playLast() {
+  const dataUrl = localStorage.getItem(LS.audio);
+  if (!dataUrl) return;
+  const player = $("audioPlayer");
+  player.src = dataUrl;
+  player.play();
+}
+
+function deleteAudio() {
+  localStorage.removeItem(LS.audio);
+  $("recordStatus").textContent = "Not recording";
+  syncCaptured();
+  toast(CONTENT[lang].toastReset);
+}
+
+/* ---------------------------
+   Events
+---------------------------- */
+function setupEvents() {
+  // Language toggle
+  $("langToggle").addEventListener("click", () => setLang(lang === "en" ? "zh" : "en"));
+
+  // Tabs
+  document.querySelectorAll(".tabBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const t = btn.getAttribute("data-tab");
+      if (t === "parent" && !parentUnlocked) {
+        toast("Locked. Long-press Parent to unlock.");
+        return;
+      }
+      if (t === "bridge" && !bridgeUnlocked) {
+        setTab("bridge");
+        return;
+      }
+      setTab(t);
+    });
+  });
+
+  // Reset toddler answers
+  $("resetToddlerBtn").addEventListener("click", () => {
+    localStorage.removeItem(LS.icons);
+    localStorage.removeItem(LS.typed);
+    localStorage.removeItem(LS.audio);
+    $("recordStatus").textContent = "Not recording";
+    syncCaptured();
+    toast(CONTENT[lang].toastReset);
+  });
+
+  // Save typed
+  $("saveTypedBtn").addEventListener("click", () => {
+    const val = $("typedAnswer").value.trim();
+    localStorage.setItem(LS.typed, val);
+    syncCaptured();
+    toast(CONTENT[lang].toastSaved);
+  });
+
+  // Audio: press & hold
+  const holdBtn = $("holdToRecordBtn");
+
+  // mouse/touch hold
+  const pressStart = (e) => {
+    e.preventDefault();
+    holdBtn.classList.add("pressing");
+    $("recordStatus").textContent = "Recording…";
+    startRecording();
+  };
+  const pressEnd = (e) => {
+    e.preventDefault();
+    holdBtn.classList.remove("pressing");
+    stopRecording();
+  };
+
+  holdBtn.addEventListener("mousedown", pressStart);
+  holdBtn.addEventListener("mouseup", pressEnd);
+  holdBtn.addEventListener("mouseleave", () => {
+    if (holdBtn.classList.contains("pressing")) {
+      holdBtn.classList.remove("pressing");
+      stopRecording();
+    }
+  });
+
+  holdBtn.addEventListener("touchstart", pressStart, { passive: false });
+  holdBtn.addEventListener("touchend", pressEnd, { passive: false });
+  holdBtn.addEventListener("touchcancel", pressEnd, { passive: false });
+
+  // Play / delete audio
+  $("playLastBtn").addEventListener("click", playLast);
+  $("deleteAudioBtn").addEventListener("click", deleteAudio);
+
+  // Parent unlock: long press on Parent button
+  const parentHold = $("parentHoldBtn");
+  let holdTimer = null;
+
+  parentHold.addEventListener("mousedown", () => {
+    holdTimer = setTimeout(unlockParent, 900); // 0.9s
+  });
+  parentHold.addEventListener("mouseup", () => clearTimeout(holdTimer));
+  parentHold.addEventListener("mouseleave", () => clearTimeout(holdTimer));
+
+  parentHold.addEventListener("touchstart", () => {
+    holdTimer = setTimeout(unlockParent, 900);
+  }, { passive: true });
+  parentHold.addEventListener("touchend", () => clearTimeout(holdTimer), { passive: true });
+  parentHold.addEventListener("touchcancel", () => clearTimeout(holdTimer), { passive: true });
+
+  // Parent lock
+  $("lockParentBtn").addEventListener("click", lockParent);
+
+  // Parent notes
+  $("parentNotes").value = localStorage.getItem(LS.parentNotes) || "";
+  $("saveParentNotesBtn").addEventListener("click", () => {
+    localStorage.setItem(LS.parentNotes, $("parentNotes").value);
+    toast(CONTENT[lang].toastSaved);
+  });
+  $("clearParentNotesBtn").addEventListener("click", () => {
+    $("parentNotes").value = "";
+    localStorage.removeItem(LS.parentNotes);
+    toast(CONTENT[lang].toastReset);
+  });
+
+  // Bridge unlock/lock
+  $("gateUnlockBtn").addEventListener("click", unlockBridge);
+  $("gateStayLockedBtn").addEventListener("click", () => {
+    toast(CONTENT[lang].toastLocked);
+    setTab("toddler");
+  });
+  $("lockBridgeBtn").addEventListener("click", lockBridge);
+
+  // Transcript
+  $("transcriptBox").value = localStorage.getItem(LS.transcript) || "";
+  $("saveTranscriptBtn").addEventListener("click", () => {
+    localStorage.setItem(LS.transcript, $("transcriptBox").value);
+    toast(CONTENT[lang].toastSaved);
+  });
+  $("clearTranscriptBtn").addEventListener("click", () => {
+    $("transcriptBox").value = "";
+    localStorage.removeItem(LS.transcript);
+    toast(CONTENT[lang].toastReset);
+  });
+}
+
+/* ---------------------------
+   Boot
+---------------------------- */
+setupEvents();
+render();
+setTab("toddler");
+syncCaptured();
+syncBridgeLockUI();
+</script>
+</body>
+</html>
