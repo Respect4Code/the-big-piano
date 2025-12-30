@@ -44,12 +44,12 @@ export default function Home() {
   
   const CLASSICAL_TRACKS = {
     mozart: {
-      title: "Mozart - Eine Kleine Nachtmusik",
-      url: "https://upload.wikimedia.org/wikipedia/commons/2/24/Wolfgang_Amadeus_Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg"
+      title: "Mozart - Piano Sonata No. 16",
+      url: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Wolfgang_Amadeus_Mozart_-_Klaviersonate_Nr._16_C-Dur_KV_545_-_I._Allegro.ogg"
     },
     beethoven: {
-      title: "Beethoven - Für Elise",
-      url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Beethoven_WoO_59_-_Bagatelle_in_A_minor_%28Für_Elise%29.ogg"
+      title: "Beethoven - Moonlight Sonata",
+      url: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Beethoven_Moonlight_Sonata_-_Movement_1.ogg"
     }
   };
 
@@ -244,60 +244,38 @@ export default function Home() {
 
   const toggleMusic = async () => {
     try {
-      if (!musicAudioRef.current || musicAudioRef.current.src !== CLASSICAL_TRACKS[currentTrack].url) {
-        // Clean up old audio if exists
-        if (musicAudioRef.current) {
-          musicAudioRef.current.pause();
-          musicAudioRef.current.src = "";
-        }
-        
-        // Create new audio element
-        musicAudioRef.current = new Audio();
-        musicAudioRef.current.crossOrigin = "anonymous";
-        musicAudioRef.current.src = CLASSICAL_TRACKS[currentTrack].url;
-        musicAudioRef.current.loop = true;
-        musicAudioRef.current.volume = 0.4;
-        musicAudioRef.current.preload = "auto";
-        
-        musicAudioRef.current.onended = () => setMusicPlaying(false);
-        musicAudioRef.current.onerror = (e) => {
-          console.error("Audio playback error:", e);
-          console.error("Failed URL:", CLASSICAL_TRACKS[currentTrack].url);
-          setMusicPlaying(false);
-          showToast(lang === "zh" ? "音频加载失败" : "Audio failed to load");
-        };
-        
-        musicAudioRef.current.onloadeddata = () => {
-          console.log("Audio loaded successfully:", CLASSICAL_TRACKS[currentTrack].title);
-        };
-        
-        // Load the audio
-        musicAudioRef.current.load();
+      // Clean up and recreate audio element
+      if (musicAudioRef.current) {
+        musicAudioRef.current.pause();
+        musicAudioRef.current = null;
       }
       
       if (musicPlaying) {
-        musicAudioRef.current.pause();
         setMusicPlaying(false);
-      } else {
-        // Attempt to play
-        const playPromise = musicAudioRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log("Playing:", CLASSICAL_TRACKS[currentTrack].title);
-              setMusicPlaying(true);
-            })
-            .catch((err) => {
-              console.error("Play failed:", err);
-              setMusicPlaying(false);
-              showToast(lang === "zh" ? "播放失败，请重试" : "Playback failed, please try again");
-            });
-        }
+        return;
       }
+      
+      // Create fresh audio element
+      const audio = new Audio(CLASSICAL_TRACKS[currentTrack].url);
+      audio.loop = true;
+      audio.volume = 0.3;
+      
+      audio.onerror = () => {
+        console.error("Audio error - URL:", CLASSICAL_TRACKS[currentTrack].url);
+        setMusicPlaying(false);
+        showToast(lang === "zh" ? "无法播放音乐" : "Cannot play music");
+      };
+      
+      musicAudioRef.current = audio;
+      
+      // Try to play
+      await audio.play();
+      setMusicPlaying(true);
+      console.log("Now playing:", CLASSICAL_TRACKS[currentTrack].title);
     } catch (err) {
-      console.error("Music playback error:", err);
+      console.error("Play error:", err);
       setMusicPlaying(false);
-      showToast(lang === "zh" ? "音频播放失败" : "Audio playback failed");
+      showToast(lang === "zh" ? "播放失败" : "Play failed");
     }
   };
 
