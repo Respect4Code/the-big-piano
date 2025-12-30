@@ -283,7 +283,7 @@ export default function Home() {
           style={{
             backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.2) 100%), url(${coverImage})`,
             backgroundSize: "cover",
-            backgroundPosition: "center top",
+            backgroundPosition: "center center",
           }}
           data-testid="splash-screen"
         >
