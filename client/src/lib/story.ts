@@ -76,7 +76,7 @@ export const COPY: Record<Lang, StoryContent> = {
     wipeBtn: "清除本地数据",
     emptyTimeline: "还没有保存的时刻。读故事、问问题、记录回答、然后保存。",
     parentTitle: "家长层",
-    parentGateText: "此区域仅限成人。请输入PIN码继续。",
+    parentGateText: "此区域仅限成人访问。请输入PIN码继续。",
     unlockBtn: "解锁",
     noNote: "（未填写文字）",
   }

@@ -11,12 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import coverImage from "@assets/image-147_1767056560181.jpg";
 
-const SPLASH_SEEN_KEY = "bigpiano_splash_seen";
-
 export default function Home() {
-  const [showSplash, setShowSplash] = useState(() => {
-    return !localStorage.getItem(SPLASH_SEEN_KEY);
-  });
+  const [showSplash, setShowSplash] = useState(true);
   const [splashFading, setSplashFading] = useState(false);
   const [lang, setLang] = useState<Lang>("en");
   const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set());
@@ -61,7 +57,6 @@ export default function Home() {
     setSplashFading(true);
     setTimeout(() => {
       setShowSplash(false);
-      localStorage.setItem(SPLASH_SEEN_KEY, "1");
     }, 500);
   };
 
@@ -552,7 +547,7 @@ export default function Home() {
                   type="password"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value)}
-                  placeholder="PIN (default 1234)"
+                  placeholder={lang === "zh" ? "PIN码（默认1234）" : "PIN (default 1234)"}
                   data-testid="input-pin"
                   className="bg-neutral-800 border-white/10 text-white"
                 />
@@ -560,7 +555,9 @@ export default function Home() {
                   {copy.unlockBtn}
                 </Button>
               </div>
-              <p className="text-xs text-neutral-500">Default PIN is 1234. You can change it once unlocked.</p>
+              <p className="text-xs text-neutral-500">
+                {lang === "zh" ? "默认PIN码为1234。解锁后您可以修改。" : "Default PIN is 1234. You can change it once unlocked."}
+              </p>
             </div>
           ) : (
             <div className="space-y-4">
