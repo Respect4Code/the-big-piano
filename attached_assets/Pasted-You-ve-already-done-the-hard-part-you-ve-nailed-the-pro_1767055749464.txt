@@ -1,0 +1,1343 @@
+You’ve already done the hard part: you’ve *nailed the product surface* (story → one question → local timeline) and you’ve protected the “resonance” by keeping the child layer clean.
+
+Below is **Replit-ready, single-file** code (`index.html`) that implements exactly what your screenshots show:
+
+* English / 中文 toggle
+* Story pane (left) + Timeline pane (right)
+* One Question section with:
+
+  * **Record child** (audio stays local; stored in **IndexedDB** on-device)
+  * **Write one line** (parent types exact words)
+  * **Optional icons** (tap to select)
+  * Save to timeline (stored locally; **no uploads, no tracking**)
+* Timeline list with playback of saved audio (if recorded)
+* Export notes (JSON) **without audio** (privacy-first)
+* Wipe local data (notes + audio)
+* Parent toggle (top-right) showing:
+
+  * Observation prompts (non-leading guidance)
+  * Contrarian prompts (parent-only)
+  * Bridge layer (age-gated placeholder) to hold your ivory→Bitcoin continuum later
+
+---
+
+## 1) Create `index.html` (paste this whole file)
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Big Piano</title>
+  <meta name="description" content="Read together. No lesson. Just the moment. Local-only timeline." />
+  <style>
+    :root{
+      --bg0:#07080b;
+      --bg1:#0b0d12;
+      --card:#0f131b;
+      --card2:#0c1018;
+      --line:rgba(255,255,255,.08);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.62);
+      --muted2:rgba(255,255,255,.46);
+      --chip:rgba(255,255,255,.06);
+      --chipOn:rgba(120,200,255,.18);
+      --chipLine:rgba(255,255,255,.12);
+      --btn:rgba(255,255,255,.08);
+      --btnLine:rgba(255,255,255,.14);
+      --danger:rgba(255,80,80,.18);
+      --dangerLine:rgba(255,80,80,.35);
+      --accent:rgba(120,200,255,.22);
+      --accentLine:rgba(120,200,255,.40);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 16px;
+      --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(120,200,255,.10), transparent 60%),
+        radial-gradient(900px 650px at 95% 10%, rgba(170,120,255,.10), transparent 55%),
+        radial-gradient(800px 700px at 50% 120%, rgba(80,255,200,.07), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,8,11,.55);
+      border-bottom:1px solid var(--line);
+    }
+    .topbarInner{
+      max-width:1160px;
+      margin:0 auto;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex; flex-direction:column; gap:4px;
+      min-width:220px;
+    }
+    .brand h1{
+      font-size:20px; margin:0; letter-spacing:.2px;
+    }
+    .crumbs{
+      font-size:12px;
+      color:var(--muted2);
+      letter-spacing:.2px;
+    }
+    .controls{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .seg{
+      display:inline-flex;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      padding:4px;
+      border-radius:999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .seg button{
+      border:0; background:transparent; color:var(--muted);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+      cursor:pointer;
+      transition: .15s ease;
+      white-space:nowrap;
+    }
+    .seg button.on{
+      background: rgba(255,255,255,.10);
+      color:var(--text);
+    }
+    .linkBtn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:13px;
+      cursor:pointer;
+      transition:.15s ease;
+      white-space:nowrap;
+    }
+    .linkBtn:hover{background: rgba(255,255,255,.06)}
+    .page{
+      max-width:1160px;
+      margin:0 auto;
+      padding:18px 16px 40px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.25fr .9fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+      .brand{min-width:auto}
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardInner{padding:18px}
+    .title{
+      font-size:18px; margin:0 0 6px; letter-spacing:.2px;
+    }
+    .subtitle{
+      color:var(--muted);
+      font-size:13px;
+      margin:0 0 14px;
+    }
+    .story{
+      line-height:1.6;
+      font-size:14.5px;
+      color: rgba(255,255,255,.86);
+      white-space:pre-wrap;
+    }
+    .divider{height:1px;background:var(--line); margin:14px 0}
+    .oneQ{
+      margin-top:10px;
+      border-top:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+    }
+    .oneQHeader{
+      padding:16px 18px 0;
+    }
+    .oneQHeader h2{
+      margin:0 0 6px;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+    .oneQHeader .q{
+      font-size:20px;
+      margin:0 0 6px;
+    }
+    .oneQHeader .hint{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .columns{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:12px;
+      padding:0 18px 16px;
+    }
+    @media (max-width: 980px){
+      .columns{grid-template-columns:1fr}
+    }
+    .panel{
+      background: rgba(0,0,0,.22);
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      padding:14px;
+      min-height:176px;
+    }
+    .panel h3{
+      margin:0 0 6px;
+      font-size:14px;
+    }
+    .panel p{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.45;
+    }
+    .btnRow{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      border:1px solid var(--btnLine);
+      background: var(--btn);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:12px;
+      font-size:13px;
+      cursor:pointer;
+      transition:.15s ease;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.10)}
+    .btn:disabled{
+      opacity:.55; cursor:not-allowed;
+    }
+    .btnAccent{
+      border-color: var(--accentLine);
+      background: var(--accent);
+    }
+    .btnDanger{
+      border-color: var(--dangerLine);
+      background: var(--danger);
+    }
+    .input{
+      width:100%;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:13px;
+      outline:none;
+    }
+    textarea.input{min-height:92px; resize:vertical; line-height:1.45}
+    .chips{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{
+      border:1px solid var(--chipLine);
+      background: var(--chip);
+      color: rgba(255,255,255,.82);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12.5px;
+      cursor:pointer;
+      transition:.15s ease;
+      user-select:none;
+    }
+    .chip.on{
+      border-color: var(--accentLine);
+      background: var(--chipOn);
+      color: var(--text);
+    }
+    .saveBar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 18px 18px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .timelineTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .timelineTop .rightBtns{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .empty{
+      border:1px dashed var(--line);
+      border-radius:16px;
+      padding:18px;
+      color:var(--muted);
+      background: rgba(0,0,0,.16);
+      font-size:13px;
+      line-height:1.5;
+    }
+    .entry{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      background: rgba(0,0,0,.18);
+      margin-bottom:10px;
+    }
+    .entryHead{
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+      margin-bottom:8px;
+    }
+    .entryMeta{
+      color:var(--muted);
+      font-size:12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .entryLine{
+      font-size:13.5px;
+      color: rgba(255,255,255,.88);
+      line-height:1.45;
+      white-space:pre-wrap;
+      margin:0 0 10px;
+    }
+    .entryChips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px}
+    .miniChip{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      padding:6px 8px;
+      border-radius:999px;
+      font-size:12px;
+      color: rgba(255,255,255,.78);
+    }
+    .audioRow{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    audio{width:100%; max-width:420px}
+    .smallBtn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:12px;
+      font-size:12.5px;
+      cursor:pointer;
+    }
+    .footer{
+      margin-top:14px;
+      color:var(--muted2);
+      font-size:12.5px;
+      padding:0 2px;
+    }
+
+    /* Parent panel */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center; justify-content:center;
+      padding:18px;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      z-index:100;
+    }
+    .modal.on{display:flex}
+    .modalCard{
+      width:min(760px, 100%);
+      border-radius:24px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(20,24,34,.95), rgba(10,12,18,.92));
+      box-shadow: 0 20px 80px rgba(0,0,0,.65);
+      overflow:hidden;
+    }
+    .modalInner{padding:18px}
+    .modalHead{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      padding:16px 18px;
+      border-bottom:1px solid var(--line);
+    }
+    .modalHead h3{margin:0; font-size:15px}
+    .closeX{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      width:38px; height:38px;
+      border-radius:12px;
+      cursor:pointer;
+      font-size:16px;
+    }
+    .parentGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 820px){
+      .parentGrid{grid-template-columns:1fr}
+    }
+    .note{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+    .list{
+      margin:10px 0 0;
+      padding-left:18px;
+      color: rgba(255,255,255,.82);
+      font-size:13px;
+      line-height:1.55;
+    }
+    .ageGate{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      padding:8px 10px;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:12.5px;
+      user-select:none;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbarInner">
+      <div class="brand">
+        <h1 id="appTitle">The Big Piano</h1>
+        <div class="crumbs" id="crumbs">Story → One Question → Local Timeline</div>
+      </div>
+
+      <div class="controls">
+        <div class="seg" role="tablist" aria-label="Language">
+          <button id="btnEN" class="on" type="button">English</button>
+          <button id="btnZH" type="button">中文</button>
+        </div>
+        <button class="linkBtn" id="btnParent" type="button">Parent</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="grid">
+      <!-- LEFT: STORY + QUESTION -->
+      <section class="card" aria-label="Story and question">
+        <div class="cardInner">
+          <h2 class="title" id="storyTitle">The Big Piano</h2>
+          <p class="subtitle" id="storySub">Read together. No lesson. Just the moment.</p>
+          <div class="story" id="storyText"></div>
+        </div>
+
+        <div class="oneQ">
+          <div class="oneQHeader">
+            <h2 id="oneQLabel">One Question</h2>
+            <p class="q" id="oneQText">Why is the big piano special?</p>
+            <p class="hint" id="oneQHint">Let your child answer in any way: words, pointing, or silence.</p>
+          </div>
+
+          <div class="columns">
+            <!-- Record -->
+            <div class="panel">
+              <h3 id="recTitle">Record the child</h3>
+              <p id="recHint">Press start, then stop. Audio stays on this device only.</p>
+              <div class="btnRow">
+                <button class="btn" id="btnRecStart" type="button">Start</button>
+                <button class="btn btnAccent" id="btnRecStop" type="button" disabled>Stop</button>
+              </div>
+              <div class="divider"></div>
+              <div class="note" id="recStatus">Not recording.</div>
+              <div class="divider"></div>
+              <div class="audioRow" id="recPreviewRow" style="display:none;">
+                <audio id="recPreview" controls></audio>
+                <button class="smallBtn" id="btnDiscardRecording" type="button">Discard</button>
+              </div>
+            </div>
+
+            <!-- One line -->
+            <div class="panel">
+              <h3 id="lineTitle">Write one line</h3>
+              <p id="lineHint">Type the child's words as they said them (no interpretation).</p>
+
+              <label class="note" for="childAge" id="ageLabel">Child age (optional)</label>
+              <input class="input" id="childAge" placeholder="e.g., 3 / 5 / 8" />
+
+              <div style="height:10px"></div>
+
+              <label class="note" for="oneLine" id="oneLineLabel">One line</label>
+              <textarea class="input" id="oneLine" placeholder='e.g., "Big. Cousin. Don’t go."'></textarea>
+            </div>
+
+            <!-- Icons -->
+            <div class="panel">
+              <h3 id="iconsTitle">Optional icons</h3>
+              <p id="iconsHint">For pointing / pre-verbal kids. Tap any that fit.</p>
+
+              <div class="chips" id="chips"></div>
+
+              <div class="divider"></div>
+              <button class="smallBtn" id="btnClearIcons" type="button">Clear</button>
+            </div>
+          </div>
+
+          <div class="saveBar">
+            <div id="saveHint">When ready, save the moment to your local timeline.</div>
+            <button class="btn" id="btnSave" type="button">Save to timeline</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: TIMELINE -->
+      <aside class="card" aria-label="Timeline">
+        <div class="cardInner">
+          <div class="timelineTop">
+            <div>
+              <h2 class="title" id="tlTitle">Timeline</h2>
+              <p class="subtitle" id="tlSub">Same question, different ages. Answers become the artifact.</p>
+            </div>
+            <div class="rightBtns">
+              <button class="btn btnAccent" id="btnExport" type="button">Export notes (JSON)</button>
+              <button class="btn btnDanger" id="btnWipe" type="button">Wipe local data</button>
+            </div>
+          </div>
+
+          <div id="timelineBody"></div>
+
+          <div class="footer" id="footerText">Local-only. No tracking. No uploads. Built for presence-first learning.</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- PARENT MODAL -->
+  <div class="modal" id="parentModal" role="dialog" aria-modal="true" aria-label="Parent layer">
+    <div class="modalCard">
+      <div class="modalHead">
+        <h3 id="parentTitle">Parent Layer</h3>
+        <button class="closeX" id="btnCloseParent" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="modalInner">
+        <p class="note" id="parentIntro">
+          This is optional. Nothing here appears in the child experience. It exists to help you notice patterns without turning the moment into a lesson.
+        </p>
+
+        <div class="parentGrid" style="margin-top:12px;">
+          <div class="panel">
+            <h3 id="obsTitle">What you're observing</h3>
+            <p class="note" id="obsNote">
+              You’re not “teaching scarcity.” You’re noticing what your child already felt.
+            </p>
+            <ul class="list" id="obsList"></ul>
+          </div>
+
+          <div class="panel">
+            <h3 id="askTitle">How to ask without leading</h3>
+            <p class="note" id="askNote">
+              “Without leading” means: don’t offer the categories before they speak. Let their first answer be theirs.
+            </p>
+            <ul class="list" id="askList"></ul>
+          </div>
+
+          <div class="panel">
+            <h3 id="contraTitle">Contrarian prompts (parent-only)</h3>
+            <p class="note" id="contraNote">
+              These are for you, not for the toddler. They preserve the “secrets” without collapsing the spell.
+            </p>
+            <ul class="list" id="contraList"></ul>
+          </div>
+
+          <div class="panel">
+            <h3 id="bridgeTitle">Bridge layer (optional / age-gated)</h3>
+            <p class="note" id="bridgeNote">
+              Your ivory → Bitcoin continuum belongs here later because it’s a different developmental audience.
+            </p>
+
+            <div class="ageGate">
+              <span class="badge" id="gateBadge">Locked</span>
+              <input class="input" id="gateAge" style="max-width:160px" placeholder="Age (e.g., 10)" />
+              <button class="btn btnAccent" id="btnUnlockBridge" type="button">Unlock</button>
+            </div>
+
+            <div class="divider"></div>
+            <div id="bridgeContent" class="note" style="display:none;">
+              <strong>Unlocked (placeholder)</strong><br />
+              This is where you’ll place:
+              <ul class="list" style="margin-top:8px;">
+                <li>Your chronological transcript (ivory → frames → notation → consensus → whitepaper)</li>
+                <li>Short “study room” cards for older kids / parents</li>
+                <li>Nothing in this area changes toddler mode</li>
+              </ul>
+              <div class="divider"></div>
+              <span class="badge">Future chapter/app: “What is a Piano?”</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:6px"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* =========================
+   Story content (EN + ZH)
+   ========================= */
+const STORY = {
+  en: {
+    appTitle: "The Big Piano",
+    storyTitle: "The Big Piano",
+    storySub: "Read together. No lesson. Just the moment.",
+    oneQLabel: "One Question",
+    oneQText: "Why is the big piano special?",
+    oneQHint: "Let your child answer in any way: words, pointing, or silence.",
+    recTitle: "Record the child",
+    recHint: "Press start, then stop. Audio stays on this device only.",
+    lineTitle: "Write one line",
+    lineHint: "Type the child's words as they said them (no interpretation).",
+    ageLabel: "Child age (optional)",
+    oneLineLabel: "One line",
+    iconsTitle: "Optional icons",
+    iconsHint: "For pointing / pre-verbal kids. Tap any that fit.",
+    clear: "Clear",
+    saveHint: "When ready, save the moment to your local timeline.",
+    saveBtn: "Save to timeline",
+    timelineTitle: "Timeline",
+    timelineSub: "Same question, different ages. Answers become the artifact.",
+    exportBtn: "Export notes (JSON)",
+    wipeBtn: "Wipe local data",
+    footer: "Local-only. No tracking. No uploads. Built for presence-first learning.",
+    parentTitle: "Parent Layer",
+    parentIntro: "This is optional. Nothing here appears in the child experience. It exists to help you notice patterns without turning the moment into a lesson.",
+    obsTitle: "What you're observing",
+    obsNote: "You’re not “teaching scarcity.” You’re noticing what your child already felt.",
+    askTitle: "How to ask without leading",
+    askNote: "“Without leading” means: don’t offer the categories before they speak. Let their first answer be theirs.",
+    contraTitle: "Contrarian prompts (parent-only)",
+    contraNote: "These are for you, not for the toddler. They preserve the “secrets” without collapsing the spell.",
+    bridgeTitle: "Bridge layer (optional / age-gated)",
+    bridgeNote: "Your ivory → Bitcoin continuum belongs here later because it’s a different developmental audience.",
+    unlock: "Unlock",
+    locked: "Locked",
+    unlocked: "Unlocked (placeholder)",
+    crumbs: "Story → One Question → Local Timeline",
+    empty: "No saved moments yet. Read the story, ask the question, capture the reply, and save.",
+    recStatusIdle: "Not recording.",
+    recStatusOn: "Recording…",
+    discard: "Discard",
+    start: "Start",
+    stop: "Stop"
+  },
+  zh: {
+    appTitle: "The Big Piano",
+    storyTitle: "《大钢琴》",
+    storySub: "一起读。没有道理。只有当下。",
+    oneQLabel: "一个问题",
+    oneQText: "为什么大钢琴很特别？",
+    oneQHint: "让孩子用任何方式回答：说话、指认、或沉默。",
+    recTitle: "录下孩子的声音",
+    recHint: "点击开始，再点击停止。录音仅保存在本设备。",
+    lineTitle: "写一句话",
+    lineHint: "照孩子说的原话写下来（不要解读）。",
+    ageLabel: "孩子年龄（可选）",
+    oneLineLabel: "一句话",
+    iconsTitle: "可选图标",
+    iconsHint: "适合指认或尚未能言语的孩子。点选适合的。",
+    clear: "Clear",
+    saveHint: "准备好后，保存这一刻到本地时间线。",
+    saveBtn: "保存到时间线",
+    timelineTitle: "时间线",
+    timelineSub: "同一个问题，不同的年龄。答案成为记忆。",
+    exportBtn: "导出笔记 (JSON)",
+    wipeBtn: "清除本地数据",
+    footer: "仅本地。无追踪。无上传。为“在场式学习”而建。",
+    parentTitle: "Parent",
+    parentIntro: "可选。这里的内容不会出现在孩子界面。它只帮助你“看见”，而不把当下变成说教。",
+    obsTitle: "你在观察什么",
+    obsNote: "你不是在“教稀缺”。你在看见孩子已经感受到的东西。",
+    askTitle: "如何提问而不引导",
+    askNote: "“不引导”就是：在他们开口前，不把你的分类塞给他们。先让第一句话属于孩子。",
+    contraTitle: "反直觉提示（仅家长）",
+    contraNote: "这些给你思考，不给幼儿。它们保留“秘密”，但不打破魔法。",
+    bridgeTitle: "桥接层（可选 / 年龄门槛）",
+    bridgeNote: "你的“象牙 → 比特币”连续谱应放在这里，因为这是不同的发展阶段受众。",
+    unlock: "Unlock",
+    locked: "Locked",
+    unlocked: "Unlocked (placeholder)",
+    crumbs: "故事 → 一个问题 → 本地时间线",
+    empty: "还没有保存的时刻。读故事、问问题、记录回答、然后保存。",
+    recStatusIdle: "未录音。",
+    recStatusOn: "录音中…",
+    discard: "Discard",
+    start: "Start",
+    stop: "Stop"
+  }
+};
+
+// Use your provided story text verbatim
+const STORY_TEXT = {
+  en: `My three-year-old has an electronic piano keyboard. It's theirs - always there, sometimes played, sometimes ignored. It makes cheerful plinks and plonks. They can bash away at it whenever they fancy. It's portable and has built-in 8 tones, 8 rhythms, 11 demos, 4 percussions, 4 animal sounds, volume and tempo control. The 37-key kid piano is an excellent musical toy they enjoy. Sometimes they even leave it on, and a happy melody plays in the background whilst our toddler is reading a book with their mother. Regardless, it's just... there.
+
+I have a piano too. A 37-key weighted one, made of wood - about a quarter the size of a proper piano. This digital piano features 37 keys and 3 full octave scales. It was my ideal introduction to music. I bought it to practise when I was taking lessons. Now I share it with my toddler because I want them to get a sense of something bigger, something with proper weighted keys.
+
+Yesterday, my toddler played on my piano. They didn't look at the keys - they looked over their shoulder at me instead. Then at their mother, who was standing there with her mouth wide open, shocked. The tune they were improvising sounded amazing. Then, our toddler slowly turned forward to face the piano, still not looking at the keys. They paused, turned back towards me, smiled, and applauded. Of course I applauded too. So did their mother. It was magnificent. I ran over to them and picked them up, gave them lots of kisses and twirled them around in the air. They giggled with excitement, laughed and smiled at their mother.
+
+Later that day I went to my sister's house so my toddler could play with their older cousin.
+
+My sister has a full-sized piano in her study.
+
+My toddler walked up to it. I pressed the keys and as the sound reverberated around the study, I said "This is a big piano" and my toddler repeated "Big Piano". It was rare for them to see a big piano.
+
+Their cousin lifted them onto the stool, but that wasn't enough. My toddler wanted their cousin to sit next to them. So the cousin sat down and started playing, and my toddler joined in. The glorious sound filled the study. They played a duet. Of course my toddler's notes were not as fluid and in tune as their cousin's, but my toddler didn't know that. They were both having so much fun. The music was so good that it drew my toddler's grandmother into the study. She stood at the door, marvelling at what she was seeing and hearing. My toddler raised their hand up in the air and offered their palm for a high five, and their grandmother patted their hand with joy.
+
+Then, their cousin paused for a second and used one finger to play a note, and my toddler copied them and used one finger to play a note. They did this about six times in time with each other - first their cousin, then my toddler. Then finally, they both looked at each other, no fingers on the keys, and both laughed. It was a perfect ending and we applauded and cheered loudly. Grandmother offered her palm up for a high five, and my toddler slapped it with glee.
+
+It was time for us to go.
+
+I picked up my toddler and walked them into the hallway towards their buggy, but they twisted, turned and wriggled in my arms trying to get free, and they said "Big Piano, The big Piano."
+
+They didn't want to leave. They pointed in the direction of the study. They wanted to play with the big piano. They wanted to hear the magnificent full sound of the big piano.
+
+Grandmother came into the hallway to see what the commotion was about. My toddler was crying, so grandmother took them from me, comforted them and placed them on the ground. My toddler ran towards the study, saying "Big Piano!"
+
+"Now, this big piano is the real deal," said Grandmother to the toddler. "It's not the sound of a small digital piano that you have, or the 37-key piano that your father has. The big piano is exactly that - big. It sounds different. The keys have a different feel. My mother gave it to me. It has a lot of history. My mother used to play the big piano in an opera house in Vienna, then she shipped it to me, and I gave it to your auntie because she was the only one in the family with space big enough to have the big piano."
+
+And I realised that In my toddler's world, the big piano was scarce. Special. Unique.
+
+So, they didn't want to leave.
+
+My toddler sat proudly on the stool next to their cousin and they played the big piano. I could see my toddler was drawn to the sound of the big piano and the smooth feel of the keys.
+
+Eventually, after a lot more crying and fighting to get out of my hands, my toddler allowed me to put them in the buggy. They were still asking for the big piano. They still didn't want to leave. But as I pushed the buggy away from my sister's house, I found some music from Mozart on my phone and placed it on top of the buggy's head cover.
+
+Mozart's piano playing made my toddler drift off to sleep.`,
+  zh: `我三岁的孩子有一架自己的电子琴。它总在那儿，有时被弹响，有时被遗忘。琴键能发出叮叮咚咚的欢快声响。孩子想敲就敲，想玩就玩。这架37键的小琴便携有趣，里面藏着各种声音、节奏和小惊喜，是他们心爱的音乐玩具。有时他们甚至不关它，任一首欢快的曲子轻轻流淌，成为他们依偎在妈妈怀里看书的背景音。它就在那里，触手可及。
+
+我也有一架琴。一架37键的配重键盘，木质的，体积大约只有标准钢琴的四分之一。它曾是我音乐之旅的理想开端，是我为了上课练习而买的。现在，我让它与我的孩子共享，因为我希望他能触摸到更"真实"的东西——那种有分量、有回应的琴键。
+
+昨天，孩子在我的琴上弹奏。他没有看琴键，却回过头来看我。然后又看向他的妈妈——她正站在那儿，惊讶得张大了嘴。那段即兴的旋律，听起来如此美妙。接着，小家伙慢慢转回身，面向钢琴，目光依然没有落在琴键上。他停顿了一下，再次转向我，笑了，然后为自己鼓起掌来。我当然也鼓掌了。妈妈也是。那一刻，精彩极了。我跑过去抱起他，亲了又亲，让他在空中转圈。他咯咯地笑，兴奋不已，冲着妈妈绽开笑脸。
+
+那天晚些时候，我们去了姐姐家，让孩子和他的表哥一起玩。
+
+姐姐的书房里，立着一架真正的三角钢琴。
+
+孩子走向它。我按下一个琴键，浑厚的声音在书房里回荡。"这是大钢琴。"我说。孩子跟着重复："大钢琴。"他很少见到这么大的钢琴。
+
+表哥把他抱上琴凳，但这还不够。我的孩子拍拍身旁的空位，示意表哥也坐下。于是，表哥坐定，开始演奏，我的孩子也加入了进来。辉煌的乐声充满了整个房间。他们完成了一段二重奏。当然，孩子的音符不如表哥的流畅和谐，但他并不知道。他们只是玩得非常、非常开心。美妙的琴声甚至把孩子的奶奶也引到了书房门口。她站在那里，眼中满是惊叹。我的孩子高高举起手，掌心向上，奶奶会意，带着喜悦轻轻拍了拍他的小手。
+
+接着，表哥停顿了一下，用一根手指按下一个琴键。我的孩子看见了，也学着用一根手指按下一个琴键。他们就这样，你一下，我一下，默契地重复了大约五六次。最后，两人同时望向对方，手指离开琴键，一起大笑起来。这真是完美的收尾，我们热烈地鼓掌、喝彩。奶奶再次伸出手掌，孩子开心地用力击了上去。
+
+该回家了。
+
+我抱起孩子，走向走廊里的婴儿车。可他在我怀里扭来扭去，像条想挣脱的小鱼，嘴里不停说着："大钢琴，要大钢琴。"
+
+他不想走。小手指着书房的方向。他想再去弹那架大钢琴，想再听听它发出的、那种饱满又宏大的声音。
+
+奶奶闻声来到走廊。孩子哭了起来。奶奶从我手中接过他，轻声安慰，把他放回地上。刚一落地，小家伙就跑向书房，嘴里喊着："大钢琴！"
+
+"这架大钢琴啊，可是个真正的宝贝。"奶奶对孩子，也像是对我们说。"它发出的声音，和你那小电子琴不一样，也和爸爸那架37键的琴不一样。大钢琴就是'大'，声音不同，琴键的触感也不同。这是我母亲留给我的，它有很多故事。我母亲曾经在维也纳的歌剧院里弹奏它，后来它远渡重洋来到我身边。现在，我把它送给了你姨妈，因为只有她家，才放得下这样一架'大钢琴'。"
+
+我忽然意识到，在我孩子的世界里，这架大钢琴是稀缺的。是特别的。是独一无二的。
+
+所以，他舍不得离开。
+
+我的孩子骄傲地重新坐上琴凳，紧挨着表哥。我能看出，他被大钢琴那浑厚的音色和丝滑的琴键深深吸引住了。
+
+最终，在又一番哭泣和挣扎之后，他总算允许我把他放进婴儿车。但他依然在问："大钢琴呢？"他依然不想走。当我推着婴儿车缓缓离开姐姐家时，我在手机上找出莫扎特的钢琴曲，把手机轻轻放在婴儿车的遮阳篷上。
+
+莫扎特的琴声流淌出来，我的孩子，在乐声中渐渐沉入了梦乡。`
+};
+
+const ICONS = {
+  en: [
+    "It’s big",
+    "It’s loud",
+    "I can’t have it every day",
+    "Cousin played with me",
+    "Grandma came",
+    "It felt different",
+    "I didn’t want to leave"
+  ],
+  zh: [
+    "它很大",
+    "它很响",
+    "不是每天都有",
+    "和表哥一起",
+    "奶奶来了",
+    "感觉不一样",
+    "我不想走"
+  ]
+};
+
+const PARENT_CONTENT = {
+  en: {
+    obs: [
+      "Abundance → limitation (what’s always there vs what’s time-limited)",
+      "Object → experience (they wanted to stay, not just touch it)",
+      "Control → participation (they needed someone else beside them)",
+      "Quality signals (sound, weight, feel) before concepts",
+      "Social amplification (the duet made it bigger than solo play)"
+    ],
+    ask: [
+      "Ask once. Then wait longer than feels comfortable.",
+      "Echo their exact words back: “You said ‘big’.” (No additions.)",
+      "If they’re silent: accept silence. You can write: “silent.”",
+      "If you must follow up, use open prompts: “Tell me more.”",
+      "Only after they answer, you may offer icons for pointing."
+    ],
+    contra: [
+      "If we bought one for home, would it stay special?",
+      "Is it special because it’s rare—or because it can’t be replaced in that moment?",
+      "Did they value the piano… or the people beside it?",
+      "What made them resist leaving: sound, touch, story, or access?",
+      "What would make a moment ‘bigger than itself’ in your own family?"
+    ]
+  },
+  zh: {
+    obs: [
+      "丰裕 → 限制（一直在 vs 有时才有）",
+      "物件 → 体验（想留下来，而不是碰一下就走）",
+      "控制 → 参与（需要别人坐在身旁）",
+      "质量信号（音色、重量、触感）先于概念",
+      "社交放大（二重奏让它比独奏更“大”）"
+    ],
+    ask: [
+      "只问一次，然后比你想象更久地等待。",
+      "复述他们的原话：你说“很大”。（不加自己的解释）",
+      "沉默也算回答：可以写“沉默”。",
+      "如果要追问，用开放句：再说一点？",
+      "只有在他们回答后，才用图标帮助指认。"
+    ],
+    contra: [
+      "如果家里也有一架，它还会特别吗？",
+      "它特别是因为稀有，还是因为那一刻不可替代？",
+      "他们喜欢的是钢琴，还是旁边的人？",
+      "不想走的原因是什么：声音、触感、故事、还是“不能随时拥有”？",
+      "你们家里有什么“比它本身更大”的时刻？"
+    ]
+  }
+};
+
+/* =========================
+   Local storage + IndexedDB
+   ========================= */
+const LS_KEY = "bigpiano_timeline_v1";
+const DB_NAME = "bigpiano_audio_v1";
+const DB_STORE = "clips";
+
+function uid(){
+  return Math.random().toString(16).slice(2) + "-" + Date.now().toString(16);
+}
+
+function loadTimeline(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }catch{
+    return [];
+  }
+}
+
+function saveTimeline(list){
+  localStorage.setItem(LS_KEY, JSON.stringify(list));
+}
+
+function download(filename, text){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], {type:"application/json"}));
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+/* IndexedDB helpers */
+function openDB(){
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if(!db.objectStoreNames.contains(DB_STORE)){
+        db.createObjectStore(DB_STORE);
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function putAudio(id, blob){
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).put(blob, id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function getAudio(id){
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readonly");
+    const req = tx.objectStore(DB_STORE).get(id);
+    req.onsuccess = () => resolve(req.result || null);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function delAudio(id){
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).delete(id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function wipeAllAudio(){
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).clear();
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+/* =========================
+   UI state
+   ========================= */
+let LANG = "en";
+let selectedIcons = new Set();
+let timeline = loadTimeline();
+
+let mediaRecorder = null;
+let recordedChunks = [];
+let pendingAudioBlob = null;
+
+const $ = (id) => document.getElementById(id);
+
+/* =========================
+   Render
+   ========================= */
+function setLanguage(lang){
+  LANG = lang;
+  $("btnEN").classList.toggle("on", lang === "en");
+  $("btnZH").classList.toggle("on", lang === "zh");
+
+  const t = STORY[lang];
+  $("appTitle").textContent = t.appTitle;
+  $("crumbs").textContent = t.crumbs;
+
+  $("storyTitle").textContent = t.storyTitle;
+  $("storySub").textContent = t.storySub;
+  $("storyText").textContent = STORY_TEXT[lang];
+
+  $("oneQLabel").textContent = t.oneQLabel;
+  $("oneQText").textContent = t.oneQText;
+  $("oneQHint").textContent = t.oneQHint;
+
+  $("recTitle").textContent = t.recTitle;
+  $("recHint").textContent = t.recHint;
+
+  $("lineTitle").textContent = t.lineTitle;
+  $("lineHint").textContent = t.lineHint;
+  $("ageLabel").textContent = t.ageLabel;
+  $("oneLineLabel").textContent = t.oneLineLabel;
+
+  $("iconsTitle").textContent = t.iconsTitle;
+  $("iconsHint").textContent = t.iconsHint;
+  $("btnClearIcons").textContent = t.clear;
+
+  $("saveHint").textContent = t.saveHint;
+  $("btnSave").textContent = t.saveBtn;
+
+  $("tlTitle").textContent = t.timelineTitle;
+  $("tlSub").textContent = t.timelineSub;
+  $("btnExport").textContent = t.exportBtn;
+  $("btnWipe").textContent = t.wipeBtn;
+  $("footerText").textContent = t.footer;
+
+  // Recording buttons
+  $("btnRecStart").textContent = t.start;
+  $("btnRecStop").textContent = t.stop;
+  $("btnDiscardRecording").textContent = t.discard;
+
+  // Parent modal
+  $("parentTitle").textContent = t.parentTitle;
+  $("parentIntro").textContent = t.parentIntro;
+  $("obsTitle").textContent = t.obsTitle;
+  $("obsNote").textContent = t.obsNote;
+  $("askTitle").textContent = t.askTitle;
+  $("askNote").textContent = t.askNote;
+  $("contraTitle").textContent = t.contraTitle;
+  $("contraNote").textContent = t.contraNote;
+  $("bridgeTitle").textContent = t.bridgeTitle;
+  $("bridgeNote").textContent = t.bridgeNote;
+
+  // Gate badge text
+  $("gateBadge").textContent = (isBridgeUnlocked() ? t.unlocked : t.locked);
+
+  // Icons
+  renderIcons();
+  renderParentLists();
+  renderTimeline();
+}
+
+function renderIcons(){
+  const wrap = $("chips");
+  wrap.innerHTML = "";
+  const items = ICONS[LANG];
+
+  items.forEach((label) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chip" + (selectedIcons.has(label) ? " on" : "");
+    btn.textContent = label;
+    btn.onclick = () => {
+      if(selectedIcons.has(label)) selectedIcons.delete(label);
+      else selectedIcons.add(label);
+      renderIcons();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function renderParentLists(){
+  const content = PARENT_CONTENT[LANG];
+
+  $("obsList").innerHTML = content.obs.map(x => `<li>${escapeHtml(x)}</li>`).join("");
+  $("askList").innerHTML = content.ask.map(x => `<li>${escapeHtml(x)}</li>`).join("");
+  $("contraList").innerHTML = content.contra.map(x => `<li>${escapeHtml(x)}</li>`).join("");
+}
+
+async function renderTimeline(){
+  const body = $("timelineBody");
+  if(!timeline.length){
+    body.innerHTML = `<div class="empty">${escapeHtml(STORY[LANG].empty)}</div>`;
+    return;
+  }
+
+  // Newest first
+  const sorted = [...timeline].sort((a,b) => b.ts - a.ts);
+
+  body.innerHTML = "";
+  for(const item of sorted){
+    const el = document.createElement("div");
+    el.className = "entry";
+
+    const date = new Date(item.ts);
+    const dateStr = date.toLocaleString(undefined, {year:"numeric", month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit"});
+
+    const iconsHtml = (item.icons && item.icons.length)
+      ? `<div class="entryChips">${item.icons.map(i => `<span class="miniChip">${escapeHtml(i)}</span>`).join("")}</div>`
+      : "";
+
+    const audioId = item.audioId || null;
+
+    el.innerHTML = `
+      <div class="entryHead">
+        <div class="entryMeta">
+          <span>${escapeHtml(dateStr)}</span>
+          ${item.age ? `<span>• ${escapeHtml(item.age)}</span>` : ""}
+        </div>
+        <button class="smallBtn" data-del="${escapeHtml(item.id)}" type="button">Delete</button>
+      </div>
+
+      ${item.line ? `<p class="entryLine">${escapeHtml(item.line)}</p>` : `<p class="entryLine" style="color: rgba(255,255,255,.55)">(no note)</p>`}
+
+      ${iconsHtml}
+
+      <div class="audioRow" id="audioRow_${escapeHtml(item.id)}">
+        ${audioId ? `<span class="badge">Audio</span>` : `<span class="badge">No audio</span>`}
+      </div>
+    `;
+
+    body.appendChild(el);
+
+    // Delete handler
+    el.querySelector(`[data-del="${item.id}"]`).onclick = async () => {
+      if(!confirm("Delete this moment?")) return;
+      // remove audio if present
+      if(item.audioId) await delAudio(item.audioId);
+      timeline = timeline.filter(x => x.id !== item.id);
+      saveTimeline(timeline);
+      renderTimeline();
+    };
+
+    // Load and attach audio player if exists
+    if(audioId){
+      const row = el.querySelector(`#audioRow_${CSS.escape(item.id)}`);
+      const blob = await getAudio(audioId);
+      if(blob){
+        const url = URL.createObjectURL(blob);
+        const audio = document.createElement("audio");
+        audio.controls = true;
+        audio.src = url;
+        row.appendChild(audio);
+      }else{
+        const missing = document.createElement("span");
+        missing.className = "badge";
+        missing.textContent = "Audio missing";
+        row.appendChild(missing);
+      }
+    }
+  }
+}
+
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+/* =========================
+   Recording
+   ========================= */
+async function startRecording(){
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    recordedChunks = [];
+    pendingAudioBlob = null;
+
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = (e) => {
+      if(e.data && e.data.size > 0) recordedChunks.push(e.data);
+    };
+    mediaRecorder.onstop = () => {
+      // stop tracks
+      stream.getTracks().forEach(t => t.stop());
+      pendingAudioBlob = new Blob(recordedChunks, { type: "audio/webm" });
+
+      const url = URL.createObjectURL(pendingAudioBlob);
+      $("recPreview").src = url;
+      $("recPreviewRow").style.display = "flex";
+
+      $("recStatus").textContent = STORY[LANG].recStatusIdle;
+    };
+
+    mediaRecorder.start();
+    $("btnRecStart").disabled = true;
+    $("btnRecStop").disabled = false;
+    $("recStatus").textContent = STORY[LANG].recStatusOn;
+    $("recPreviewRow").style.display = "none";
+  }catch(err){
+    alert("Microphone permission is required to record audio.");
+    console.error(err);
+  }
+}
+
+function stopRecording(){
+  if(mediaRecorder && mediaRecorder.state !== "inactive"){
+    mediaRecorder.stop();
+  }
+  $("btnRecStart").disabled = false;
+  $("btnRecStop").disabled = true;
+}
+
+/* =========================
+   Save moment
+   ========================= */
+async function saveMoment(){
+  const age = $("childAge").value.trim();
+  const line = $("oneLine").value.trim();
+  const icons = Array.from(selectedIcons);
+
+  const hasAudio = !!pendingAudioBlob;
+  const hasAnything = hasAudio || line.length || icons.length;
+
+  if(!hasAnything){
+    alert("Add a recording, a note, or select an icon before saving.");
+    return;
+  }
+
+  const id = uid();
+  let audioId = null;
+
+  if(pendingAudioBlob){
+    audioId = "a_" + uid();
+    await putAudio(audioId, pendingAudioBlob);
+  }
+
+  const entry = {
+    id,
+    ts: Date.now(),
+    age: age || "",
+    line: line || "",
+    icons,
+    audioId
+  };
+
+  timeline.push(entry);
+  saveTimeline(timeline);
+
+  // Reset input state (keep story untouched)
+  $("childAge").value = "";
+  $("oneLine").value = "";
+  selectedIcons.clear();
+  renderIcons();
+
+  pendingAudioBlob = null;
+  $("recPreviewRow").style.display = "none";
+  $("recPreview").src = "";
+
+  renderTimeline();
+}
+
+/* =========================
+   Export / Wipe
+   ========================= */
+function exportNotes(){
+  const payload = {
+    app: "The Big Piano",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    notes: timeline
+      .map(({id, ts, age, line, icons}) => ({ id, ts, age, line, icons }))
+      .sort((a,b)=>a.ts-b.ts)
+  };
+  download("big-piano-notes.json", JSON.stringify(payload, null, 2));
+}
+
+async function wipeAll(){
+  if(!confirm("This will delete all local notes and recordings from this device. Continue?")) return;
+  timeline = [];
+  saveTimeline(timeline);
+  await wipeAllAudio();
+  renderTimeline();
+
+  $("childAge").value = "";
+  $("oneLine").value = "";
+  selectedIcons.clear();
+  renderIcons();
+  pendingAudioBlob = null;
+  $("recPreviewRow").style.display = "none";
+  $("recPreview").src = "";
+}
+
+/* =========================
+   Parent modal + Bridge gate
+   ========================= */
+function openParent(){
+  $("parentModal").classList.add("on");
+}
+function closeParent(){
+  $("parentModal").classList.remove("on");
+}
+
+function isBridgeUnlocked(){
+  return localStorage.getItem("bigpiano_bridge_unlocked_v1") === "1";
+}
+function setBridgeUnlocked(on){
+  localStorage.setItem("bigpiano_bridge_unlocked_v1", on ? "1" : "0");
+}
+
+function refreshBridgeUI(){
+  const unlocked = isBridgeUnlocked();
+  $("bridgeContent").style.display = unlocked ? "block" : "none";
+  $("gateBadge").textContent = unlocked ? STORY[LANG].unlocked : STORY[LANG].locked;
+}
+
+function unlockBridge(){
+  const raw = $("gateAge").value.trim();
+  const n = Number(raw);
+  if(!raw || !Number.isFinite(n)){
+    alert("Enter an age number (e.g., 10).");
+    return;
+  }
+  // Simple gate: 8+
+  if(n < 8){
+    alert("Bridge is intended for later (8+).");
+    return;
+  }
+  setBridgeUnlocked(true);
+  refreshBridgeUI();
+}
+
+/* =========================
+   Wire up events
+   ========================= */
+$("btnEN").onclick = () => setLanguage("en");
+$("btnZH").onclick = () => setLanguage("zh");
+
+$("btnClearIcons").onclick = () => { selectedIcons.clear(); renderIcons(); };
+
+$("btnRecStart").onclick = startRecording;
+$("btnRecStop").onclick = stopRecording;
+
+$("btnDiscardRecording").onclick = () => {
+  pendingAudioBlob = null;
+  recordedChunks = [];
+  $("recPreviewRow").style.display = "none";
+  $("recPreview").src = "";
+};
+
+$("btnSave").onclick = saveMoment;
+
+$("btnExport").onclick = exportNotes;
+$("btnWipe").onclick = wipeAll;
+
+$("btnParent").onclick = () => { openParent(); refreshBridgeUI(); };
+$("btnCloseParent").onclick = closeParent;
+$("parentModal").addEventListener("click", (e) => {
+  if(e.target === $("parentModal")) closeParent();
+});
+
+$("btnUnlockBridge").onclick = unlockBridge;
+
+/* Initial render */
+$("recStatus").textContent = STORY.en.recStatusIdle;
+setLanguage("en");
+refreshBridgeUI();
+</script>
+</body>
+</html>
+```
+
+---
+
+## 2) Notes about privacy (matches your “MyNameIsApp” stance)
+
+* **No analytics. No network calls. No uploads.**
+* Timeline notes are stored in **localStorage** (device-only).
+* Audio recordings are stored in **IndexedDB** (device-only).
+* **Export JSON excludes audio** by design (parents can keep it purely as an on-device “resonance vault”).
+
+---
+
+## 3) If you want it even closer to your screenshot (quick tweaks)
+
+Tell me which you want, and I’ll adjust the code accordingly (without changing the core architecture):
+
+* Make **“Parent”** open only via **long-press** (instead of a click)
+* Make the timeline show **Story → One Question → Local Timeline** as clickable “tabs”
+* Add “tap an answer” icons that are **image-based** rather than text chips
+* Make the Chinese/English typography a bit more “book-like” (line spacing + font fallbacks)
+
+If you paste your Replit file structure (or confirm it’s single `index.html`), I’ll also give you the exact deploy-safe `manifest.json` + `robots.txt` + `sitemap.xml` pattern you used on *MyNameIsApp*, adapted for this.

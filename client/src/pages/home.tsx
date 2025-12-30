@@ -9,8 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import coverImage from "@assets/image-147_1767056560181.jpg";
+
+const SPLASH_SEEN_KEY = "bigpiano_splash_seen";
 
 export default function Home() {
+  const [showSplash, setShowSplash] = useState(() => {
+    return !localStorage.getItem(SPLASH_SEEN_KEY);
+  });
+  const [splashFading, setSplashFading] = useState(false);
   const [lang, setLang] = useState<Lang>("en");
   const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set());
   const [childAge, setChildAge] = useState("");
@@ -40,6 +47,23 @@ export default function Home() {
   useEffect(() => {
     setEntries(loadEntries());
   }, []);
+
+  useEffect(() => {
+    if (showSplash) {
+      const timer = setTimeout(() => {
+        dismissSplash();
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSplash]);
+
+  const dismissSplash = () => {
+    setSplashFading(true);
+    setTimeout(() => {
+      setShowSplash(false);
+      localStorage.setItem(SPLASH_SEEN_KEY, "1");
+    }, 500);
+  };
 
   const showToast = (msg: string) => {
     setToast(msg);
@@ -213,6 +237,73 @@ export default function Home() {
                    radial-gradient(900px 500px at 80% 10%, rgba(52,211,153,.06), transparent 60%),
                    #0b0c10`
     }}>
+      {/* Splash/Cover Page */}
+      {showSplash && (
+        <div 
+          className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500 ease-out ${
+            splashFading ? "opacity-0" : "opacity-100"
+          }`}
+          style={{
+            backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.6) 100%), url(${coverImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          data-testid="splash-screen"
+        >
+          <div className="text-center px-6">
+            <h1 
+              className="text-5xl md:text-7xl font-serif text-amber-100 tracking-wide"
+              style={{ 
+                fontFamily: "'Georgia', 'Times New Roman', serif",
+                textShadow: "0 4px 20px rgba(0,0,0,0.7)"
+              }}
+            >
+              《大钢琴》
+            </h1>
+            <h2 
+              className="text-3xl md:text-5xl font-serif text-amber-100/90 mt-3 tracking-wider"
+              style={{ 
+                fontFamily: "'Georgia', 'Times New Roman', serif",
+                textShadow: "0 4px 20px rgba(0,0,0,0.7)"
+              }}
+            >
+              The Big Piano
+            </h2>
+            <p className="mt-8 text-amber-100/60 text-sm tracking-widest uppercase">
+              A story about what makes things special
+            </p>
+          </div>
+          
+          <button
+            onClick={dismissSplash}
+            data-testid="button-skip-splash"
+            className="absolute bottom-8 right-8 px-4 py-2 text-sm text-amber-100/70 hover:text-amber-100 transition-colors rounded-full border border-amber-100/30 hover:border-amber-100/50"
+            style={{ backdropFilter: "blur(4px)", background: "rgba(0,0,0,0.3)" }}
+          >
+            Skip
+          </button>
+          
+          <div className="absolute bottom-8 left-8 flex items-center gap-2">
+            <div className="w-8 h-1 bg-amber-100/40 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-amber-100/80 rounded-full"
+                style={{
+                  animation: "splashProgress 3s linear forwards"
+                }}
+              />
+            </div>
+            <span className="text-xs text-amber-100/50">3s</span>
+          </div>
+          
+          <style>{`
+            @keyframes splashProgress {
+              from { width: 0%; }
+              to { width: 100%; }
+            }
+          `}</style>
+        </div>
+      )}
+
       {/* Header */}
       <header className="sticky top-0 z-10 flex items-center justify-between gap-4 px-4 py-3 border-b border-white/10" 
               style={{ background: "rgba(11,12,16,.7)", backdropFilter: "blur(10px)" }}>
