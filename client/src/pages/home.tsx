@@ -244,24 +244,55 @@ export default function Home() {
 
   const toggleMusic = async () => {
     try {
-      if (!musicAudioRef.current) {
-        musicAudioRef.current = new Audio(CLASSICAL_TRACKS[currentTrack].url);
+      if (!musicAudioRef.current || musicAudioRef.current.src !== CLASSICAL_TRACKS[currentTrack].url) {
+        // Clean up old audio if exists
+        if (musicAudioRef.current) {
+          musicAudioRef.current.pause();
+          musicAudioRef.current.src = "";
+        }
+        
+        // Create new audio element
+        musicAudioRef.current = new Audio();
+        musicAudioRef.current.crossOrigin = "anonymous";
+        musicAudioRef.current.src = CLASSICAL_TRACKS[currentTrack].url;
         musicAudioRef.current.loop = true;
         musicAudioRef.current.volume = 0.4;
+        musicAudioRef.current.preload = "auto";
+        
         musicAudioRef.current.onended = () => setMusicPlaying(false);
         musicAudioRef.current.onerror = (e) => {
           console.error("Audio playback error:", e);
+          console.error("Failed URL:", CLASSICAL_TRACKS[currentTrack].url);
           setMusicPlaying(false);
           showToast(lang === "zh" ? "音频加载失败" : "Audio failed to load");
         };
+        
+        musicAudioRef.current.onloadeddata = () => {
+          console.log("Audio loaded successfully:", CLASSICAL_TRACKS[currentTrack].title);
+        };
+        
+        // Load the audio
+        musicAudioRef.current.load();
       }
       
       if (musicPlaying) {
         musicAudioRef.current.pause();
         setMusicPlaying(false);
       } else {
-        await musicAudioRef.current.play();
-        setMusicPlaying(true);
+        // Attempt to play
+        const playPromise = musicAudioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log("Playing:", CLASSICAL_TRACKS[currentTrack].title);
+              setMusicPlaying(true);
+            })
+            .catch((err) => {
+              console.error("Play failed:", err);
+              setMusicPlaying(false);
+              showToast(lang === "zh" ? "播放失败，请重试" : "Playback failed, please try again");
+            });
+        }
       }
     } catch (err) {
       console.error("Music playback error:", err);
