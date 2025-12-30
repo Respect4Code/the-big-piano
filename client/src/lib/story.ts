@@ -25,6 +25,35 @@ export interface StoryContent {
   parentGateText: string;
   unlockBtn: string;
   noNote: string;
+  parentObservingTitle: string;
+  parentInstrument: string;
+  parentAccess: string;
+  parentAttachment: string;
+  parentToyPiano: string;
+  parentToyAccess: string;
+  parentToyAttachment: string;
+  parent37Key: string;
+  parent37Access: string;
+  parent37Attachment: string;
+  parentBigPiano: string;
+  parentBigAccess: string;
+  parentBigAttachment: string;
+  parentKeyPoint: string;
+  parentAskingTitle: string;
+  parentAskNeutral: string;
+  parentAskReflect: string;
+  parentAskStuck: string;
+  parentAskAvoid: string;
+  parentContrarianTitle: string;
+  parentContrarian1: string;
+  parentContrarian2: string;
+  parentContrarian3: string;
+  parentContrarian4: string;
+  parentBridgeTitle: string;
+  parentBridgeText: string;
+  parentBridgePlaceholder: string;
+  parentSettingsTitle: string;
+  parentSetPinBtn: string;
 }
 
 export const COPY: Record<Lang, StoryContent> = {
@@ -53,6 +82,35 @@ export const COPY: Record<Lang, StoryContent> = {
     parentGateText: "This area is for adults. Enter your PIN to continue.",
     unlockBtn: "Unlock",
     noNote: "(No note)",
+    parentObservingTitle: "What you're observing (the three-piano ladder)",
+    parentInstrument: "Instrument",
+    parentAccess: "Access",
+    parentAttachment: "Attachment signal",
+    parentToyPiano: "Toy piano",
+    parentToyAccess: "Always there",
+    parentToyAttachment: "Often discarded easily",
+    parent37Key: "37-key weighted (yours)",
+    parent37Access: "Shared / permission",
+    parent37Attachment: "Played with intention; looks for approval",
+    parentBigPiano: "Big piano",
+    parentBigAccess: "Rare / time-limited / socially mediated",
+    parentBigAttachment: "Resists leaving; wants continuity and co-presence",
+    parentKeyPoint: "The key data point is not \"scarcity as a fact.\" It is the emotional signal: \"I don't want to leave.\" That is value formation in the wild.",
+    parentAskingTitle: "How to ask without leading",
+    parentAskNeutral: "Neutral: \"Why was it special?\" \"What do you remember?\"",
+    parentAskReflect: "Reflect: \"You really didn't want to leave, did you?\"",
+    parentAskStuck: "If stuck: \"Was it the sound, or who was there?\"",
+    parentAskAvoid: "Avoid: \"Because it's rare, right?\" (that answers it for them)",
+    parentContrarianTitle: "Contrarian prompts (parent-only, optional)",
+    parentContrarian1: "\"If we had a big piano at home, would it still feel special?\"",
+    parentContrarian2: "\"Was it special because it was big — or because cousin joined?\"",
+    parentContrarian3: "\"Was the best part the sound, or the moment?\"",
+    parentContrarian4: "\"What changed when grandma came to the door?\"",
+    parentBridgeTitle: "Bridge layer: \"What is a piano?\" (later)",
+    parentBridgeText: "This is where your next chapter lives: ivory → ebony → strings → constraints → innovation → notation as shared interpretability → decentralised trust → the Bitcoin whitepaper continuum.",
+    parentBridgePlaceholder: "MVP ships without this. When you add it, store it locally as a \"Study Room\" artifact behind the parent layer.",
+    parentSettingsTitle: "Parent settings",
+    parentSetPinBtn: "Set PIN",
   },
   zh: {
     storyTitle: "《大钢琴》",
@@ -79,6 +137,35 @@ export const COPY: Record<Lang, StoryContent> = {
     parentGateText: "此区域仅限成人访问。请输入PIN码继续。",
     unlockBtn: "解锁",
     noNote: "（未填写文字）",
+    parentObservingTitle: "您所观察的（三钢琴阶梯）",
+    parentInstrument: "乐器",
+    parentAccess: "接触方式",
+    parentAttachment: "依恋信号",
+    parentToyPiano: "玩具钢琴",
+    parentToyAccess: "始终在场",
+    parentToyAttachment: "常被轻易放下",
+    parent37Key: "37键配重琴（你的）",
+    parent37Access: "共享 / 需许可",
+    parent37Attachment: "有意识地弹奏；寻求认可",
+    parentBigPiano: "大钢琴",
+    parentBigAccess: "稀有 / 限时 / 需社交媒介",
+    parentBigAttachment: "抗拒离开；渴望延续与共同在场",
+    parentKeyPoint: "关键数据点不是"稀缺性这一事实"，而是情感信号："我不想离开。" 这就是价值在真实场景中的形成。",
+    parentAskingTitle: "如何提问而不引导",
+    parentAskNeutral: "中性："为什么它很特别？" "你记得什么？"",
+    parentAskReflect: "反映："你真的很不想离开，对吧？"",
+    parentAskStuck: "如果卡住："是因为声音，还是因为谁在那里？"",
+    parentAskAvoid: "避免："因为它很稀有，对吗？"（这等于替他们回答了）",
+    parentContrarianTitle: "反向提示（仅限家长，可选）",
+    parentContrarian1: ""如果家里有一架大钢琴，它还会感觉特别吗？"",
+    parentContrarian2: ""它特别是因为它很大，还是因为表哥加入了？"",
+    parentContrarian3: ""最棒的部分是声音，还是那个时刻？"",
+    parentContrarian4: ""奶奶来到门口时，发生了什么变化？"",
+    parentBridgeTitle: "桥接层："钢琴是什么？"（后续）",
+    parentBridgeText: "这是你下一章的所在：象牙 → 乌木 → 琴弦 → 约束 → 创新 → 记谱法作为可共享的解释性 → 去中心化信任 → 比特币白皮书连续体。",
+    parentBridgePlaceholder: "MVP发布时暂不包含此内容。添加时，请将其作为"书房"工件存储在家长层后。",
+    parentSettingsTitle: "家长设置",
+    parentSetPinBtn: "设置PIN码",
   }
 };
 

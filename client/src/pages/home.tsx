@@ -580,77 +580,84 @@ export default function Home() {
             <div className="space-y-4">
               {/* Three-piano ladder */}
               <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">What you're observing (the three-piano ladder)</h4>
+                <h4 className="font-semibold">{copy.parentObservingTitle}</h4>
                 <div className="mt-3 text-sm space-y-1">
                   <div className="grid grid-cols-3 gap-2 p-2 rounded-lg bg-neutral-800/50 text-neutral-400 text-xs">
-                    <span>Instrument</span><span>Access</span><span>Attachment signal</span>
+                    <span>{copy.parentInstrument}</span>
+                    <span>{copy.parentAccess}</span>
+                    <span>{copy.parentAttachment}</span>
                   </div>
                   <div className="grid grid-cols-3 gap-2 p-2 rounded-lg border border-white/5 text-xs">
-                    <span>Toy piano</span><span>Always there</span><span>Often discarded easily</span>
+                    <span>{copy.parentToyPiano}</span>
+                    <span>{copy.parentToyAccess}</span>
+                    <span>{copy.parentToyAttachment}</span>
                   </div>
                   <div className="grid grid-cols-3 gap-2 p-2 rounded-lg border border-white/5 text-xs">
-                    <span>37-key weighted (yours)</span><span>Shared / permission</span><span>Played with intention; looks for approval</span>
+                    <span>{copy.parent37Key}</span>
+                    <span>{copy.parent37Access}</span>
+                    <span>{copy.parent37Attachment}</span>
                   </div>
                   <div className="grid grid-cols-3 gap-2 p-2 rounded-lg border border-white/5 text-xs">
-                    <span>Big piano</span><span>Rare / time-limited / socially mediated</span><span>Resists leaving; wants continuity and co-presence</span>
+                    <span>{copy.parentBigPiano}</span>
+                    <span>{copy.parentBigAccess}</span>
+                    <span>{copy.parentBigAttachment}</span>
                   </div>
                 </div>
                 <p className="text-xs text-neutral-400 mt-3">
-                  The key data point is not "scarcity as a fact." It is the emotional signal: "I don't want to leave." That is value formation in the wild.
+                  {copy.parentKeyPoint}
                 </p>
               </div>
               
               {/* How to ask */}
               <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">How to ask without leading</h4>
+                <h4 className="font-semibold">{copy.parentAskingTitle}</h4>
                 <ul className="mt-2 text-sm text-neutral-300 list-disc ml-4 space-y-1">
-                  <li><strong>Neutral:</strong> "Why was it special?" "What do you remember?"</li>
-                  <li><strong>Reflect:</strong> "You really didn't want to leave, did you?"</li>
-                  <li><strong>If stuck:</strong> "Was it the sound, or who was there?"</li>
-                  <li><strong>Avoid:</strong> "Because it's rare, right?" (that answers it for them)</li>
+                  <li>{copy.parentAskNeutral}</li>
+                  <li>{copy.parentAskReflect}</li>
+                  <li>{copy.parentAskStuck}</li>
+                  <li>{copy.parentAskAvoid}</li>
                 </ul>
               </div>
               
               {/* Contrarian prompts */}
               <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">Contrarian prompts (parent-only, optional)</h4>
+                <h4 className="font-semibold">{copy.parentContrarianTitle}</h4>
                 <ul className="mt-2 text-sm text-neutral-300 list-disc ml-4 space-y-1">
-                  <li>"If we had a big piano at home, would it still feel special?"</li>
-                  <li>"Was it special because it was big — or because cousin joined?"</li>
-                  <li>"Was the best part the sound, or the moment?"</li>
-                  <li>"What changed when grandma came to the door?"</li>
+                  <li>{copy.parentContrarian1}</li>
+                  <li>{copy.parentContrarian2}</li>
+                  <li>{copy.parentContrarian3}</li>
+                  <li>{copy.parentContrarian4}</li>
                 </ul>
               </div>
               
               {/* Bridge placeholder */}
               <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">Bridge layer: "What is a piano?" (later)</h4>
+                <h4 className="font-semibold">{copy.parentBridgeTitle}</h4>
                 <p className="text-xs text-neutral-400 mt-2">
-                  This is where your next chapter lives: ivory → ebony → strings → constraints → innovation → 
-                  notation as shared interpretability → decentralised trust → the Bitcoin whitepaper continuum.
+                  {copy.parentBridgeText}
                 </p>
                 <details className="mt-2">
-                  <summary className="text-xs text-neutral-400 cursor-pointer">Study Room placeholder</summary>
+                  <summary className="text-xs text-neutral-400 cursor-pointer">{lang === "zh" ? "书房" : "Study Room"} {lang === "zh" ? "占位符" : "placeholder"}</summary>
                   <p className="text-xs text-neutral-500 mt-2">
-                    MVP ships without this. When you add it, store it locally as a "Study Room" artifact behind the parent layer.
+                    {copy.parentBridgePlaceholder}
                   </p>
                 </details>
               </div>
               
               {/* PIN settings */}
               <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">Parent settings</h4>
+                <h4 className="font-semibold">{copy.parentSettingsTitle}</h4>
                 <div className="flex gap-2 mt-2">
                   <Input 
                     type="password"
                     value={newPinInput}
                     onChange={(e) => setNewPinInput(e.target.value)}
-                    placeholder="New PIN"
+                    placeholder={lang === "zh" ? "新PIN码" : "New PIN"}
                     data-testid="input-new-pin"
                     className="bg-neutral-800 border-white/10 text-white"
                   />
                   <Button onClick={updatePin} className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-200 border-cyan-500/20">
-                    Set PIN
+                    {copy.parentSetPinBtn}
                   </Button>
                 </div>
               </div>
