@@ -242,26 +242,38 @@ export default function Home() {
     });
   };
 
-  const toggleMusic = () => {
-    if (!musicAudioRef.current) {
-      musicAudioRef.current = new Audio(CLASSICAL_TRACKS[currentTrack].url);
-      musicAudioRef.current.loop = true;
-      musicAudioRef.current.volume = 0.4;
-      musicAudioRef.current.onended = () => setMusicPlaying(false);
-    }
-    
-    if (musicPlaying) {
-      musicAudioRef.current.pause();
+  const toggleMusic = async () => {
+    try {
+      if (!musicAudioRef.current) {
+        musicAudioRef.current = new Audio(CLASSICAL_TRACKS[currentTrack].url);
+        musicAudioRef.current.loop = true;
+        musicAudioRef.current.volume = 0.4;
+        musicAudioRef.current.onended = () => setMusicPlaying(false);
+        musicAudioRef.current.onerror = (e) => {
+          console.error("Audio playback error:", e);
+          setMusicPlaying(false);
+          showToast(lang === "zh" ? "音频加载失败" : "Audio failed to load");
+        };
+      }
+      
+      if (musicPlaying) {
+        musicAudioRef.current.pause();
+        setMusicPlaying(false);
+      } else {
+        await musicAudioRef.current.play();
+        setMusicPlaying(true);
+      }
+    } catch (err) {
+      console.error("Music playback error:", err);
       setMusicPlaying(false);
-    } else {
-      musicAudioRef.current.play();
-      setMusicPlaying(true);
+      showToast(lang === "zh" ? "音频播放失败" : "Audio playback failed");
     }
   };
 
   const switchTrack = (track: "mozart" | "beethoven") => {
     if (musicAudioRef.current) {
       musicAudioRef.current.pause();
+      musicAudioRef.current.src = "";
       musicAudioRef.current = null;
     }
     setCurrentTrack(track);
@@ -283,7 +295,7 @@ export default function Home() {
           style={{
             backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.2) 100%), url(${coverImage})`,
             backgroundSize: "cover",
-            backgroundPosition: "center 35%",
+            backgroundPosition: "center 60%",
           }}
           data-testid="splash-screen"
         >
