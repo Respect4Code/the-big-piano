@@ -44,12 +44,12 @@ export default function Home() {
   
   const CLASSICAL_TRACKS = {
     mozart: {
-      title: "Mozart - Rondo Alla Turca",
+      title: "Mozart - Piano Sonata No. 11",
       url: "https://upload.wikimedia.org/wikipedia/commons/4/49/Rondo_Alla_Turka.ogg"
     },
     beethoven: {
       title: "Beethoven - Moonlight Sonata",
-      url: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Beethoven_Moonlight_1st_movement.ogg"
+      url: "https://upload.wikimedia.org/wikipedia/commons/2/25/Beethoven_-_Pair_of_Mates.ogg"
     }
   };
 
