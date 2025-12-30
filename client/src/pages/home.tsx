@@ -10,6 +10,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
+import mozartAudio from "@assets/mozart_rondo_alla_turca.mp3";
+import beethovenAudio from "@assets/beethoven_moonlight_sonata.mp3";
 
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
@@ -36,6 +38,16 @@ export default function Home() {
   const [parentUnlocked, setParentUnlocked] = useState(false);
   const [pinInput, setPinInput] = useState("");
   const [newPinInput, setNewPinInput] = useState("");
+
+  // Classical music player state
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState<"mozart" | "beethoven">("mozart");
+  const musicAudioRef = useRef<HTMLAudioElement | null>(null);
+  
+  const CLASSICAL_TRACKS = {
+    mozart: { title: "Mozart - Rondo Alla Turca", url: mozartAudio },
+    beethoven: { title: "Beethoven - Moonlight Sonata", url: beethovenAudio }
+  };
 
   const copy = COPY[lang];
   const story = STORY[lang];
@@ -224,6 +236,30 @@ export default function Home() {
       year: "numeric", month: "short", day: "2-digit", 
       hour: "2-digit", minute: "2-digit" 
     });
+  };
+
+  const toggleMusic = () => {
+    if (!musicAudioRef.current) {
+      musicAudioRef.current = new Audio(CLASSICAL_TRACKS[currentTrack].url);
+      musicAudioRef.current.loop = true;
+      musicAudioRef.current.volume = 0.4;
+    }
+    if (musicPlaying) {
+      musicAudioRef.current.pause();
+      setMusicPlaying(false);
+    } else {
+      musicAudioRef.current.play().catch(console.error);
+      setMusicPlaying(true);
+    }
+  };
+
+  const switchTrack = (track: "mozart" | "beethoven") => {
+    if (musicAudioRef.current) {
+      musicAudioRef.current.pause();
+      musicAudioRef.current = null;
+    }
+    setCurrentTrack(track);
+    setMusicPlaying(false);
   };
 
   return (
@@ -622,6 +658,60 @@ export default function Home() {
           )}
         </DialogContent>
       </Dialog>
+      
+      {/* Floating Classical Music Player */}
+      {!showSplash && (
+        <div 
+          className="fixed bottom-4 left-4 z-40 rounded-xl border border-white/10 p-3"
+          style={{ background: "rgba(18,19,26,.95)", backdropFilter: "blur(10px)" }}
+          data-testid="music-player"
+        >
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleMusic}
+              data-testid="button-music-toggle"
+              className="w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors"
+              style={{ background: musicPlaying ? "rgba(234,179,8,.2)" : "rgba(255,255,255,.1)" }}
+            >
+              {musicPlaying ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="5" width="4" height="14" rx="1" />
+                  <rect x="14" y="5" width="4" height="14" rx="1" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              )}
+            </button>
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-1">
+                <button
+                  onClick={() => switchTrack("mozart")}
+                  data-testid="button-track-mozart"
+                  className={`px-2 py-1 text-xs rounded transition-colors ${
+                    currentTrack === "mozart" ? "bg-amber-500/20 text-amber-200" : "text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  Mozart
+                </button>
+                <button
+                  onClick={() => switchTrack("beethoven")}
+                  data-testid="button-track-beethoven"
+                  className={`px-2 py-1 text-xs rounded transition-colors ${
+                    currentTrack === "beethoven" ? "bg-amber-500/20 text-amber-200" : "text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  Beethoven
+                </button>
+              </div>
+              <p className="text-xs text-neutral-500 max-w-[140px] truncate">
+                {CLASSICAL_TRACKS[currentTrack].title}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
       
       <footer className="max-w-6xl mx-auto px-4 py-6 text-xs text-neutral-500">
         Local-only. No tracking. No uploads. Built for presence-first learning.
