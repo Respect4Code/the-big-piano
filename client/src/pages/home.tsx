@@ -44,12 +44,12 @@ export default function Home() {
   
   const CLASSICAL_TRACKS = {
     mozart: {
-      title: "Mozart - Piano Sonata No. 11",
-      url: "https://upload.wikimedia.org/wikipedia/commons/4/49/Rondo_Alla_Turka.ogg"
+      title: "Mozart - Eine Kleine Nachtmusik",
+      url: "https://upload.wikimedia.org/wikipedia/commons/2/24/Wolfgang_Amadeus_Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg"
     },
     beethoven: {
-      title: "Beethoven - Moonlight Sonata",
-      url: "https://upload.wikimedia.org/wikipedia/commons/2/25/Beethoven_-_Pair_of_Mates.ogg"
+      title: "Beethoven - Für Elise",
+      url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Beethoven_WoO_59_-_Bagatelle_in_A_minor_%28Für_Elise%29.ogg"
     }
   };
 
@@ -283,7 +283,7 @@ export default function Home() {
           style={{
             backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.2) 100%), url(${coverImage})`,
             backgroundSize: "cover",
-            backgroundPosition: "center center",
+            backgroundPosition: "center 35%",
           }}
           data-testid="splash-screen"
         >
