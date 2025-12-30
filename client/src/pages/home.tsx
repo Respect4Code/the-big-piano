@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import coverImage from "@assets/image-147_1767056560181.jpg";
+import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
 
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
@@ -235,36 +235,36 @@ export default function Home() {
       {/* Splash/Cover Page */}
       {showSplash && (
         <div 
-          className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500 ease-out ${
+          className={`fixed inset-0 z-50 transition-opacity duration-500 ease-out ${
             splashFading ? "opacity-0" : "opacity-100"
           }`}
           style={{
-            backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.6) 100%), url(${coverImage})`,
+            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.2) 100%), url(${coverImage})`,
             backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundPosition: "center bottom",
           }}
           data-testid="splash-screen"
         >
-          <div className="text-center px-6">
+          <div className="absolute top-8 left-8 md:top-12 md:left-12">
             <h1 
-              className="text-5xl md:text-7xl font-serif text-amber-100 tracking-wide"
+              className="text-4xl md:text-6xl font-serif text-amber-100 tracking-wide"
               style={{ 
                 fontFamily: "'Georgia', 'Times New Roman', serif",
-                textShadow: "0 4px 20px rgba(0,0,0,0.7)"
+                textShadow: "0 4px 20px rgba(0,0,0,0.8)"
               }}
             >
               《大钢琴》
             </h1>
             <h2 
-              className="text-3xl md:text-5xl font-serif text-amber-100/90 mt-3 tracking-wider"
+              className="text-2xl md:text-4xl font-serif text-amber-100/90 mt-2 tracking-wider"
               style={{ 
                 fontFamily: "'Georgia', 'Times New Roman', serif",
-                textShadow: "0 4px 20px rgba(0,0,0,0.7)"
+                textShadow: "0 4px 20px rgba(0,0,0,0.8)"
               }}
             >
               The Big Piano
             </h2>
-            <p className="mt-8 text-amber-100/60 text-sm tracking-widest uppercase">
+            <p className="mt-4 text-amber-100/60 text-xs md:text-sm tracking-widest uppercase">
               A story about what makes things special
             </p>
           </div>
@@ -277,25 +277,6 @@ export default function Home() {
           >
             Skip
           </button>
-          
-          <div className="absolute bottom-8 left-8 flex items-center gap-2">
-            <div className="w-8 h-1 bg-amber-100/40 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-amber-100/80 rounded-full"
-                style={{
-                  animation: "splashProgress 3s linear forwards"
-                }}
-              />
-            </div>
-            <span className="text-xs text-amber-100/50">3s</span>
-          </div>
-          
-          <style>{`
-            @keyframes splashProgress {
-              from { width: 0%; }
-              to { width: 100%; }
-            }
-          `}</style>
         </div>
       )}
 
