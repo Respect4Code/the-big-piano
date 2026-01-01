@@ -4,6 +4,7 @@ import {
   type Lang, type Entry,
   loadEntries, saveEntries, getPin, setPin, wipeAllData 
 } from "@/lib/story";
+import { Music } from "lucide-react";
 import { dbPutAudio, dbGetAudio, dbDeleteAudio, dbWipeAllAudio } from "@/lib/idb";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -38,6 +39,8 @@ export default function Home() {
   const [parentUnlocked, setParentUnlocked] = useState(false);
   const [pinInput, setPinInput] = useState("");
   const [newPinInput, setNewPinInput] = useState("");
+  const [showPinSetup, setShowPinSetup] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
 
   // Classical music player state
   const [musicPlaying, setMusicPlaying] = useState(false);
@@ -163,7 +166,10 @@ export default function Home() {
     if (recordedUrl) URL.revokeObjectURL(recordedUrl);
     setRecordedUrl(null);
     
-    showToast(lang === "zh" ? "已保存" : "Saved");
+    // Show save confirmation with animation
+    setJustSaved(true);
+    showToast(lang === "zh" ? "时刻已保存" : "Moment saved");
+    setTimeout(() => setJustSaved(false), 2000);
   };
 
   const deleteEntry = async (id: string) => {
@@ -208,19 +214,59 @@ export default function Home() {
 
   const wipeData = async () => {
     if (!confirm(lang === "zh" ? "确定要删除所有本地数据吗？" : "Delete all local data?")) return;
+    
+    // Stop any playing audio
+    if (entryAudioRef.current) {
+      entryAudioRef.current.pause();
+      entryAudioRef.current = null;
+    }
+    if (musicAudioRef.current) {
+      musicAudioRef.current.pause();
+      musicAudioRef.current = null;
+    }
+    if (recordedUrl) {
+      URL.revokeObjectURL(recordedUrl);
+    }
+    
+    // Clear all data
     await dbWipeAllAudio();
     wipeAllData();
-    setEntries([]);
-    showToast(lang === "zh" ? "已清除" : "Wiped");
+    
+    // Force page reload to ensure clean state
+    window.location.reload();
   };
 
   const unlockParent = () => {
-    if (pinInput === getPin()) {
+    const storedPin = getPin();
+    if (storedPin === null) {
+      // No PIN set yet, show setup flow
+      setShowPinSetup(true);
+    } else if (pinInput === storedPin) {
       setParentUnlocked(true);
       setPinInput("");
     } else {
       showToast(lang === "zh" ? "PIN错误" : "Wrong PIN");
     }
+  };
+  
+  const handlePinSetup = () => {
+    if (newPinInput.length >= 4) {
+      setPin(newPinInput);
+      setNewPinInput("");
+      setShowPinSetup(false);
+      setParentUnlocked(true);
+      showToast(lang === "zh" ? "PIN已设置" : "PIN set");
+    } else {
+      showToast(lang === "zh" ? "PIN需至少4位" : "PIN must be at least 4 digits");
+    }
+  };
+  
+  const openParentModal = () => {
+    const storedPin = getPin();
+    if (storedPin === null) {
+      setShowPinSetup(true);
+    }
+    setParentOpen(true);
   };
 
   const updatePin = () => {
@@ -345,7 +391,7 @@ export default function Home() {
             </button>
           </div>
           <button 
-            onClick={() => setParentOpen(true)}
+            onClick={openParentModal}
             data-testid="button-parent"
             className="px-3 py-1.5 text-sm text-neutral-300 hover:text-white transition-colors"
           >
@@ -425,6 +471,7 @@ export default function Home() {
                 className="mt-1 bg-neutral-900 border-white/10 text-white text-sm resize-none"
                 rows={2}
               />
+              <p className="text-xs text-neutral-500 mt-1">{copy.helperTextNote}</p>
             </div>
             
             {/* Icons */}
@@ -437,7 +484,7 @@ export default function Home() {
                     key={icon.key}
                     onClick={() => toggleIcon(icon.key)}
                     data-testid={`icon-${icon.key}`}
-                    className={`px-2 py-1 text-xs rounded-full border transition-colors ${
+                    className={`min-h-[44px] px-3 py-2 text-sm rounded-full border transition-colors ${
                       selectedIcons.has(icon.key) 
                         ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-200" 
                         : "bg-neutral-900 border-white/10 text-neutral-300"
@@ -464,7 +511,11 @@ export default function Home() {
             <Button 
               onClick={saveEntry}
               data-testid="button-save"
-              className="bg-white/10 hover:bg-white/20 text-white border-white/20"
+              className={`min-h-[44px] px-6 text-base transition-all duration-300 ${
+                (recordedBlob || note.trim() || selectedIcons.size > 0)
+                  ? "bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border-emerald-500/30 shadow-lg shadow-emerald-500/10"
+                  : "bg-white/10 hover:bg-white/20 text-white border-white/20"
+              } ${justSaved ? "scale-105" : ""}`}
             >
               {copy.saveBtn}
             </Button>
@@ -556,7 +607,27 @@ export default function Home() {
             <DialogTitle>{copy.parentTitle}</DialogTitle>
           </DialogHeader>
           
-          {!parentUnlocked ? (
+          {showPinSetup ? (
+            <div className="space-y-4">
+              <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4">
+                <h3 className="font-semibold text-amber-200">{copy.pinSetupTitle}</h3>
+                <p className="text-sm text-neutral-300 mt-2">{copy.pinSetupText}</p>
+              </div>
+              <div className="flex gap-2">
+                <Input 
+                  type="password"
+                  value={newPinInput}
+                  onChange={(e) => setNewPinInput(e.target.value)}
+                  placeholder={lang === "zh" ? "选择您的PIN码（至少4位）" : "Choose your PIN (at least 4 digits)"}
+                  data-testid="input-setup-pin"
+                  className="bg-neutral-800 border-white/10 text-white"
+                />
+                <Button onClick={handlePinSetup} data-testid="button-setup-pin" className="min-h-[44px] bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border-amber-500/30">
+                  {copy.pinSetupBtn}
+                </Button>
+              </div>
+            </div>
+          ) : !parentUnlocked ? (
             <div className="space-y-3">
               <p className="text-sm text-neutral-400">{copy.parentGateText}</p>
               <div className="flex gap-2">
@@ -564,20 +635,22 @@ export default function Home() {
                   type="password"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value)}
-                  placeholder={lang === "zh" ? "PIN码（默认1234）" : "PIN (default 1234)"}
+                  placeholder={lang === "zh" ? "输入您的PIN码" : "Enter your PIN"}
                   data-testid="input-pin"
                   className="bg-neutral-800 border-white/10 text-white"
                 />
-                <Button onClick={unlockParent} data-testid="button-unlock" className="bg-white/10 hover:bg-white/20 text-white">
+                <Button onClick={unlockParent} data-testid="button-unlock" className="min-h-[44px] bg-white/10 hover:bg-white/20 text-white">
                   {copy.unlockBtn}
                 </Button>
               </div>
-              <p className="text-xs text-neutral-500">
-                {lang === "zh" ? "默认PIN码为1234。解锁后您可以修改。" : "Default PIN is 1234. You can change it once unlocked."}
-              </p>
             </div>
           ) : (
             <div className="space-y-4">
+              {/* Framing text */}
+              <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4">
+                <p className="text-sm text-neutral-300 italic">{copy.parentFramingText}</p>
+              </div>
+              
               {/* Three-piano ladder */}
               <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
                 <h4 className="font-semibold">{copy.parentObservingTitle}</h4>
@@ -674,23 +747,26 @@ export default function Home() {
           data-testid="music-player"
         >
           <div className="flex items-center gap-3">
-            <button
-              onClick={toggleMusic}
-              data-testid="button-music-toggle"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors"
-              style={{ background: musicPlaying ? "rgba(234,179,8,.2)" : "rgba(255,255,255,.1)" }}
-            >
-              {musicPlaying ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              )}
-            </button>
+            <div className="flex items-center gap-2">
+              <Music className="w-4 h-4 text-amber-300/70" />
+              <button
+                onClick={toggleMusic}
+                data-testid="button-music-toggle"
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white transition-colors"
+                style={{ background: musicPlaying ? "rgba(234,179,8,.2)" : "rgba(255,255,255,.1)" }}
+              >
+                {musicPlaying ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="5" width="4" height="14" rx="1" />
+                    <rect x="14" y="5" width="4" height="14" rx="1" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                )}
+              </button>
+            </div>
             <div className="flex flex-col gap-1">
               <div className="flex gap-1">
                 <button

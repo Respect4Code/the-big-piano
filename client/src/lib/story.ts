@@ -54,6 +54,11 @@ export interface StoryContent {
   parentBridgePlaceholder: string;
   parentSettingsTitle: string;
   parentSetPinBtn: string;
+  parentFramingText: string;
+  helperTextNote: string;
+  pinSetupTitle: string;
+  pinSetupText: string;
+  pinSetupBtn: string;
 }
 
 export const COPY: Record<Lang, StoryContent> = {
@@ -72,7 +77,7 @@ export const COPY: Record<Lang, StoryContent> = {
     iconsTitle: "Optional icons",
     iconsHint: "For pointing / pre-verbal kids. Tap any that fit.",
     saveHint: "When ready, save the moment to your local timeline.",
-    saveBtn: "Save to timeline",
+    saveBtn: "Save moment",
     timelineTitle: "Timeline",
     timelineHint: "Same question, different ages. Answers become the artifact.",
     exportBtn: "Export notes (JSON)",
@@ -111,6 +116,11 @@ export const COPY: Record<Lang, StoryContent> = {
     parentBridgePlaceholder: "MVP ships without this. When you add it, store it locally as a \"Study Room\" artifact behind the parent layer.",
     parentSettingsTitle: "Parent settings",
     parentSetPinBtn: "Set PIN",
+    parentFramingText: "This is not written for children. It's a record of how I thought when I didn't yet know how to explain the world.",
+    helperTextNote: "Fragments are okay. Misspellings are okay.",
+    pinSetupTitle: "Set Your PIN",
+    pinSetupText: "This space is for adult thinking. Choose a PIN you won't share yet.",
+    pinSetupBtn: "Set PIN & Enter",
   },
   zh: {
     storyTitle: "《大钢琴》",
@@ -127,7 +137,7 @@ export const COPY: Record<Lang, StoryContent> = {
     iconsTitle: "可选图标",
     iconsHint: "适合指认或尚未能言语的孩子。点选适合的。",
     saveHint: "准备好后，保存这一刻到本地时间线。",
-    saveBtn: "保存到时间线",
+    saveBtn: "保存时刻",
     timelineTitle: "时间线",
     timelineHint: "同一个问题，不同的年龄。答案成为记忆。",
     exportBtn: "导出笔记 (JSON)",
@@ -166,6 +176,11 @@ export const COPY: Record<Lang, StoryContent> = {
     parentBridgePlaceholder: "MVP发布时暂不包含此内容。添加时，请将其作为「书房」工件存储在家长层后。",
     parentSettingsTitle: "家长设置",
     parentSetPinBtn: "设置PIN码",
+    parentFramingText: "这不是写给孩子的。这是一份思考记录——当我还不知道如何向他解释这个世界时，我是怎样思考的。",
+    helperTextNote: "片段也可以。拼写错误也没关系。",
+    pinSetupTitle: "设置您的PIN码",
+    pinSetupText: "这个空间是给成人思考的。选择一个您暂时不会分享的PIN码。",
+    pinSetupBtn: "设置PIN码并进入",
   }
 };
 
@@ -240,7 +255,11 @@ export interface Entry {
 
 const LS_KEY = "bigpiano_entries_v1";
 const LS_PIN = "bigpiano_parent_pin_v1";
-const DEFAULT_PIN = "1234";
+const LS_PIN_SET = "bigpiano_pin_set_v1";
+
+export function isPinSet(): boolean {
+  return localStorage.getItem(LS_PIN_SET) === "true";
+}
 
 export function loadEntries(): Entry[] {
   try {
@@ -258,14 +277,17 @@ export function saveEntries(entries: Entry[]): void {
   localStorage.setItem(LS_KEY, JSON.stringify(entries));
 }
 
-export function getPin(): string {
-  return localStorage.getItem(LS_PIN) || DEFAULT_PIN;
+export function getPin(): string | null {
+  return localStorage.getItem(LS_PIN);
 }
 
 export function setPin(pin: string): void {
   localStorage.setItem(LS_PIN, pin);
+  localStorage.setItem(LS_PIN_SET, "true");
 }
 
 export function wipeAllData(): void {
   localStorage.removeItem(LS_KEY);
+  localStorage.removeItem(LS_PIN);
+  localStorage.removeItem(LS_PIN_SET);
 }
