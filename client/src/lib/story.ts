@@ -64,11 +64,11 @@ export interface StoryContent {
 export const COPY: Record<Lang, StoryContent> = {
   en: {
     storyTitle: "The Big Piano",
-    storyHint: "Read together. No lesson. Just the moment.",
+    storyHint: "Read together.",
     questionTitle: "One Question",
     questionText: "Why is the big piano special?",
     questionHint: "Let your child answer in any way: words, pointing, or silence.",
-    recordTitle: "Record the child",
+    recordTitle: "Record",
     recordHint: "Press start, then stop. Audio stays on this device only.",
     noteTitle: "Write one line",
     noteHint: "Type the child's words as they said them (no interpretation).",
@@ -124,11 +124,11 @@ export const COPY: Record<Lang, StoryContent> = {
   },
   zh: {
     storyTitle: "《大钢琴》",
-    storyHint: "一起读。没有道理。只有当下。",
+    storyHint: "一起读。",
     questionTitle: "一个问题",
     questionText: "为什么大钢琴很特别？",
     questionHint: "让孩子用任何方式回答：说话、指认、或沉默。",
-    recordTitle: "录下孩子的声音",
+    recordTitle: "录音",
     recordHint: "点击开始，再点击停止。录音仅保存在本设备。",
     noteTitle: "写一句话",
     noteHint: "照孩子说的原话写下来（不要解读）。",
