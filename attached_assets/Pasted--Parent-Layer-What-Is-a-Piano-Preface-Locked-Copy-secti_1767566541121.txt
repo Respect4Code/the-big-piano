@@ -1,0 +1,145 @@
+<!-- Parent Layer: What Is a Piano + Preface (Locked Copy) -->
+<section class="parent-layer" aria-label="Parent Layer">
+  <div class="parent-wrap">
+
+    <!-- Optional small title area (remove if you already have headers above) -->
+    <!-- <h1 class="parent-title">Parent Layer</h1> -->
+
+    <!-- Image inserted in the correct place: before “What Is a Piano?” -->
+    <figure class="parent-figure">
+      <img
+        src="/assets/parent-layer-elephant-book.png"
+        alt="Why did the elephant make a noise? — cover image"
+        loading="lazy"
+      />
+    </figure>
+
+    <h2>What Is a Piano?</h2>
+
+    <p><strong>Before ownership is taught, it is felt.</strong></p>
+
+    <p>My toddler is at the stage where “mine” arrives long before “yours.”<br>
+    Shoes. A ball. A book.</p>
+
+    <p>They are learning to map the world between what feels like theirs, and what belongs to others:<br>
+    mummy’s brush, daddy’s shoes.</p>
+
+    <p>This sense isn’t explained. It emerges.<br>
+    It’s physical, immediate, and absolute.</p>
+
+    <p>Naturally, this creates friction.<br>
+    The logic of sharing is foreign. Why give up what you’re holding?<br>
+    Why can’t you have what you want, right now?</p>
+
+    <p>The concept of patience is just a word.<br>
+    And it should be. Their world is the present moment.</p>
+
+    <p>What fascinates me is the briefness of this early “ownership.”<br>
+    A toy is clutched tightly in conflict, then discarded moments later.<br>
+    The desire evaporates with access.</p>
+
+    <p>It’s not about keeping.<br>
+    It’s about the act of having had.</p>
+
+    <p>At the same time, the word “share” is beginning to appear —<br>
+    not as a moral rule, but as a social tool.</p>
+
+    <p>“Daddy, share,” they say, even while reaching for what I hold.<br>
+    They use it with other toddlers, too.</p>
+
+    <p>I think they’re noticing it softens conflict.<br>
+    They see it works before they understand why.</p>
+
+    <p>This is where the pianos quietly entered our world.</p>
+
+    <p>My toddler has their own piano. A small 37-key keyboard.<br>
+    It’s always there, to be played or ignored.<br>
+    It is unquestionably theirs.</p>
+
+    <p>I have a piano, too. A small, weighted keyboard.<br>
+    At first, it was mine.<br>
+    Then it became shared.<br>
+    Slowly, without any decree, it began to feel like ours.</p>
+
+    <p>Then there is the Big Piano.<br>
+    The full-sized one in my sister’s study.</p>
+
+    <p>My toddler has no access to it unless we visit.<br>
+    It exists elsewhere, and only sometimes.</p>
+
+    <p>I didn’t plan this, but I see now we created a natural hierarchy:</p>
+
+    <p>Their toy piano — always available<br>
+    My shared piano — accessible, negotiated<br>
+    The big piano — rare, permission-bound</p>
+
+    <p>I never had to explain scarcity.<br>
+    My toddler encountered it.</p>
+
+    <p>The Big Piano mattered differently.<br>
+    Not because it was technically better —<br>
+    but because it wasn’t always accessible.</p>
+
+    <p>At this stage, ownership isn’t legal or ethical.<br>
+    It isn’t about rights or fairness.</p>
+
+    <p>It is about:</p>
+
+    <ul class="parent-bullets">
+      <li>this is in my hand</li>
+      <li>this is not always here</li>
+      <li>this feels different when we experience it together</li>
+    </ul>
+
+    <p>That felt experience — not a lesson — is the foundation.</p>
+
+    <p>And from this simple, personal hierarchy,<br>
+    a much larger story about materials, history, and value begins to unfold.</p>
+
+    <hr class="parent-divider">
+
+    <h2>A Note to Parents</h2>
+
+    <p>What you are about to read next (elsewhere in this app) is a record of my thinking as a father.</p>
+
+    <p>One evening at bath time, my child asked me,<br>
+    “Why did the elephant make a noise?”</p>
+
+    <p>They were standing in the bath, looking at their toy elephant by the taps.<br>
+    They picked it up, stroked it, played with its tusks and long trunk,<br>
+    and waited for me to tell them a story.</p>
+
+    <p>In that moment, I realised they weren’t asking for an answer.<br>
+    They were thinking.<br>
+    They were storytelling.<br>
+    Or asking me to make up a story called Why the Elephant Made a Noise.</p>
+
+    <p>I told them I would tell it the following night.</p>
+
+    <p>In the meantime, their love for elephants forced me to confront the history of piano keys.<br>
+    I was perplexed.</p>
+
+    <p>I needed a quiet, non-judgmental space to sort out my thoughts —<br>
+    from materials to ethics,<br>
+    from technology to value.</p>
+
+    <p>What comes next is not a lesson.<br>
+    It is not polished.<br>
+    It is not complete.</p>
+
+    <p>It is a preserved record of thinking,<br>
+    kept here for a day in the future.</p>
+
+  </div>
+</section>
+
+<style>
+  .parent-layer { padding: 20px 14px; }
+  .parent-wrap { max-width: 680px; margin: 0 auto; }
+  .parent-layer h2 { margin: 22px 0 10px; font-size: 20px; line-height: 1.2; }
+  .parent-layer p { margin: 10px 0; line-height: 1.65; }
+  .parent-figure { margin: 6px 0 18px; }
+  .parent-figure img { width: 100%; height: auto; border-radius: 14px; display: block; }
+  .parent-bullets { margin: 10px 0 12px 18px; line-height: 1.65; }
+  .parent-divider { margin: 22px 0; opacity: 0.25; }
+</style>

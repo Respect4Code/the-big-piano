@@ -1,0 +1,95 @@
+Implement/Update the Parent Layer section using the exact text below (do not rewrite any wording, punctuation, capitalization, or line breaks except where required for HTML formatting). 
+
+Requirements:
+1) Add a “Parent Layer” view behind the existing Parent gate/PIN (if already present, just replace the Parent Layer body content).
+2) Render the content in a readable mobile-first layout:
+   - max width: 680px
+   - comfortable line-height
+   - preserve paragraph breaks and em-dashes
+   - preserve the three “this is…” lines as a list (each on its own line)
+3) Insert ONE image between the intro/title block and “What Is a Piano?” section. 
+   - Use this file path for the image: /assets/parent-layer-elephant-book.png
+   - If the file does not exist, create an /assets folder and add the image there, then reference it from the Parent Layer.
+4) The image must be responsive, center-aligned, with rounded corners.
+5) No external tracking, no embeds, no third-party calls.
+6) Do not add new sections, “status” notes, or commentary. Only the content below.
+
+CONTENT (render exactly):
+
+What Is a Piano?
+Before ownership is taught, it is felt.
+My toddler is at the stage where “mine” arrives long before “yours.”
+Shoes. A ball. A book.
+They are learning to map the world between what feels like theirs, and what belongs to others:
+mummy’s brush, daddy’s shoes.
+This sense isn’t explained. It emerges.
+It’s physical, immediate, and absolute.
+Naturally, this creates friction.
+The logic of sharing is foreign. Why give up what you’re holding?
+Why can’t you have what you want, right now?
+The concept of patience is just a word.
+And it should be. Their world is the present moment.
+What fascinates me is the briefness of this early “ownership.”
+A toy is clutched tightly in conflict, then discarded moments later.
+The desire evaporates with access.
+It’s not about keeping.
+It’s about the act of having had.
+At the same time, the word “share” is beginning to appear —
+not as a moral rule, but as a social tool.
+“Daddy, share,” they say, even while reaching for what I hold.
+They use it with other toddlers, too.
+I think they’re noticing it softens conflict.
+They see it works before they understand why.
+This is where the pianos quietly entered our world.
+My toddler has their own piano. A small 37-key keyboard.
+It’s always there, to be played or ignored.
+It is unquestionably theirs.
+I have a piano, too. A small, weighted keyboard.
+At first, it was mine.
+Then it became shared.
+Slowly, without any decree, it began to feel like ours.
+Then there is the Big Piano.
+The full-sized one in my sister’s study.
+My toddler has no access to it unless we visit.
+It exists elsewhere, and only sometimes.
+I didn’t plan this, but I see now we created a natural hierarchy:
+Their toy piano — always available
+My shared piano — accessible, negotiated
+The big piano — rare, permission-bound
+I never had to explain scarcity.
+My toddler encountered it.
+The Big Piano mattered differently.
+Not because it was technically better —
+but because it wasn’t always accessible.
+At this stage, ownership isn’t legal or ethical.
+It isn’t about rights or fairness.
+It is about:
+this is in my hand
+this is not always here
+this feels different when we experience it together
+That felt experience — not a lesson — is the foundation.
+And from this simple, personal hierarchy,
+a much larger story about materials, history, and value begins to unfold.
+
+A Note to Parents
+What you are about to read next (elsewhere in this app) is a record of my thinking as a father.
+One evening at bath time, my child asked me,
+“Why did the elephant make a noise?”
+They were standing in the bath, looking at their toy elephant by the taps.
+They picked it up, stroked it, played with its tusks and long trunk,
+and waited for me to tell them a story.
+In that moment, I realised they weren’t asking for an answer.
+They were thinking.
+They were storytelling.
+Or asking me to make up a story called Why the Elephant Made a Noise.
+I told them I would tell it the following night.
+In the meantime, their love for elephants forced me to confront the history of piano keys.
+I was perplexed.
+I needed a quiet, non-judgmental space to sort out my thoughts —
+from materials to ethics,
+from technology to value.
+What comes next is not a lesson.
+It is not polished.
+It is not complete.
+It is a preserved record of thinking,
+kept here for a day in the future.

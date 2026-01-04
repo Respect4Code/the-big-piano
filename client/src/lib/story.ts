@@ -52,6 +52,15 @@ export interface StoryContent {
   parentBridgeTitle: string;
   parentBridgeText: string;
   parentBridgePlaceholder: string;
+  whatIsAPianoTitle: string;
+  whatIsAPianoOpening: string;
+  whatIsAPianoOwnership: string;
+  whatIsAPianoFriction: string;
+  whatIsAPianoBrief: string;
+  whatIsAPianoSharing: string;
+  whatIsAPianoHierarchy: string;
+  whatIsAPianoScarcity: string;
+  whatIsAPianoSubstrate: string;
   parentSettingsTitle: string;
   parentSetPinBtn: string;
   parentFramingText: string;
@@ -114,6 +123,15 @@ export const COPY: Record<Lang, StoryContent> = {
     parentBridgeTitle: "Bridge layer: \"What is a piano?\" (later)",
     parentBridgeText: "This is where your next chapter lives: ivory → ebony → strings → constraints → innovation → notation as shared interpretability → decentralised trust → the Bitcoin whitepaper continuum.",
     parentBridgePlaceholder: "MVP ships without this. When you add it, store it locally as a \"Study Room\" artifact behind the parent layer.",
+    whatIsAPianoTitle: "What Is a Piano?",
+    whatIsAPianoOpening: "Before ownership is taught, it is felt.",
+    whatIsAPianoOwnership: "My toddler is at the stage where \"mine\" has arrived before \"yours.\" Shoes. A ball. A book. They recognise what they feel belongs to them, and what belongs to others. Mummy's brush. Mummy's gloves. Daddy's shoes. And, increasingly clearly: my mummy, my daddy.",
+    whatIsAPianoFriction: "This sense of ownership isn't explained to them. It's emerging. It's physical. Immediate. Emotional. Alongside it comes friction. They don't yet understand why they should share something they are holding. Waiting makes no sense. Patience is a word, not an experience.",
+    whatIsAPianoBrief: "What's striking is how brief ownership can be. A toy is taken, clutched tightly — and then, moments later, discarded. The desire evaporates once possession is secured. What matters isn't keeping. It's having had.",
+    whatIsAPianoSharing: "At the same time, the idea of \"sharing\" is beginning to appear — not as a moral rule, but as a social tool. They will say \"daddy, share\" while still trying to take what they want. I think they're noticing that the word softens conflict. Not why it should work — just that it does.",
+    whatIsAPianoHierarchy: "Looking back, I realise we accidentally created a hierarchy: Their piano → always available, unquestionably \"mine.\" My piano → shared, becoming \"ours,\" ownership slightly blurred. The big piano → rare, no access without permission, scarce.",
+    whatIsAPianoScarcity: "I didn't explain scarcity. My toddler encountered it. The big piano mattered differently. Not because it was better in any technical sense — but because it wasn't always there. Because it had a place, a history, and limits around it.",
+    whatIsAPianoSubstrate: "Ownership, at this stage, isn't legal or ethical. It isn't about rights or fairness. It's about: this is in my hand, this is not always available, someone else having it changes how I feel. That is the raw substrate of ownership. And it's where this story begins.",
     parentSettingsTitle: "Parent settings",
     parentSetPinBtn: "Set PIN",
     parentFramingText: "This is not written for children. It's a record of how I thought when I didn't yet know how to explain the world.",
@@ -174,6 +192,15 @@ export const COPY: Record<Lang, StoryContent> = {
     parentBridgeTitle: "桥接层：「钢琴是什么？」（后续）",
     parentBridgeText: "这是你下一章的所在：象牙 → 乌木 → 琴弦 → 约束 → 创新 → 记谱法作为可共享的解释性 → 去中心化信任 → 比特币白皮书连续体。",
     parentBridgePlaceholder: "MVP发布时暂不包含此内容。添加时，请将其作为「书房」工件存储在家长层后。",
+    whatIsAPianoTitle: "钢琴是什么？",
+    whatIsAPianoOpening: "在所有权被教导之前，它先被感受到。",
+    whatIsAPianoOwnership: "我的孩子正处于「我的」比「你的」先出现的阶段。鞋子、球、书。他们感知到什么属于自己，什么属于别人。妈妈的刷子、妈妈的手套、爸爸的鞋子。还有，越来越清晰的：我的妈妈，我的爸爸。",
+    whatIsAPianoFriction: "这种所有权意识不是被解释给他们的。它正在涌现。它是身体的、即时的、情感的。随之而来的是摩擦。他们还不明白为什么应该分享自己正握着的东西。等待毫无意义。耐心只是一个词，不是一种体验。",
+    whatIsAPianoBrief: "令人惊讶的是所有权可以如此短暂。一个玩具被拿起，紧紧攥住——然后，片刻之后，被丢弃。一旦获得占有，欲望就蒸发了。重要的不是保有，而是曾经拥有。",
+    whatIsAPianoSharing: "与此同时，「分享」的概念开始出现——不是作为道德规则，而是作为社交工具。他们会说「爸爸，分享」，同时仍试图拿走想要的东西。我认为他们注意到这个词能软化冲突。不是为什么它应该起作用——只是它确实起作用。",
+    whatIsAPianoHierarchy: "回顾过去，我意识到我们无意中创造了一个层级：他们的钢琴 → 总是在那里，无可争议地「我的」。我的钢琴 → 共享的，正在变成「我们的」，所有权略微模糊。大钢琴 → 稀有的，未经允许无法接触，稀缺的。",
+    whatIsAPianoScarcity: "我没有解释稀缺性。我的孩子遇到了它。大钢琴有着不同的意义。不是因为它在技术意义上更好——而是因为它不总是在那里。因为它有一个位置、一段历史，以及围绕它的限制。",
+    whatIsAPianoSubstrate: "在这个阶段，所有权不是法律的或伦理的。它与权利或公平无关。它关乎：这在我手中，这不总是可得的，别人拥有它改变了我的感受。这是所有权的原始基底。也是这个故事开始的地方。",
     parentSettingsTitle: "家长设置",
     parentSetPinBtn: "设置PIN码",
     parentFramingText: "这不是写给孩子的。这是一份思考记录——当我还不知道如何向他解释这个世界时，我是怎样思考的。",

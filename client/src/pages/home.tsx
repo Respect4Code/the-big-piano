@@ -703,6 +703,22 @@ export default function Home() {
                 </ul>
               </div>
               
+              {/* What Is a Piano? - Full Narrative */}
+              <div className="rounded-xl border border-amber-500/20 p-4" style={{ background: "rgba(11,12,16,.5)" }}>
+                <h4 className="font-semibold text-amber-200 text-lg">{copy.whatIsAPianoTitle}</h4>
+                <p className="text-base text-amber-100 mt-3 italic font-medium">{copy.whatIsAPianoOpening}</p>
+                
+                <div className="mt-4 space-y-4 text-sm text-neutral-300 leading-relaxed">
+                  <p>{copy.whatIsAPianoOwnership}</p>
+                  <p>{copy.whatIsAPianoFriction}</p>
+                  <p>{copy.whatIsAPianoBrief}</p>
+                  <p>{copy.whatIsAPianoSharing}</p>
+                  <p className="text-neutral-400 italic">{copy.whatIsAPianoHierarchy}</p>
+                  <p>{copy.whatIsAPianoScarcity}</p>
+                  <p className="text-neutral-400 border-t border-white/10 pt-4 mt-4">{copy.whatIsAPianoSubstrate}</p>
+                </div>
+              </div>
+              
               {/* Bridge placeholder */}
               <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
                 <h4 className="font-semibold">{copy.parentBridgeTitle}</h4>
