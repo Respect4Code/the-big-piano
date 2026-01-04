@@ -1,0 +1,39 @@
+Best, given everything you’ve said (no preaching, access-not-possession, parent-as-observer, and you want one clean artifact you can ship now):
+
+### My recommendation
+
+**Use the “locked HTML block” approach**, and keep the Parent Layer as a **single scrollable document behind the PIN**, with **one image at the top**.
+
+Why this is best (in practical product terms):
+
+* **You control the voice.** No model “helpfully” rewriting your text later.
+* **It will render consistently on mobile** (spacing, line breaks, bullets), which is where parents will actually read it.
+* **It keeps the app’s ethos intact:** one artifact, no extra framing, no “Status” section, no meta.
+* **It keeps “access” as the core concept**—the copy already does that, and the HTML preserves it exactly.
+* **It’s future-proof:** later you can add a PDF link *after* “A Note to Parents” without changing a word.
+
+### Image choice
+
+Use **one image**, not multiple. The image should act like a quiet “cover” for the Parent Layer.
+
+* If you’re choosing between **dark vs light** versions:
+  **Pick the dark one** *if your app background is dark* (it will feel native and calm).
+  **Pick the light one** *if your app background is white/light* (it will feel clean and editorial).
+
+If you tell me whether your Parent Layer background is dark or light, I’ll tell you definitively which one to use.
+
+### Replit prompt vs HTML
+
+* If you want the fastest path with the least room for Replit to improvise: **paste the HTML directly.**
+* If you need Replit to wire it into an existing PIN gate component/page: use the **Replit prompt**, but still provide the HTML and say:
+  “Insert this HTML as-is inside the Parent Layer container.”
+
+### One micro-adjustment I’d keep
+
+Your change to “could not be possessed or easily accessed” was directionally correct, but **you don’t need “possessed” at all**. The cleanest, most “you” version is:
+
+> “but because it wasn’t always accessible.”
+
+That line already carries the entire moment of leaving, denial, rarity, and longing—without importing “possession.”
+
+If you want, I’ll return your final copy again with that single line set exactly how you prefer, and nothing else changed.

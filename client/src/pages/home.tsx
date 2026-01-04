@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
+import elephantBookImage from "@assets/image-155_1767566599607.jpg";
 import mozartAudio from "@assets/mozart_rondo_alla_turca.mp3";
 import beethovenAudio from "@assets/beethoven_moonlight_sonata.mp3";
 
@@ -703,35 +704,73 @@ export default function Home() {
                 </ul>
               </div>
               
-              {/* What Is a Piano? - Full Narrative */}
-              <div className="rounded-xl border border-amber-500/20 p-4" style={{ background: "rgba(11,12,16,.5)" }}>
-                <h4 className="font-semibold text-amber-200 text-lg">{copy.whatIsAPianoTitle}</h4>
-                <p className="text-base text-amber-100 mt-3 italic font-medium">{copy.whatIsAPianoOpening}</p>
+              {/* What Is a Piano? - Full Narrative (mobile-first locked copy) */}
+              <section 
+                className="rounded-xl border border-amber-500/20 p-4 md:p-5"
+                style={{ background: "rgba(11,12,16,.5)", maxWidth: "680px", margin: "0 auto" }}
+                aria-label="What Is a Piano"
+              >
+                {/* Elephant Book Image */}
+                <figure className="mb-6">
+                  <img 
+                    src={elephantBookImage} 
+                    alt="Why did the elephant make a noise? — cover image"
+                    className="w-full h-auto rounded-xl"
+                    loading="lazy"
+                  />
+                </figure>
                 
-                <div className="mt-4 space-y-4 text-sm text-neutral-300 leading-relaxed">
-                  <p>{copy.whatIsAPianoOwnership}</p>
-                  <p>{copy.whatIsAPianoFriction}</p>
-                  <p>{copy.whatIsAPianoBrief}</p>
-                  <p>{copy.whatIsAPianoSharing}</p>
-                  <p className="text-neutral-400 italic">{copy.whatIsAPianoHierarchy}</p>
-                  <p>{copy.whatIsAPianoScarcity}</p>
-                  <p className="text-neutral-400 border-t border-white/10 pt-4 mt-4">{copy.whatIsAPianoSubstrate}</p>
+                <h2 className="font-semibold text-amber-200 text-xl mb-4">{copy.whatIsAPianoTitle}</h2>
+                
+                <div className="space-y-4 text-sm md:text-base text-neutral-300 leading-relaxed">
+                  {copy.whatIsAPiano.map((para, i) => {
+                    const isBold = para.startsWith("**") && para.endsWith("**");
+                    const isBullets = para.includes("• ");
+                    
+                    if (isBold) {
+                      return (
+                        <p key={i} className="text-base md:text-lg text-amber-100 font-semibold">
+                          {para.replace(/\*\*/g, "")}
+                        </p>
+                      );
+                    }
+                    
+                    if (isBullets) {
+                      const lines = para.split("\n");
+                      const titleLine = lines[0];
+                      const bulletLines = lines.filter(l => l.startsWith("• "));
+                      return (
+                        <div key={i}>
+                          <p>{titleLine}</p>
+                          <ul className="mt-2 ml-5 space-y-1 list-disc">
+                            {bulletLines.map((line, j) => (
+                              <li key={j}>{line.replace("• ", "")}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    }
+                    
+                    return (
+                      <p key={i} className="whitespace-pre-line">
+                        {para}
+                      </p>
+                    );
+                  })}
                 </div>
-              </div>
-              
-              {/* Bridge placeholder */}
-              <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">{copy.parentBridgeTitle}</h4>
-                <p className="text-xs text-neutral-400 mt-2">
-                  {copy.parentBridgeText}
-                </p>
-                <details className="mt-2">
-                  <summary className="text-xs text-neutral-400 cursor-pointer">{lang === "zh" ? "书房" : "Study Room"} {lang === "zh" ? "占位符" : "placeholder"}</summary>
-                  <p className="text-xs text-neutral-500 mt-2">
-                    {copy.parentBridgePlaceholder}
-                  </p>
-                </details>
-              </div>
+                
+                {/* Divider */}
+                <hr className="my-6 opacity-25" />
+                
+                {/* A Note to Parents */}
+                <h2 className="font-semibold text-amber-200 text-xl mb-4">{copy.noteToParentsTitle}</h2>
+                
+                <div className="space-y-4 text-sm md:text-base text-neutral-300 leading-relaxed">
+                  {copy.noteToParents.map((para, i) => (
+                    <p key={i} className="whitespace-pre-line">{para}</p>
+                  ))}
+                </div>
+              </section>
               
               {/* PIN settings */}
               <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>

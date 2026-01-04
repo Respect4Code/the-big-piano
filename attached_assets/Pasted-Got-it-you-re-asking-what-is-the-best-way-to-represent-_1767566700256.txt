@@ -1,0 +1,90 @@
+Got it — you’re asking **what is the best way to represent the future PDF in the code right now**, without actually adding the PDF or changing the document.
+
+### Best practice (clean, reversible, zero semantic drift)
+
+Use a **single, inert placeholder line in HTML**, commented out or visually muted, that can be activated later **without touching the text above it**.
+
+You have two good options. I recommend **Option A**.
+
+---
+
+## ✅ Option A (Recommended): Commented placeholder (invisible, safest)
+
+This keeps the Parent Layer **pure** and avoids any UI implication until you’re ready.
+
+```html
+<!--
+Future addition:
+<a href="/assets/what-is-a-piano-thinking-record.pdf" class="parent-pdf-link">
+  Read the archived thinking record (PDF)
+</a>
+-->
+```
+
+**Why this is best**
+
+* Zero visual footprint
+* No implied promise to the user
+* No wording commitment yet
+* One-line enable later (remove the comment)
+
+This matches your philosophy: *some answers are not yet available*.
+
+---
+
+## ✅ Option B: Muted, disabled text (visible but inactive)
+
+If you want parents to *sense* something exists without accessing it yet:
+
+```html
+<p class="parent-pdf-placeholder">
+  Archived thinking record (PDF) — available later
+</p>
+```
+
+With CSS:
+
+```css
+.parent-pdf-placeholder {
+  opacity: 0.45;
+  font-size: 0.9rem;
+  margin-top: 16px;
+}
+```
+
+**Use this only if** you want to signal future depth without opening it.
+
+---
+
+## ❌ What I would NOT do
+
+* ❌ A live link that goes nowhere
+* ❌ “Coming soon” banners
+* ❌ Buttons
+* ❌ Icons
+* ❌ Any copy that frames it as instructional or required
+
+Those all break the restraint you’ve worked so hard to maintain.
+
+---
+
+## Final recommendation (clear answer)
+
+**Use Option A: the commented HTML link.**
+
+It:
+
+* respects the document
+* respects the reader
+* respects your timing
+* keeps the Parent Layer *complete in its incompleteness*
+
+When you’re ready, you’ll know — and you’ll uncomment one line.
+
+If you want, next I can:
+
+* lock the exact filename/path you should use later
+* or help you design the *moment* the link appears (without changing the text)
+
+But right now:
+**you’re doing this exactly right.**
