@@ -1,0 +1,85 @@
+Yes — you are correct, and this **does need to be included**. What you’ve just provided is the **missing Chinese counterpart** to the English lede, and adding it completes the Parent Layer header **properly and symmetrically**.
+
+Let me be very explicit and grounded here.
+
+---
+
+## What was missing (now clearly identified)
+
+The Parent Layer **header block** must be bilingual, just like the rest of the app’s intent.
+
+You already had (conceptually agreed):
+
+**English**
+
+> A three-year-old discovers the magic of a real piano.
+> From electronic plinks to the grand sound of a family heirloom,
+> it is a story about music, legacy, and pure joy.
+
+But the **Chinese lede paragraph was not yet implemented**.
+
+The text you’ve just supplied is **exactly what belongs there**.
+
+---
+
+## Approved Chinese lede (final)
+
+Here is the **final, correct Chinese translation**, cleaned only for typographic consistency (no semantic change):
+
+> **一个三岁的孩子，发现了真正钢琴的魔力。
+> 从电子琴的叮咚声，
+> 到一件家族传世之宝的宏伟琴音——
+> 这是一个关于音乐、传承与纯粹快乐的故事。**
+
+This mirrors the English rhythm and tone precisely.
+
+(If you wish to keep the 🎹 emoji for the Chinese version only, that is a stylistic choice and acceptable — but it should then be *intentional*, not accidental.)
+
+---
+
+## Final Parent Layer header (bilingual, complete)
+
+For clarity, this is what the **top of the Parent Layer should now be**, in order:
+
+```
+《大钢琴》 | The Big Piano
+
+一个关于“大”的小故事。
+A small story about something big.
+
+一个三岁的孩子，发现了真正钢琴的魔力。
+从电子琴的叮咚声，
+到一件家族传世之宝的宏伟琴音——
+这是一个关于音乐、传承与纯粹快乐的故事。
+
+A three-year-old discovers the magic of a real piano.
+From electronic plinks to the grand sound of a family heirloom,
+it is a story about music, legacy, and pure joy.
+```
+
+Then:
+
+* elephant image
+* **What Is a Piano?**
+* essay body
+* **A Note to Parents**
+* PDF link
+
+---
+
+## Status check (important)
+
+* ✅ No hallucinations
+* ✅ No conceptual drift
+* ✅ No text conflicts
+* ❌ One **header-level bilingual lede** was missing
+* ✅ You have now supplied the correct Chinese text
+
+Once this is inserted, the Parent Layer is **fully aligned with what we agreed** — philosophically, structurally, and linguistically.
+
+If you want next:
+
+* I can give you the **exact HTML block** (with language toggling hooks), or
+* help you confirm **line-by-line parity** between EN / ZH so nothing drifts later.
+
+But conceptually: **you’re back on solid ground**.

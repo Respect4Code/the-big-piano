@@ -52,6 +52,11 @@ export interface StoryContent {
   parentBridgeTitle: string;
   parentBridgeText: string;
   parentBridgePlaceholder: string;
+  parentLayerTitle: string;
+  parentLayerSubtitleZh: string;
+  parentLayerSubtitleEn: string;
+  parentLayerLedeZh: string;
+  parentLayerLedeEn: string;
   whatIsAPianoTitle: string;
   whatIsAPiano: string[];
   noteToParentsTitle: string;
@@ -119,6 +124,11 @@ export const COPY: Record<Lang, StoryContent> = {
     parentBridgeTitle: "Bridge layer: \"What is a piano?\" (later)",
     parentBridgeText: "This is where your next chapter lives: ivory → ebony → strings → constraints → innovation → notation as shared interpretability → decentralised trust → the Bitcoin whitepaper continuum.",
     parentBridgePlaceholder: "MVP ships without this. When you add it, store it locally as a \"Study Room\" artifact behind the parent layer.",
+    parentLayerTitle: "《大钢琴》 | The Big Piano",
+    parentLayerSubtitleZh: '一个关于"大"的小故事。',
+    parentLayerSubtitleEn: "A small story about something big.",
+    parentLayerLedeZh: "一个三岁的孩子，发现了真正钢琴的魔力。\n从电子琴的叮咚声，\n到一件家族传世之宝的宏伟琴音——\n这是一个关于音乐、传承与纯粹快乐的故事。",
+    parentLayerLedeEn: "A three-year-old discovers the magic of a real piano.\nFrom electronic plinks to the grand sound of a family heirloom,\nit is a story about music, legacy, and pure joy.",
     whatIsAPianoTitle: "What Is a Piano?",
     whatIsAPiano: [
       "**Before ownership is taught, it is felt.**",
@@ -218,6 +228,11 @@ export const COPY: Record<Lang, StoryContent> = {
     parentBridgeTitle: "桥接层：「钢琴是什么？」（后续）",
     parentBridgeText: "这是你下一章的所在：象牙 → 乌木 → 琴弦 → 约束 → 创新 → 记谱法作为可共享的解释性 → 去中心化信任 → 比特币白皮书连续体。",
     parentBridgePlaceholder: "MVP发布时暂不包含此内容。添加时，请将其作为「书房」工件存储在家长层后。",
+    parentLayerTitle: "《大钢琴》 | The Big Piano",
+    parentLayerSubtitleZh: '一个关于"大"的小故事。',
+    parentLayerSubtitleEn: "A small story about something big.",
+    parentLayerLedeZh: "一个三岁的孩子，发现了真正钢琴的魔力。\n从电子琴的叮咚声，\n到一件家族传世之宝的宏伟琴音——\n这是一个关于音乐、传承与纯粹快乐的故事。",
+    parentLayerLedeEn: "A three-year-old discovers the magic of a real piano.\nFrom electronic plinks to the grand sound of a family heirloom,\nit is a story about music, legacy, and pure joy.",
     whatIsAPianoTitle: "钢琴是什么？",
     whatIsAPiano: [
       "**所有权在被教导之前，是被感受的。**",

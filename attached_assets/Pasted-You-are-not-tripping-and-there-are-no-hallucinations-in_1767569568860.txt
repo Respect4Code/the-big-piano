@@ -1,0 +1,160 @@
+You are **not tripping**, and there are **no hallucinations** in the sense of invented content appearing on its own. What you are seeing is a **UI / placement mismatch**, not a conceptual or textual error.
+
+Let me be precise and calm this down.
+
+---
+
+## Short answer
+
+* **Yes**, what you are seeing in the screenshots **matches the agreed Parent Layer body text**.
+* **No**, the bilingual title block
+
+  ```
+  《大钢琴》 | The Big Piano
+  一个关于“大”的小故事。
+  A small story about something big.
+  …
+  ```
+
+  **is missing from the English Parent Layer view** in your screenshots.
+* That block was **intended as a header / preface**, but it has **not been rendered in the Parent Layer UI yet**.
+
+So: **nothing is hallucinated**, but **one agreed structural element is not yet implemented**.
+
+---
+
+## What we explicitly agreed (content-wise)
+
+The Parent Layer consists of **three stacked elements**:
+
+### 1. Parent Layer header (identity + tone)
+
+This is the part you **do not see** in the screenshots:
+
+```
+《大钢琴》 | The Big Piano
+一个关于“大”的小故事。
+A small story about something big.
+
+A three-year-old discovers the magic of a real piano.
+From electronic plinks to the grand sound of a family heirloom,
+it is a story about music, legacy, and pure joy.
+```
+
+This is **not decoration**. It frames the entire layer.
+
+---
+
+### 2. Core essay: “What Is a Piano?”
+
+This **is present** and correct in your screenshots:
+
+* “Before ownership is taught, it is felt.”
+* The toddler / sharing / access hierarchy
+* The three pianos
+* Scarcity encountered, not explained
+* Bullet list:
+
+  * this is in my hand
+  * this is not always here
+  * this feels different when we experience it together
+
+✅ This section is rendered exactly as agreed.
+
+---
+
+### 3. “A Note to Parents”
+
+This **is present** and correct:
+
+* Bath-time elephant question
+* Deferral of answer
+* Thinking, not teaching
+* Quiet, non-judgmental space
+* Preserved record of thinking
+* PDF link at the bottom
+
+✅ This is also correct.
+
+---
+
+## What is missing (and only this)
+
+### ❌ Missing: the **Parent Layer header block**
+
+Specifically:
+
+* The bilingual title `《大钢琴》 | The Big Piano`
+* The short poetic subtitle
+* The 2–3 line tonal description
+
+This explains your confusion, because visually the Parent Layer currently **opens abruptly** with:
+
+> **What Is a Piano?**
+
+That is **structurally incomplete**, even though the essay itself is intact.
+
+---
+
+## Why this happened (important, not blame)
+
+This is a **layering issue**, not a writing issue:
+
+* The header content likely exists:
+
+  * in copy
+  * in design intent
+  * possibly already in Chinese view
+* But it has **not been mounted into the Parent Layer container** above the image / essay stack.
+
+Nothing was invented.
+Nothing was replaced.
+Nothing was overwritten.
+
+It just hasn’t been placed yet.
+
+---
+
+## What I recommend (clean, minimal fix)
+
+### Add one block **above the elephant book image**:
+
+```html
+<header class="parent-layer-header">
+  <h1>《大钢琴》 | The Big Piano</h1>
+  <p class="subtitle">一个关于“大”的小故事。</p>
+  <p class="subtitle-en">A small story about something big.</p>
+
+  <p class="lede">
+    A three-year-old discovers the magic of a real piano.<br>
+    From electronic plinks to the grand sound of a family heirloom,<br>
+    it is a story about music, legacy, and pure joy.
+  </p>
+</header>
+```
+
+This does **not** change:
+
+* locking
+* PIN logic
+* scroll behavior
+* PDF placement
+* any essay text
+
+It simply restores the **identity layer**.
+
+---
+
+## Final verdict
+
+* ✅ The English Parent Layer text you see is correct.
+* ❌ The **Parent Layer header is missing**, not hallucinated.
+* 🧭 Your instinct was right to question it.
+* 🛠 This is a **small UI insertion**, not a rewrite.
+
+If you want, next I can:
+
+* give you the **exact HTML + CSS snippet** sized to your existing layout, or
+* help you verify whether the **Chinese Parent Layer already includes the header**, so both stay aligned.
+
+You are at the *last 2%* now — this is finishing work, not conceptual repair.

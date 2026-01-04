@@ -711,6 +711,28 @@ export default function Home() {
                 style={{ background: "rgba(11,12,16,.5)", maxWidth: "680px", margin: "0 auto" }}
                 aria-label="What Is a Piano"
               >
+                {/* Parent Layer Header */}
+                <header className="text-center mb-6">
+                  <h1 className="text-2xl md:text-3xl font-semibold text-amber-100 mb-3">
+                    {copy.parentLayerTitle}
+                  </h1>
+                  <p className="text-neutral-400 text-sm md:text-base">
+                    {copy.parentLayerSubtitleZh}
+                  </p>
+                  <p className="text-neutral-400 text-sm md:text-base italic mb-4">
+                    {copy.parentLayerSubtitleEn}
+                  </p>
+                  <p className="text-neutral-300 text-sm md:text-base whitespace-pre-line">
+                    {copy.parentLayerLedeZh}
+                  </p>
+                  <p className="text-neutral-300 text-sm md:text-base whitespace-pre-line mt-3 italic">
+                    {copy.parentLayerLedeEn}
+                  </p>
+                </header>
+                
+                {/* Divider */}
+                <hr className="my-6 opacity-25" />
+                
                 {/* Elephant Book Image */}
                 <figure className="mb-6">
                   <img 
