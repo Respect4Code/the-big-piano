@@ -56,6 +56,7 @@ export interface StoryContent {
   whatIsAPiano: string[];
   noteToParentsTitle: string;
   noteToParents: string[];
+  thinkingRecordLink: string;
   parentSettingsTitle: string;
   parentSetPinBtn: string;
   parentFramingText: string;
@@ -156,6 +157,7 @@ export const COPY: Record<Lang, StoryContent> = {
       "What comes next is not a lesson.\nIt is not polished.\nIt is not complete.",
       "It is a preserved record of thinking,\nkept here for a day in the future."
     ],
+    thinkingRecordLink: "Read the archived thinking record (PDF)",
     parentSettingsTitle: "Parent settings",
     parentSetPinBtn: "Set PIN",
     parentFramingText: "This is not written for children. It's a record of how I thought when I didn't yet know how to explain the world.",
@@ -254,6 +256,7 @@ export const COPY: Record<Lang, StoryContent> = {
       "接下来的内容不是一堂课。\n它未经打磨。\n它并不完整。",
       "它是一份被保存下来的思考记录，\n留待未来的某一天。"
     ],
+    thinkingRecordLink: "阅读完整思考记录 (PDF)",
     parentSettingsTitle: "家长设置",
     parentSetPinBtn: "设置PIN码",
     parentFramingText: "这不是写给孩子的。这是一份思考记录——当我还不知道如何向他解释这个世界时，我是怎样思考的。",
