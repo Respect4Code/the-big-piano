@@ -127,7 +127,7 @@ export const COPY: Record<Lang, StoryContent> = {
     parentLayerTitle: "《大钢琴》 | The Big Piano",
     parentLayerSubtitleZh: '一个关于"大"的小故事。',
     parentLayerSubtitleEn: "A small story about something big.",
-    parentLayerLedeZh: "一个三岁的孩子，发现了真正钢琴的魔力。\n从电子琴的叮咚声，\n到一件家族传世之宝的宏伟琴音——\n这是一个关于音乐、传承与纯粹快乐的故事。",
+    parentLayerLedeZh: "一个三岁的孩子，发现了真正的钢琴的魔力。从电子琴的叮咚声，到一件家族传世之宝的宏伟琴音——这是一个关于音乐、传承与纯粹快乐的故事。",
     parentLayerLedeEn: "A three-year-old discovers the magic of a real piano.\nFrom electronic plinks to the grand sound of a family heirloom,\nit is a story about music, legacy, and pure joy.",
     whatIsAPianoTitle: "What Is a Piano?",
     whatIsAPiano: [
@@ -231,7 +231,7 @@ export const COPY: Record<Lang, StoryContent> = {
     parentLayerTitle: "《大钢琴》 | The Big Piano",
     parentLayerSubtitleZh: '一个关于"大"的小故事。',
     parentLayerSubtitleEn: "A small story about something big.",
-    parentLayerLedeZh: "一个三岁的孩子，发现了真正钢琴的魔力。\n从电子琴的叮咚声，\n到一件家族传世之宝的宏伟琴音——\n这是一个关于音乐、传承与纯粹快乐的故事。",
+    parentLayerLedeZh: "一个三岁的孩子，发现了真正的钢琴的魔力。从电子琴的叮咚声，到一件家族传世之宝的宏伟琴音——这是一个关于音乐、传承与纯粹快乐的故事。",
     parentLayerLedeEn: "A three-year-old discovers the magic of a real piano.\nFrom electronic plinks to the grand sound of a family heirloom,\nit is a story about music, legacy, and pure joy.",
     whatIsAPianoTitle: "钢琴是什么？",
     whatIsAPiano: [
