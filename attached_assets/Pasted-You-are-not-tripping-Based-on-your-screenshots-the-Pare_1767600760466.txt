@@ -1,0 +1,718 @@
+You are not tripping. Based on your screenshots, the **Parent Layer modal you’re looking at is showing only the “What Is a Piano?” + “A Note to Parents” sections**, plus the **PDF link** and **PIN settings**—but it is **not showing the earlier “Parent Layer” header block** you pasted (the part that begins with):
+
+* **《大钢琴》 | The Big Piano**
+* **一个关于“大”的小故事。 / A small story about something big.**
+* The 2–3 line blurb about discovering the piano’s magic
+
+So if you expected that header block to appear at the top of the Parent Layer, then yes: **it’s currently missing from that modal** (or it’s placed somewhere else in the app, not inside the Parent Layer modal).
+
+Separately: the PDFs you uploaded are indeed parallel editions of the same transcript content.  
+
+---
+
+## 1) Bilingual in the Parent Layer: helps or hinders?
+
+**Best practice for the Parent Layer:**
+
+* **English mode:** show **English only**
+* **中文 mode:** show **中文 only**
+
+Reason: the Parent Layer is already “dense.” Mixing languages inside the same reading surface increases cognitive load and makes it feel less “locked” / more like a draft.
+
+**One exception that works well:**
+Keep the **title line bilingual** (e.g., `《大钢琴》 | The Big Piano`) even in both modes, but keep the **body** single-language.
+
+So: **bilingual title = helps**, **bilingual paragraphs = hinders**.
+
+---
+
+## 2) The missing Chinese blurb you requested
+
+You said you want this in the Chinese translation:
+
+> 一个三岁的孩子，发现了真正的钢琴的魔力。从电子琴的叮咚声，到一件家族传世之宝的宏伟琴音——这是一个关于音乐、传承与纯粹快乐的故事。🎹
+
+I recommend **removing the emoji** for tonal consistency with the rest of the Parent Layer (your current typography is elegant and restrained). Use:
+
+**中文（建议版）**
+一个三岁的孩子，发现了真正钢琴的魔力。
+从电子琴的叮咚声，到一件家族传世之宝的宏伟琴音——
+这是一个关于音乐、传承与纯粹快乐的故事。
+
+---
+
+## 3) How “side by side” should work in the UI
+
+You have two clean options:
+
+### Option A (recommended): Toggle, not split
+
+* Top-right toggle: **English | 中文**
+* The Parent Layer modal re-renders the same structure, different language.
+* The PDF link also swaps:
+
+  * English mode → `piano_to_bitcoin_english_paginated.pdf` 
+  * 中文 mode → `piano_to_bitcoin_chinese.pdf` 
+
+This keeps the experience calm and “locked.”
+
+### Option B: True side-by-side split view
+
+Only if your audience is explicitly bilingual and wants study-mode. Otherwise it’s visually heavy on mobile.
+
+---
+
+## 4) PIN reset: what happens if a parent forgets it?
+
+Because your app is **local-only** (no email recovery), you must choose one of these:
+
+### Recommended: “Reset Parent PIN” (soft reset)
+
+* Adds a **Forgot PIN?** link in the Parent modal.
+* Clicking it warns: **“This will reset Parent access on this device.”**
+* It clears **only the PIN**, not the story progress or recordings.
+
+This is the most parent-friendly and doesn’t violate your privacy-first design.
+
+### More secure: Recovery phrase (set once)
+
+* On PIN setup, generate a short recovery phrase shown once:
+  “Write this down. Without it, you can’t recover Parent access.”
+* Parents can restore using the phrase.
+
+This is more secure, but more friction.
+
+---
+
+## 5) What is currently “missing / outstanding” in the Parent Layer (based on your screenshots)
+
+From what you said you wanted vs what’s visible:
+
+1. **The Parent Layer header block is missing** inside the modal:
+
+   * `《大钢琴》 | The Big Piano`
+   * `一个关于“大”的小故事。 / A small story about something big.`
+   * The 2–3 line intro blurb (EN + ZH)
+2. **Language separation policy** is not enforced (you’re asking whether to mix; right now it appears mixed in at least the header area in some views).
+3. **PIN reset flow** is not visible (you have “Set PIN” but no “Forgot PIN?”).
+4. **PDF link is present** (good), but ensure it swaps by language.
+
+---
+
+# Replit prompt + single-file HTML you can paste
+
+Below is a **single prompt** you can paste into Replit AI, followed by a **single HTML file** (no build system required). This HTML includes:
+
+* Parent Layer modal
+* Language toggle (English/中文)
+* The missing header block (title + subtitle + blurbs)
+* Your locked “What Is a Piano?” and “A Note to Parents” text
+* Elephant book image placement
+* PDF link (language-aware)
+* PIN set + PIN verify + **Forgot PIN** soft reset
+
+## Replit Prompt (copy/paste)
+
+```text
+Build a single-file, mobile-first Parent Layer modal in vanilla HTML/CSS/JS.
+
+Requirements:
+1) Provide a language toggle: English / 中文. When toggled, render ONLY the selected language for body paragraphs (bilingual title line is allowed).
+2) At the top of the Parent Layer modal, include the missing header block:
+   - Title line: 《大钢琴》 | The Big Piano
+   - Subtitle line: 一个关于“大”的小故事。 (Chinese only in 中文 mode) / A small story about something big. (English only in English mode)
+   - Blurb lines (per language):
+     English:
+       A three-year-old discovers the magic of a real piano.
+       From electronic plinks to the grand sound of a family heirloom,
+       it is a story about music, legacy, and pure joy.
+     中文:
+       一个三岁的孩子，发现了真正钢琴的魔力。
+       从电子琴的叮咚声，到一件家族传世之宝的宏伟琴音——
+       这是一个关于音乐、传承与纯粹快乐的故事。
+3) Include the “What Is a Piano?” and “A Note to Parents” sections exactly as provided (English copy below).
+4) Insert the elephant book image between the header block and “A Note to Parents” OR immediately before the “A Note to Parents” heading (whichever reads best).
+5) Add a language-aware PDF link at the bottom:
+   - English mode: piano_to_bitcoin_english_paginated.pdf
+   - 中文 mode: piano_to_bitcoin_chinese.pdf
+6) Add a PIN gate:
+   - If no PIN is set: allow setting a new PIN.
+   - If PIN is set: require PIN to unlock Parent content.
+   - Provide “Forgot PIN?” that clears only the stored PIN (soft reset) after confirmation. Do not clear other data.
+
+Deliver as one self-contained HTML file with embedded CSS/JS. Use localStorage only.
+```
+
+## Single-file HTML (copy/paste as `parent-layer.html`)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Parent Layer — The Big Piano</title>
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --panel:#111318;
+      --panel2:#0f1014;
+      --text:#e9eef5;
+      --muted:#aeb6c3;
+      --gold:#e6d38a;
+      --line:rgba(230,211,138,.22);
+      --shadow: 0 24px 80px rgba(0,0,0,.55);
+      --radius:18px;
+      --max:720px;
+      --pad:22px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(230,211,138,.08), transparent 60%),
+                  radial-gradient(900px 700px at 80% 40%, rgba(255,255,255,.04), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      letter-spacing:.1px;
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 14px;
+    }
+
+    .modal{
+      width:min(var(--max), 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.08);
+      border-top:1px solid rgba(230,211,138,.22);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow:hidden;
+    }
+
+    .bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px 18px;
+      background: rgba(0,0,0,.25);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .brand .kicker{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(230,211,138,.9);
+    }
+    .brand .title{
+      font-size:14px;
+      color: rgba(233,238,245,.9);
+    }
+
+    .controls{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .seg{
+      display:inline-flex;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      overflow:hidden;
+    }
+    .seg button{
+      border:0;
+      background:transparent;
+      color: rgba(233,238,245,.75);
+      padding:8px 12px;
+      font-size:12px;
+      cursor:pointer;
+    }
+    .seg button.active{
+      background: rgba(230,211,138,.14);
+      color: rgba(230,211,138, .95);
+    }
+
+    .body{
+      padding: var(--pad);
+      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.10));
+    }
+
+    .locked{
+      display:none;
+    }
+
+    .gate{
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding:16px;
+      margin-bottom:16px;
+    }
+    .gate h3{
+      margin:0 0 10px 0;
+      font-size:14px;
+      color: rgba(230,211,138,.95);
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    input[type="password"], input[type="text"]{
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      border-radius: 12px;
+      padding:10px 12px;
+      font-size:14px;
+      outline:none;
+      min-width: 180px;
+      flex:1;
+    }
+    .btn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(233,238,245,.92);
+      padding:10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .btn.primary{
+      border-color: rgba(230,211,138,.35);
+      background: rgba(230,211,138,.14);
+      color: rgba(230,211,138,.98);
+    }
+    .link{
+      background:none;
+      border:0;
+      color: rgba(230,211,138,.92);
+      text-decoration: underline;
+      cursor:pointer;
+      padding:0;
+      font-size:12px;
+    }
+    .hint{
+      margin-top:10px;
+      color: rgba(233,238,245,.68);
+      font-size:12px;
+      line-height:1.5;
+    }
+    .msg{
+      margin-top:10px;
+      font-size:12px;
+      color: rgba(233,238,245,.72);
+    }
+
+    .headerBlock{
+      text-align:center;
+      padding: 8px 6px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      margin-bottom: 18px;
+    }
+    .hTitle{
+      margin:0;
+      font-size:26px;
+      letter-spacing:.3px;
+      color: rgba(230,211,138,.98);
+    }
+    .hSub{
+      margin:10px 0 0 0;
+      font-size:15px;
+      color: rgba(233,238,245,.80);
+      font-style: italic;
+    }
+    .hBlurb{
+      margin:14px auto 0;
+      max-width: 46ch;
+      color: rgba(233,238,245,.78);
+      line-height:1.6;
+      font-size:14px;
+      white-space:pre-line;
+    }
+
+    h2{
+      margin:0 0 10px 0;
+      color: rgba(230,211,138,.98);
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+    .lead{
+      font-weight:700;
+      color: rgba(233,238,245,.92);
+      font-size:18px;
+      margin: 0 0 18px 0;
+    }
+    p{
+      margin:0 0 16px 0;
+      color: rgba(233,238,245,.82);
+      line-height:1.75;
+      font-size:16px;
+    }
+    ul{
+      margin:10px 0 18px 0;
+      padding-left: 18px;
+      color: rgba(233,238,245,.82);
+      line-height:1.75;
+    }
+    li{ margin: 6px 0; }
+
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.07);
+      margin: 18px 0;
+    }
+
+    .imageWrap{
+      margin: 16px 0 18px;
+      border-radius: 16px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+    }
+    .imageWrap img{
+      width:100%;
+      display:block;
+      height:auto;
+    }
+
+    .pdf{
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .pdf a{
+      color: rgba(230,211,138,.95);
+      text-decoration: underline;
+      font-size: 15px;
+    }
+
+    .footerNote{
+      margin-top:10px;
+      color: rgba(233,238,245,.62);
+      font-size:12px;
+      line-height:1.5;
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="modal" role="dialog" aria-label="Parent Layer">
+    <div class="bar">
+      <div class="brand">
+        <div class="kicker">Parent Layer</div>
+        <div class="title">The Big Piano</div>
+      </div>
+
+      <div class="controls">
+        <div class="seg" aria-label="Language toggle">
+          <button id="btnEn" class="active" type="button">English</button>
+          <button id="btnZh" type="button">中文</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="body">
+
+      <!-- PIN Gate -->
+      <div class="gate" id="gate">
+        <h3 id="gateTitle">Parent access</h3>
+        <div class="row">
+          <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter PIN" />
+          <button id="pinAction" class="btn primary" type="button">Unlock</button>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <button id="forgotBtn" class="link" type="button" style="display:none;">Forgot PIN?</button>
+        </div>
+        <div class="hint" id="gateHint">
+          This space is for adult thinking. The PIN is stored only on this device.
+        </div>
+        <div class="msg" id="gateMsg"></div>
+      </div>
+
+      <!-- Locked Content -->
+      <div class="locked" id="lockedContent">
+
+        <!-- Missing Header Block (now included) -->
+        <div class="headerBlock">
+          <h1 class="hTitle">《大钢琴》 | The Big Piano</h1>
+          <div class="hSub" id="subLine"></div>
+          <div class="hBlurb" id="blurb"></div>
+        </div>
+
+        <h2 id="secTitle1">What Is a Piano?</h2>
+        <div class="lead" id="secLead1">Before ownership is taught, it is felt.</div>
+
+        <!-- EN body (locked copy) -->
+        <div id="enBody">
+          <p>My toddler is at the stage where “mine” arrives long before “yours.”<br/>Shoes. A ball. A book.</p>
+
+          <p>They are learning to map the world between what feels like theirs, and what belongs to others:<br/>mummy’s brush, daddy’s shoes.</p>
+
+          <p>This sense isn’t explained. It emerges.<br/>It’s physical, immediate, and absolute.</p>
+
+          <p>Naturally, this creates friction.<br/>The logic of sharing is foreign. Why give up what you’re holding?<br/>Why can’t you have what you want, right now?</p>
+
+          <p>The concept of patience is just a word.<br/>And it should be. Their world is the present moment.</p>
+
+          <p>What fascinates me is the briefness of this early “ownership.”<br/>A toy is clutched tightly in conflict, then discarded moments later.<br/>The desire evaporates with access.</p>
+
+          <p>It’s not about keeping.<br/>It’s about the act of having had.</p>
+
+          <p>At the same time, the word “share” is beginning to appear —<br/>not as a moral rule, but as a social tool.</p>
+
+          <p>“Daddy, share,” they say, even while reaching for what I hold.<br/>They use it with other toddlers, too.</p>
+
+          <p>I think they’re noticing it softens conflict.<br/>They see it works before they understand why.</p>
+
+          <p>This is where the pianos quietly entered our world.</p>
+
+          <p>My toddler has their own piano. A small 37-key keyboard.<br/>It’s always there, to be played or ignored.<br/>It is unquestionably theirs.</p>
+
+          <p>I have a piano, too. A small, weighted keyboard.<br/>At first, it was mine.<br/>Then it became shared.<br/>Slowly, without any decree, it began to feel like ours.</p>
+
+          <p>Then there is the Big Piano.<br/>The full-sized one in my sister’s study.</p>
+
+          <p>My toddler has no access to it unless we visit.<br/>It exists elsewhere, and only sometimes.</p>
+
+          <p>I didn’t plan this, but I see now we created a natural hierarchy:</p>
+
+          <ul>
+            <li>Their toy piano — always available</li>
+            <li>My shared piano — accessible, negotiated</li>
+            <li>The big piano — rare, permission-bound</li>
+          </ul>
+
+          <p>I never had to explain scarcity.<br/>My toddler encountered it.</p>
+
+          <p>The Big Piano mattered differently.<br/>Not because it was technically better —<br/>but because it wasn’t always accessible.</p>
+
+          <p>At this stage, ownership isn’t legal or ethical.<br/>It isn’t about rights or fairness.</p>
+
+          <p>It is about:</p>
+          <ul>
+            <li>this is in my hand</li>
+            <li>this is not always here</li>
+            <li>this feels different when we experience it together</li>
+          </ul>
+
+          <p>That felt experience — not a lesson — is the foundation.</p>
+
+          <p>And from this simple, personal hierarchy,<br/>a much larger story about materials, history, and value begins to unfold.</p>
+
+          <div class="divider"></div>
+
+          <h2>A Note to Parents</h2>
+
+          <!-- Image placement -->
+          <div class="imageWrap" aria-label="Elephant book image">
+            <img src="why_elephant.jpg" alt="Book cover: WHY DID THE ELEPHANT MAKE A NOISE?" />
+          </div>
+
+          <p>What you are about to read next (elsewhere in this app) is a record of my thinking as a father.</p>
+
+          <p>One evening at bath time, my child asked me,<br/>“Why did the elephant make a noise?”</p>
+
+          <p>They were standing in the bath, looking at their toy elephant by the taps.<br/>They picked it up, stroked it, played with its tusks and long trunk,<br/>and waited for me to tell them a story.</p>
+
+          <p>In that moment, I realised they weren’t asking for an answer.<br/>They were thinking.<br/>They were storytelling.<br/>Or asking me to make up a story called <em>Why the Elephant Made a Noise</em>.</p>
+
+          <p>I told them I would tell it the following night.</p>
+
+          <p>In the meantime, their love for elephants forced me to confront the history of piano keys.<br/>I was perplexed.</p>
+
+          <p>I needed a quiet, non-judgmental space to sort out my thoughts —<br/>from materials to ethics,<br/>from technology to value.</p>
+
+          <p>What comes next is not a lesson.<br/>It is not polished.<br/>It is not complete.</p>
+
+          <p>It is a preserved record of thinking,<br/>kept here for a day in the future.</p>
+
+          <div class="pdf">
+            <a id="pdfLinkEn" href="piano_to_bitcoin_english_paginated.pdf" target="_blank" rel="noopener">Read the archived thinking record (PDF)</a>
+          </div>
+          <div class="footerNote">Local-only experience. No accounts. No tracking.</div>
+        </div>
+
+        <!-- 中文 body (you can replace with your finalized Chinese translation of these sections) -->
+        <div id="zhBody" style="display:none;">
+          <p style="color:rgba(233,238,245,.70); font-size:14px; line-height:1.7;">
+            中文版的“什么是钢琴？”与“给父母的一段话”正文可在这里粘贴最终译文（单语呈现）。
+            目前此模板已实现：标题区、简介区、图片位置、PDF链接切换、PIN门禁与重置流程。
+          </p>
+
+          <div class="divider"></div>
+
+          <h2>给父母的一段话</h2>
+          <div class="imageWrap" aria-label="Elephant book image">
+            <img src="why_elephant.jpg" alt="书封面：为什么大象会发出声音？" />
+          </div>
+
+          <div class="pdf">
+            <a id="pdfLinkZh" href="piano_to_bitcoin_chinese.pdf" target="_blank" rel="noopener">阅读归档的思考记录（PDF）</a>
+          </div>
+          <div class="footerNote">仅本地保存。不需账号。不做追踪。</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Language ----------
+  const btnEn = document.getElementById('btnEn');
+  const btnZh = document.getElementById('btnZh');
+  const enBody = document.getElementById('enBody');
+  const zhBody = document.getElementById('zhBody');
+  const subLine = document.getElementById('subLine');
+  const blurb = document.getElementById('blurb');
+
+  function setLang(lang){
+    localStorage.setItem('parentLang', lang);
+    if(lang === 'zh'){
+      btnZh.classList.add('active'); btnEn.classList.remove('active');
+      enBody.style.display = 'none';
+      zhBody.style.display = 'block';
+
+      subLine.textContent = '一个关于“大”的小故事。';
+      blurb.textContent =
+        '一个三岁的孩子，发现了真正钢琴的魔力。\n' +
+        '从电子琴的叮咚声，到一件家族传世之宝的宏伟琴音——\n' +
+        '这是一个关于音乐、传承与纯粹快乐的故事。';
+    } else {
+      btnEn.classList.add('active'); btnZh.classList.remove('active');
+      enBody.style.display = 'block';
+      zhBody.style.display = 'none';
+
+      subLine.textContent = 'A small story about something big.';
+      blurb.textContent =
+        'A three-year-old discovers the magic of a real piano.\n' +
+        'From electronic plinks to the grand sound of a family heirloom,\n' +
+        'it is a story about music, legacy, and pure joy.';
+    }
+  }
+
+  btnEn.addEventListener('click', () => setLang('en'));
+  btnZh.addEventListener('click', () => setLang('zh'));
+
+  // ---------- PIN Gate (local-only) ----------
+  const gate = document.getElementById('gate');
+  const locked = document.getElementById('lockedContent');
+  const pinInput = document.getElementById('pinInput');
+  const pinAction = document.getElementById('pinAction');
+  const gateTitle = document.getElementById('gateTitle');
+  const gateHint = document.getElementById('gateHint');
+  const gateMsg = document.getElementById('gateMsg');
+  const forgotBtn = document.getElementById('forgotBtn');
+
+  const PIN_KEY = 'parentPin';
+
+  function hasPin(){
+    return !!localStorage.getItem(PIN_KEY);
+  }
+
+  function showMsg(text){
+    gateMsg.textContent = text || '';
+  }
+
+  function lock(){
+    locked.style.display = 'none';
+    gate.style.display = 'block';
+    pinInput.value = '';
+    showMsg('');
+    forgotBtn.style.display = hasPin() ? 'inline' : 'none';
+
+    if(!hasPin()){
+      gateTitle.textContent = 'Set a Parent PIN';
+      pinInput.placeholder = 'Set new PIN';
+      pinAction.textContent = 'Set PIN';
+      gateHint.textContent = 'Choose a PIN you will remember. Stored only on this device.';
+    } else {
+      gateTitle.textContent = 'Parent access';
+      pinInput.placeholder = 'Enter PIN';
+      pinAction.textContent = 'Unlock';
+      gateHint.textContent = 'This space is for adult thinking. The PIN is stored only on this device.';
+    }
+  }
+
+  function unlock(){
+    gate.style.display = 'none';
+    locked.style.display = 'block';
+  }
+
+  pinAction.addEventListener('click', () => {
+    const v = (pinInput.value || '').trim();
+    if(v.length < 3){
+      showMsg('PIN is too short.');
+      return;
+    }
+
+    if(!hasPin()){
+      localStorage.setItem(PIN_KEY, v);
+      showMsg('PIN set. Unlocking…');
+      setTimeout(unlock, 150);
+      return;
+    }
+
+    const saved = localStorage.getItem(PIN_KEY);
+    if(v === saved){
+      unlock();
+    } else {
+      showMsg('Incorrect PIN.');
+      forgotBtn.style.display = 'inline';
+    }
+  });
+
+  forgotBtn.addEventListener('click', () => {
+    const ok = confirm('Forgot PIN? This will reset Parent access on this device. You can set a new PIN afterwards.');
+    if(!ok) return;
+    localStorage.removeItem(PIN_KEY);
+    lock();
+    showMsg('PIN reset. Please set a new PIN.');
+  });
+
+  // ---------- Init ----------
+  setLang(localStorage.getItem('parentLang') || 'en');
+  lock();
+</script>
+</body>
+</html>
+```
+
+---
+
+## Two quick implementation notes (so the screenshots match what you expect)
+
+1. **Your elephant image file**
+
+* In the HTML I used `why_elephant.jpg`.
+* Rename your chosen image to that filename (or change the `src=`).
+
+2. **Your “missing Parent Layer header block”**
+
+* This file puts it **inside the Parent Layer modal**, above “What Is a Piano?”.
+* That’s why your screenshots didn’t show it previously: it likely wasn’t included in that modal’s content.
+
+If you paste your **final Chinese translation** of the “What Is a Piano?” + “A Note to Parents” sections, I will return **one single replacement block** for `zhBody` that matches your tone (and stays single-language).

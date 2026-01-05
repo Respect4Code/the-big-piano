@@ -261,9 +261,9 @@ export default function Home() {
         setShowForgotPin(true);
       }
       if (newAttempts === 1 && hint) {
-        showToast(lang === "zh" ? `PIN错误。提示：${hint}` : `Wrong PIN. Hint: ${hint}`);
+        showToast(lang === "zh" ? `PIN错误。再试一次。提示：${hint}` : `Wrong PIN. Try again. Hint: ${hint}`);
       } else {
-        showToast(lang === "zh" ? "PIN错误" : "Wrong PIN");
+        showToast(lang === "zh" ? "PIN错误。再试一次。" : "Wrong PIN. Try again.");
       }
     }
   };
@@ -271,8 +271,8 @@ export default function Home() {
   const handleForgotPin = () => {
     const confirmed = confirm(
       lang === "zh" 
-        ? "忘记PIN码？这将重置您的PIN码，但保留所有保存的时刻。如需完全重置，可在家长区域内使用「清除所有数据」。继续吗？"
-        : "Forgot your PIN? This will reset your PIN but keep all saved moments. To start completely fresh, use 'Wipe All Data' inside the Parent section after resetting. Continue?"
+        ? "重置您的PIN码？您的录音不会被删除。"
+        : "Reset your PIN? Your recordings won't be deleted."
     );
     if (confirmed) {
       resetPinOnly();
@@ -280,7 +280,7 @@ export default function Home() {
       setFailedAttempts(0);
       setShowForgotPin(false);
       setShowPinSetup(true);
-      showToast(lang === "zh" ? "PIN已重置，请设置新PIN码" : "PIN reset. Please set a new PIN.");
+      showToast(lang === "zh" ? "PIN已清除。请设置新PIN码以重新锁定家长区域。" : "PIN cleared. Set a new one to lock the Parent area again.");
     }
   };
   

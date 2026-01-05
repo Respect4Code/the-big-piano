@@ -173,7 +173,7 @@ export const COPY: Record<Lang, StoryContent> = {
     parentFramingText: "This is not written for children. It's a record of how I thought when I didn't yet know how to explain the world.",
     helperTextNote: "Fragments are okay. Misspellings are okay.",
     pinSetupTitle: "Set Your PIN",
-    pinSetupText: "This space is for adult thinking. Choose a PIN you won't share yet.",
+    pinSetupText: "Create a 4-digit PIN. Write it down somewhere safe. Don't share it with anyone. Not your PIN, not your app. If you forget it, you can reset it - but only you can do this.",
     pinSetupBtn: "Set PIN & Enter",
   },
   zh: {
@@ -277,7 +277,7 @@ export const COPY: Record<Lang, StoryContent> = {
     parentFramingText: "这不是写给孩子的。这是一份思考记录——当我还不知道如何向他解释这个世界时，我是怎样思考的。",
     helperTextNote: "片段也可以。拼写错误也没关系。",
     pinSetupTitle: "设置您的PIN码",
-    pinSetupText: "这个空间是给成人思考的。选择一个您暂时不会分享的PIN码。",
+    pinSetupText: "创建一个4位PIN码。把它写在安全的地方。不要与任何人分享。不是你的PIN码，就不是你的应用。如果忘记了，你可以重置——但只有你能做到这一点。",
     pinSetupBtn: "设置PIN码并进入",
   }
 };
