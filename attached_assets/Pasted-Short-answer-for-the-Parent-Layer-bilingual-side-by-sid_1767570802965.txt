@@ -1,0 +1,162 @@
+Short answer: **for the Parent Layer, bilingual side-by-side *hinders* more than it helps.**
+What you are sensing is correct, and there are **no hallucinations** in what you’re seeing — there is, however, a **structural mismatch** between intent and presentation.
+
+Let me break this down cleanly.
+
+---
+
+## 1. Are there hallucinations?
+
+**No.**
+What’s on screen matches the content you approved *in substance*.
+
+However, one thing **is missing in the English Parent Layer view** that *you explicitly intended to be there*:
+
+> **《大钢琴》 | The Big Piano**
+> 一个关于“大”的小故事。
+> *A small story about something big.*
+>
+> *A three-year-old discovers the magic of a real piano…*
+
+In your screenshots, the **body text is present**, but the **introductory framing block** is either:
+
+* rendered only once (above the image), or
+* visually de-emphasised compared to how strongly you conceptually treat it.
+
+So your discomfort is not imagined — it’s a **presentation hierarchy issue**, not a content error.
+
+That block is doing *identity work*. It should feel like a title page, not a caption.
+
+---
+
+## 2. Does bilingual text help or hinder in the Parent Layer?
+
+### For children: bilingual can help
+
+### For parents: bilingual **dilutes**
+
+And this Parent Layer is explicitly **not** for the child.
+
+### Why bilingual side-by-side hinders here
+
+1. **This layer is reflective, not instructional**
+   Parents read it slowly, emotionally, often late at night.
+   Doubling the text:
+
+   * breaks rhythm
+   * interrupts tone
+   * shifts the brain into “comparison / translation mode”
+
+2. **It weakens voice authority**
+   This text works because it feels *singular* and *confident*.
+   Side-by-side languages subtly introduce:
+
+   > “Which is the original?”
+   > “Which is canonical?”
+
+   That’s not what you want here.
+
+3. **You already have a language switch**
+   Your UI clearly shows:
+
+   * English
+   * 中文
+
+   That is the *correct* place for bilingualism — **at the mode level**, not the paragraph level.
+
+---
+
+## 3. What is the correct model for the Parent Layer?
+
+**One language per mode. Fully. Cleanly.**
+
+### English Parent Mode
+
+* Entire Parent Layer in English
+* English typography, rhythm, pacing
+* No Chinese interleaved
+
+### Chinese Parent Mode
+
+* Entire Parent Layer in Chinese
+* Thoughtful literary Chinese (which you already have)
+* No English interleaved
+
+This mirrors how serious books, museums, and exhibitions handle bilingual content.
+
+It signals:
+
+> “This text matters enough to stand on its own.”
+
+---
+
+## 4. Where *should* bilingual coexist?
+
+Two places only:
+
+### A. The title header (optional, tasteful)
+
+This works because it’s symbolic, not cognitive:
+
+```
+《大钢琴》 | The Big Piano
+```
+
+That’s identity, not reading load.
+
+### B. The child-facing layer
+
+There, bilingualism is playful, normalising, curiosity-driven.
+
+The Parent Layer is different. It’s private. Adult. Reflective.
+
+---
+
+## 5. What I recommend you do next (very concrete)
+
+### 1. Parent Layer: split by language
+
+* English mode → English only
+* 中文模式 → 中文 only
+
+### 2. Elevate the intro block visually
+
+Treat this as a **title card**, not body text:
+
+* tighter width
+* more breathing space
+* visually distinct from the essay
+
+### 3. Keep the image exactly where it is
+
+The book image placement is excellent.
+It acts as a **hinge** between:
+
+* abstraction (text)
+* physical reality (object)
+
+Do not move it.
+
+---
+
+## 6. Final reassurance
+
+You are not looping or overthinking.
+You are doing **editorial systems thinking**, which is exactly what this project requires.
+
+What you’ve built is *already strong*.
+This is not a rewrite moment — it’s a **presentation refinement moment**.
+
+If you want, next I can:
+
+* propose the exact English-only Parent Layer markup
+* propose the Chinese-only equivalent
+* or help you define a “canonical language” rule across the app
+
+But on your core question:
+
+> **Does bilingual help or hinder in the Parent Layer?**
+
+**It hinders.
+Split by language.
+You’ll feel the calm immediately.**

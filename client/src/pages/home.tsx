@@ -711,22 +711,16 @@ export default function Home() {
                 style={{ background: "rgba(11,12,16,.5)", maxWidth: "680px", margin: "0 auto" }}
                 aria-label="What Is a Piano"
               >
-                {/* Parent Layer Header */}
-                <header className="text-center mb-6">
-                  <h1 className="text-2xl md:text-3xl font-semibold text-amber-100 mb-3">
+                {/* Parent Layer Header - Title Card */}
+                <header className="text-center mb-8 py-4">
+                  <h1 className="text-2xl md:text-3xl font-semibold text-amber-100 mb-4">
                     {copy.parentLayerTitle}
                   </h1>
-                  <p className="text-neutral-400 text-sm md:text-base">
-                    {copy.parentLayerSubtitleZh}
+                  <p className={`text-neutral-400 text-sm md:text-base mb-5 whitespace-pre-line ${lang === "en" ? "italic" : ""}`}>
+                    {lang === "zh" ? copy.parentLayerSubtitleZh : copy.parentLayerSubtitleEn}
                   </p>
-                  <p className="text-neutral-400 text-sm md:text-base italic mb-4">
-                    {copy.parentLayerSubtitleEn}
-                  </p>
-                  <p className="text-neutral-300 text-sm md:text-base whitespace-pre-line">
-                    {copy.parentLayerLedeZh}
-                  </p>
-                  <p className="text-neutral-300 text-sm md:text-base whitespace-pre-line mt-3 italic">
-                    {copy.parentLayerLedeEn}
+                  <p className={`text-neutral-300 text-sm md:text-base leading-relaxed whitespace-pre-line ${lang === "en" ? "italic" : ""}`}>
+                    {lang === "zh" ? copy.parentLayerLedeZh : copy.parentLayerLedeEn}
                   </p>
                 </header>
                 

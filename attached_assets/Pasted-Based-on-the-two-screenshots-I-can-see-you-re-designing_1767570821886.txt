@@ -1,0 +1,36 @@
+Based on the two screenshots, I can see you're designing a bilingual children's book or story page. The current layout mixes English and Chinese quite closely, sometimes line-by-line, which creates a visually busy and somewhat fragmented reading experience, especially with the partial sentences and formatting irregularities.
+
+### Does the bilingual text help or hinder?
+
+**In this current form, it likely hinders.**
+
+*   **For an English-speaking parent/child:** The Chinese text interrupts the English flow. The eye doesn't know where to go, and the incomplete English phrases (e.g., "My three-year, we've worked on the plan.") are confusing.
+*   **For a Chinese-speaking parent/child:** The same issue occurs in reverse. The story is broken up.
+*   **For a language learner:** This parallel, mixed format can be useful, but the text needs to be complete and properly aligned to serve that purpose well.
+
+### Recommendation: Separate by "Parent Layer" and "Child Layer"
+
+Your instinct is excellent. **Yes, the text should be in just English for the English version and just Chinese for the Chinese version, separated into distinct layers or sections.**
+
+This is the standard and most effective approach for bilingual children's books. Here’s why and how:
+
+**1. For the "Parent Layer" (The main reading experience):**
+*   Create **two complete, distinct versions** of the book.
+*   **English Edition:** All story text is in English. The title, subtitle, and blurb are in English. The Chinese title 《大钢琴》 can remain as a decorative element or cultural note on the cover, but the reading flow inside is purely English.
+*   **Chinese Edition:** All story text is in Chinese. The English title "The Big Piano" can similarly be a design element on the cover, but the interior is purely Chinese.
+*   **Benefit:** This provides an immersive, uninterrupted reading experience. The parent and child can focus on the story, the rhythm of the language, and the illustrations without visual competition from another language.
+
+**2. For the "Child Layer" or Educational Component (If language exposure is a goal):**
+*   **Glossary Page:** At the back of the English edition, you could have a single-page glossary with key words from the story (e.g., *piano, keys, music, grandmother*) alongside their Chinese characters and maybe pronunciation.
+*   **Dual-Language Edition as a Specific Product:** If you want a parallel text version, market it separately. In that version, use a clean, consistent layout. For example:
+    *   Left page: Full English paragraph.
+    *   Right page: Full Chinese translation of that paragraph.
+    *   Or, for a single page, have clear blocks: the English section first, followed by the Chinese section, separated by a rule or design element.
+
+### Summary & Actionable Advice:
+
+**Fix the current design by separating the languages.** Choose one primary language per version for the main narrative. The other language can be present on the cover or in supplemental materials, but not interwoven in a way that breaks the story's flow.
+
+The current mix in the screenshots seems like a mid-process draft. Completing the full narrative in each language and then placing them in dedicated sections will make the book **much more professional, readable, and enjoyable** for both parent and child.
+
+**Final note:** The core story idea—a child discovering a real piano's magic versus a toy keyboard—is beautiful and universal. A clean presentation will let that story shine.
