@@ -12,7 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
 import elephantBookImage from "@assets/image-155_1767566599607.jpg";
-import thinkingRecordPdf from "@assets/piano_to_bitcoin_meta_ai_conversation_1767568197818.pdf";
+import thinkingRecordPdfEn from "@assets/piano_to_bitcoin_english_paginated_1767597077589.pdf";
+import thinkingRecordPdfZh from "@assets/piano_to_bitcoin_chinese_1767597091754.pdf";
 import mozartAudio from "@assets/mozart_rondo_alla_turca.mp3";
 import beethovenAudio from "@assets/beethoven_moonlight_sonata.mp3";
 
@@ -791,7 +792,7 @@ export default function Home() {
                 {/* PDF Link */}
                 <div className="mt-6 pt-4 border-t border-white/10">
                   <a 
-                    href={thinkingRecordPdf}
+                    href={lang === "zh" ? thinkingRecordPdfZh : thinkingRecordPdfEn}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-amber-200 hover:text-amber-100 underline underline-offset-4 transition-colors"
