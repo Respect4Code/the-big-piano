@@ -271,8 +271,8 @@ export default function Home() {
   const handleForgotPin = () => {
     const confirmed = confirm(
       lang === "zh" 
-        ? "忘记PIN码？这将重置您的PIN码，但保留所有保存的时刻。继续吗？"
-        : "Forgot your PIN? This will reset your PIN but keep all saved moments. Continue?"
+        ? "忘记PIN码？这将重置您的PIN码，但保留所有保存的时刻。如需完全重置，可在家长区域内使用「清除所有数据」。继续吗？"
+        : "Forgot your PIN? This will reset your PIN but keep all saved moments. To start completely fresh, use 'Wipe All Data' inside the Parent section after resetting. Continue?"
     );
     if (confirmed) {
       resetPinOnly();
