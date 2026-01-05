@@ -354,9 +354,24 @@ export interface Entry {
 const LS_KEY = "bigpiano_entries_v1";
 const LS_PIN = "bigpiano_parent_pin_v1";
 const LS_PIN_SET = "bigpiano_pin_set_v1";
+const LS_PIN_HINT = "bigpiano_pin_hint_v1";
 
 export function isPinSet(): boolean {
   return localStorage.getItem(LS_PIN_SET) === "true";
+}
+
+export function getPinHint(): string | null {
+  return localStorage.getItem(LS_PIN_HINT);
+}
+
+export function setPinHint(hint: string): void {
+  localStorage.setItem(LS_PIN_HINT, hint);
+}
+
+export function resetPinOnly(): void {
+  localStorage.removeItem(LS_PIN);
+  localStorage.removeItem(LS_PIN_SET);
+  localStorage.removeItem(LS_PIN_HINT);
 }
 
 export function loadEntries(): Entry[] {

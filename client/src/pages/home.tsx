@@ -2,7 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { 
   COPY, STORY, ICONS, 
   type Lang, type Entry,
-  loadEntries, saveEntries, getPin, setPin, wipeAllData 
+  loadEntries, saveEntries, getPin, setPin, wipeAllData,
+  getPinHint, setPinHint, resetPinOnly
 } from "@/lib/story";
 import { Music } from "lucide-react";
 import { dbPutAudio, dbGetAudio, dbDeleteAudio, dbWipeAllAudio } from "@/lib/idb";
@@ -42,8 +43,11 @@ export default function Home() {
   const [parentUnlocked, setParentUnlocked] = useState(false);
   const [pinInput, setPinInput] = useState("");
   const [newPinInput, setNewPinInput] = useState("");
+  const [hintInput, setHintInput] = useState("");
   const [showPinSetup, setShowPinSetup] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [showForgotPin, setShowForgotPin] = useState(false);
 
   // Classical music player state
   const [musicPlaying, setMusicPlaying] = useState(false);
@@ -247,15 +251,47 @@ export default function Home() {
     } else if (pinInput === storedPin) {
       setParentUnlocked(true);
       setPinInput("");
+      setFailedAttempts(0);
+      setShowForgotPin(false);
     } else {
-      showToast(lang === "zh" ? "PIN错误" : "Wrong PIN");
+      const newAttempts = failedAttempts + 1;
+      setFailedAttempts(newAttempts);
+      const hint = getPinHint();
+      if (newAttempts >= 3) {
+        setShowForgotPin(true);
+      }
+      if (newAttempts === 1 && hint) {
+        showToast(lang === "zh" ? `PIN错误。提示：${hint}` : `Wrong PIN. Hint: ${hint}`);
+      } else {
+        showToast(lang === "zh" ? "PIN错误" : "Wrong PIN");
+      }
+    }
+  };
+  
+  const handleForgotPin = () => {
+    const confirmed = confirm(
+      lang === "zh" 
+        ? "忘记PIN码？这将重置您的PIN码，但保留所有保存的时刻。继续吗？"
+        : "Forgot your PIN? This will reset your PIN but keep all saved moments. Continue?"
+    );
+    if (confirmed) {
+      resetPinOnly();
+      setPinInput("");
+      setFailedAttempts(0);
+      setShowForgotPin(false);
+      setShowPinSetup(true);
+      showToast(lang === "zh" ? "PIN已重置，请设置新PIN码" : "PIN reset. Please set a new PIN.");
     }
   };
   
   const handlePinSetup = () => {
     if (newPinInput.length >= 4) {
       setPin(newPinInput);
+      if (hintInput.trim()) {
+        setPinHint(hintInput.trim());
+      }
       setNewPinInput("");
+      setHintInput("");
       setShowPinSetup(false);
       setParentUnlocked(true);
       showToast(lang === "zh" ? "PIN已设置" : "PIN set");
@@ -616,18 +652,28 @@ export default function Home() {
                 <h3 className="font-semibold text-amber-200">{copy.pinSetupTitle}</h3>
                 <p className="text-sm text-neutral-300 mt-2">{copy.pinSetupText}</p>
               </div>
-              <div className="flex gap-2">
+              <div className="space-y-3">
+                <div className="flex gap-2">
+                  <Input 
+                    type="password"
+                    value={newPinInput}
+                    onChange={(e) => setNewPinInput(e.target.value)}
+                    placeholder={lang === "zh" ? "选择您的PIN码（至少4位）" : "Choose your PIN (at least 4 digits)"}
+                    data-testid="input-setup-pin"
+                    className="bg-neutral-800 border-white/10 text-white"
+                  />
+                  <Button onClick={handlePinSetup} data-testid="button-setup-pin" className="min-h-[44px] bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border-amber-500/30">
+                    {copy.pinSetupBtn}
+                  </Button>
+                </div>
                 <Input 
-                  type="password"
-                  value={newPinInput}
-                  onChange={(e) => setNewPinInput(e.target.value)}
-                  placeholder={lang === "zh" ? "选择您的PIN码（至少4位）" : "Choose your PIN (at least 4 digits)"}
-                  data-testid="input-setup-pin"
+                  type="text"
+                  value={hintInput}
+                  onChange={(e) => setHintInput(e.target.value)}
+                  placeholder={lang === "zh" ? "提示（可选，例如：孩子的出生年份）" : "Hint (optional, e.g., child's birth year)"}
+                  data-testid="input-pin-hint"
                   className="bg-neutral-800 border-white/10 text-white"
                 />
-                <Button onClick={handlePinSetup} data-testid="button-setup-pin" className="min-h-[44px] bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border-amber-500/30">
-                  {copy.pinSetupBtn}
-                </Button>
               </div>
             </div>
           ) : !parentUnlocked ? (
@@ -646,6 +692,15 @@ export default function Home() {
                   {copy.unlockBtn}
                 </Button>
               </div>
+              {showForgotPin && (
+                <button
+                  onClick={handleForgotPin}
+                  className="text-sm text-neutral-500 hover:text-neutral-300 underline underline-offset-2"
+                  data-testid="button-forgot-pin"
+                >
+                  {lang === "zh" ? "忘记PIN码？" : "Forgot PIN?"}
+                </button>
+              )}
             </div>
           ) : (
             <div className="space-y-4">
