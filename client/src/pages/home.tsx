@@ -364,6 +364,31 @@ export default function Home() {
     setMusicPlaying(false);
   };
 
+  const exportNotes = () => {
+    const data = {
+      exportedAt: new Date().toISOString(),
+      entries: entries.map(e => ({
+        id: e.id,
+        timestamp: e.createdAt,
+        date: formatDate(e.createdAt),
+        icons: e.icons,
+        childAge: e.childAge,
+        note: e.note,
+        hasAudio: e.hasAudio
+      }))
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `big-piano-journey-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast(lang === "zh" ? "旅程已导出" : "Journey exported");
+  };
+
   return (
     <div className="min-h-screen" style={{
       background: `radial-gradient(1000px 500px at 20% 0%, rgba(110,231,255,.09), transparent 60%),
