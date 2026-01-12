@@ -5,12 +5,13 @@ import {
   loadEntries, saveEntries, getPin, setPin, wipeAllData,
   getPinHint, setPinHint, resetPinOnly
 } from "@/lib/story";
-import { Music } from "lucide-react";
+import { Music, BookOpen, FileText, Download, Settings, ChevronDown } from "lucide-react";
 import { dbPutAudio, dbGetAudio, dbDeleteAudio, dbWipeAllAudio } from "@/lib/idb";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
 import elephantBookImageEn from "@assets/image-155_1767566599607.jpg";
 import elephantBookImageZh from "@assets/Chinese_Cover_1768167832940.png";
@@ -55,6 +56,12 @@ export default function Home() {
   const [justSaved, setJustSaved] = useState(false);
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [showForgotPin, setShowForgotPin] = useState(false);
+  
+  // Elephant Gate state
+  const [elephantGatePassed, setElephantGatePassed] = useState(false);
+  const [elephantGateFading, setElephantGateFading] = useState(false);
+  const [showIvoryContext, setShowIvoryContext] = useState(false);
+  const [showPinWhisper, setShowPinWhisper] = useState(false);
 
   // Classical music player state
   const [musicPlaying, setMusicPlaying] = useState(false);
@@ -709,179 +716,368 @@ export default function Home() {
                 </button>
               )}
             </div>
-          ) : (
-            <div className="space-y-4">
-              {/* Framing text */}
-              <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4">
-                <p className="text-sm text-neutral-300 italic">{copy.parentFramingText}</p>
+          ) : !elephantGatePassed ? (
+            /* Elephant Question Gate - Full-screen threshold */
+            <div 
+              className={`flex flex-col items-center justify-center min-h-[60vh] text-center transition-opacity duration-700 ${elephantGateFading ? "opacity-0" : "opacity-100"}`}
+              onClick={() => {
+                setElephantGateFading(true);
+                setTimeout(() => {
+                  setElephantGatePassed(true);
+                  setShowPinWhisper(true);
+                  setTimeout(() => setShowPinWhisper(false), 4000);
+                }, 700);
+              }}
+              data-testid="elephant-gate"
+            >
+              {/* Elephant silhouette fade-in */}
+              <div className="w-24 h-24 mb-8 opacity-30">
+                <svg viewBox="0 0 100 100" fill="currentColor" className="text-neutral-500">
+                  <path d="M85 45c0-5-2-10-5-14-2-3-5-5-8-6V15c0-2-2-4-4-4s-4 2-4 4v8h-8V15c0-2-2-4-4-4s-4 2-4 4v8H30c-11 0-20 9-20 20v25c0 11 9 20 20 20h40c11 0 20-9 20-20V52c0-2-1-5-5-7zm-45 35c-6 0-10-4-10-10h20c0 6-4 10-10 10zm30 0c-6 0-10-4-10-10h20c0 6-4 10-10 10z"/>
+                </svg>
               </div>
               
-              {/* Three-piano ladder */}
-              <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">{copy.parentObservingTitle}</h4>
-                <div className="mt-3 text-sm space-y-1">
-                  <div className="grid grid-cols-3 gap-2 p-2 rounded-lg bg-neutral-800/50 text-neutral-400 text-xs">
-                    <span>{copy.parentInstrument}</span>
-                    <span>{copy.parentAccess}</span>
-                    <span>{copy.parentAttachment}</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 p-2 rounded-lg border border-white/5 text-xs">
-                    <span>{copy.parentToyPiano}</span>
-                    <span>{copy.parentToyAccess}</span>
-                    <span>{copy.parentToyAttachment}</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 p-2 rounded-lg border border-white/5 text-xs">
-                    <span>{copy.parent37Key}</span>
-                    <span>{copy.parent37Access}</span>
-                    <span>{copy.parent37Attachment}</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 p-2 rounded-lg border border-white/5 text-xs">
-                    <span>{copy.parentBigPiano}</span>
-                    <span>{copy.parentBigAccess}</span>
-                    <span>{copy.parentBigAttachment}</span>
-                  </div>
-                </div>
-                <p className="text-xs text-neutral-400 mt-3">
-                  {copy.parentKeyPoint}
-                </p>
-              </div>
+              <h2 className="text-2xl md:text-3xl font-semibold text-amber-100 mb-6">
+                {copy.elephantGateTitle}
+              </h2>
               
-              {/* How to ask */}
-              <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">{copy.parentAskingTitle}</h4>
-                <ul className="mt-2 text-sm text-neutral-300 list-disc ml-4 space-y-1">
-                  <li>{copy.parentAskNeutral}</li>
-                  <li>{copy.parentAskReflect}</li>
-                  <li>{copy.parentAskStuck}</li>
-                  <li>{copy.parentAskAvoid}</li>
-                </ul>
-              </div>
+              <p className="text-neutral-400 text-sm md:text-base mb-3 max-w-md">
+                {copy.elephantGateLine1}
+              </p>
+              <p className="text-neutral-500 text-xs md:text-sm mb-8 max-w-md italic">
+                {copy.elephantGateLine2}
+              </p>
               
-              {/* Contrarian prompts */}
-              <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">{copy.parentContrarianTitle}</h4>
-                <ul className="mt-2 text-sm text-neutral-300 list-disc ml-4 space-y-1">
-                  <li>{copy.parentContrarian1}</li>
-                  <li>{copy.parentContrarian2}</li>
-                  <li>{copy.parentContrarian3}</li>
-                  <li>{copy.parentContrarian4}</li>
-                </ul>
-              </div>
-              
-              {/* What Is a Piano? - Full Narrative (mobile-first locked copy) */}
-              <section 
-                className="rounded-xl border border-amber-500/20 p-4 md:p-5"
-                style={{ background: "rgba(11,12,16,.5)", maxWidth: "680px", margin: "0 auto" }}
-                aria-label="What Is a Piano"
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowIvoryContext(!showIvoryContext);
+                }}
+                className="text-xs text-neutral-600 hover:text-neutral-400 transition-colors mb-4"
+                data-testid="button-ivory-context"
               >
-                {/* Parent Layer Header - Title Card */}
-                <header className="text-center mb-8 py-4">
-                  <h1 className="text-2xl md:text-3xl font-semibold text-amber-100 mb-4">
-                    {copy.parentLayerTitle}
-                  </h1>
-                  <p className={`text-neutral-400 text-sm md:text-base mb-5 whitespace-pre-line ${lang === "en" ? "italic" : ""}`}>
-                    {lang === "zh" ? copy.parentLayerSubtitleZh : copy.parentLayerSubtitleEn}
-                  </p>
-                  <p className={`text-neutral-300 text-sm md:text-base leading-relaxed whitespace-pre-line ${lang === "en" ? "italic" : ""}`}>
-                    {lang === "zh" ? copy.parentLayerLedeZh : copy.parentLayerLedeEn}
-                  </p>
-                </header>
-                
-                {/* Divider */}
-                <hr className="my-6 opacity-25" />
-                
-                {/* Elephant Book Image - Language-aware */}
-                <figure className="mb-6">
-                  <img 
-                    src={lang === "zh" ? elephantBookImageZh : elephantBookImageEn} 
-                    alt={lang === "zh" ? "大象为什么发出声音？" : "Why did the elephant make a noise?"}
-                    className="w-full h-auto rounded-xl"
-                    loading="lazy"
-                  />
-                </figure>
-                
-                <h2 className="font-semibold text-amber-200 text-xl mb-4">{copy.whatIsAPianoTitle}</h2>
-                
-                <div className="space-y-4 text-sm md:text-base text-neutral-300 leading-relaxed">
-                  {copy.whatIsAPiano.map((para, i) => {
-                    const isBold = para.startsWith("**") && para.endsWith("**");
-                    const isBullets = para.includes("• ");
-                    
-                    if (isBold) {
-                      return (
-                        <p key={i} className="text-base md:text-lg text-amber-100 font-semibold">
-                          {para.replace(/\*\*/g, "")}
-                        </p>
-                      );
-                    }
-                    
-                    if (isBullets) {
-                      const lines = para.split("\n");
-                      const titleLine = lines[0];
-                      const bulletLines = lines.filter(l => l.startsWith("• "));
-                      return (
-                        <div key={i}>
-                          <p>{titleLine}</p>
-                          <ul className="mt-2 ml-5 space-y-1 list-disc">
-                            {bulletLines.map((line, j) => (
-                              <li key={j}>{line.replace("• ", "")}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      );
-                    }
-                    
-                    return (
-                      <p key={i} className="whitespace-pre-line">
-                        {para}
-                      </p>
-                    );
-                  })}
-                </div>
-                
-                {/* Divider */}
-                <hr className="my-6 opacity-25" />
-                
-                {/* A Note to Parents */}
-                <h2 className="font-semibold text-amber-200 text-xl mb-4">{copy.noteToParentsTitle}</h2>
-                
-                <div className="space-y-4 text-sm md:text-base text-neutral-300 leading-relaxed">
-                  {copy.noteToParents.map((para, i) => (
-                    <p key={i} className="whitespace-pre-line">{para}</p>
-                  ))}
-                </div>
-                
-                {/* PDF Link */}
-                <div className="mt-6 pt-4 border-t border-white/10">
-                  <a 
-                    href={lang === "zh" ? thinkingRecordPdfZh : thinkingRecordPdfEn}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-amber-200 hover:text-amber-100 underline underline-offset-4 transition-colors"
-                    data-testid="link-thinking-record-pdf"
-                  >
-                    {copy.thinkingRecordLink}
-                  </a>
-                </div>
-              </section>
+                {showIvoryContext ? "" : copy.elephantGateTapHint}
+              </button>
               
-              {/* PIN settings */}
-              <div className="rounded-xl border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
-                <h4 className="font-semibold">{copy.parentSettingsTitle}</h4>
-                <div className="flex gap-2 mt-2">
-                  <Input 
-                    type="password"
-                    value={newPinInput}
-                    onChange={(e) => setNewPinInput(e.target.value)}
-                    placeholder={lang === "zh" ? "新PIN码" : "New PIN"}
-                    data-testid="input-new-pin"
-                    className="bg-neutral-800 border-white/10 text-white"
-                  />
-                  <Button onClick={updatePin} className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-200 border-cyan-500/20">
-                    {copy.parentSetPinBtn}
-                  </Button>
+              {showIvoryContext && (
+                <p className="text-xs text-neutral-500 max-w-sm p-3 rounded-lg border border-white/5 bg-white/5">
+                  {copy.elephantGateIvorySnippet}
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-4" style={{ maxWidth: "680px", margin: "0 auto" }}>
+              {/* PIN Whisper - Post-unlock framing */}
+              {showPinWhisper && (
+                <div className="text-center py-4 transition-opacity duration-1000">
+                  <p className="text-sm text-neutral-500 italic">
+                    {copy.pinWhisperText}
+                  </p>
                 </div>
+              )}
+              
+              {/* Parent Layer Header */}
+              <header className="text-center py-4">
+                <h1 className="text-xl md:text-2xl font-semibold text-amber-100 mb-2">
+                  {copy.parentLayerTitle}
+                </h1>
+                <p className={`text-neutral-400 text-sm whitespace-pre-line ${lang === "en" ? "italic" : ""}`}>
+                  {lang === "zh" ? copy.parentLayerSubtitleZh : copy.parentLayerSubtitleEn}
+                </p>
+              </header>
+              
+              {/* Quick-nav chips */}
+              <div className="flex flex-wrap gap-2 justify-center pb-4">
+                <a href="#section-story" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                  <BookOpen className="w-3 h-3" />
+                  {copy.accordionStory}
+                </a>
+                <a href="#section-journey" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                  <FileText className="w-3 h-3" />
+                  {copy.accordionJourney}
+                </a>
+                <a href="#section-elephant" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                  <FileText className="w-3 h-3" />
+                  {copy.accordionElephant}
+                </a>
+                <a href="#section-archive" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                  <FileText className="w-3 h-3" />
+                  {copy.accordionArchive}
+                </a>
+                <a href="#section-settings" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                  <Settings className="w-3 h-3" />
+                  {copy.accordionSettings}
+                </a>
               </div>
+              
+              {/* Accordion sections */}
+              <Accordion type="single" collapsible defaultValue="section-story" className="space-y-2">
+                
+                {/* Section 1: The Story (What Is a Piano) */}
+                <AccordionItem value="section-story" id="section-story" className="border border-amber-500/20 rounded-xl overflow-hidden">
+                  <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
+                    <span className="flex items-center gap-2 text-amber-200">
+                      <BookOpen className="w-4 h-4" />
+                      {copy.accordionStory}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4">
+                    {/* Elephant Book Image - Language-aware */}
+                    <figure className="mb-6">
+                      <img 
+                        src={lang === "zh" ? elephantBookImageZh : elephantBookImageEn} 
+                        alt={lang === "zh" ? "大象为什么发出声音？" : "Why did the elephant make a noise?"}
+                        className="w-full h-auto rounded-xl"
+                        loading="lazy"
+                      />
+                    </figure>
+                    
+                    <h3 className="font-semibold text-amber-200 text-lg mb-4">{copy.whatIsAPianoTitle}</h3>
+                    
+                    <div className="space-y-4 text-sm text-neutral-300 leading-relaxed">
+                      {copy.whatIsAPiano.map((para, i) => {
+                        const isBold = para.startsWith("**") && para.endsWith("**");
+                        const isBullets = para.includes("• ");
+                        
+                        if (isBold) {
+                          return (
+                            <p key={i} className="text-base text-amber-100 font-semibold">
+                              {para.replace(/\*\*/g, "")}
+                            </p>
+                          );
+                        }
+                        
+                        if (isBullets) {
+                          const lines = para.split("\n");
+                          const titleLine = lines[0];
+                          const bulletLines = lines.filter(l => l.startsWith("• "));
+                          return (
+                            <div key={i}>
+                              <p>{titleLine}</p>
+                              <ul className="mt-2 ml-5 space-y-1 list-disc">
+                                {bulletLines.map((line, j) => (
+                                  <li key={j}>{line.replace("• ", "")}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          );
+                        }
+                        
+                        return (
+                          <p key={i} className="whitespace-pre-line">
+                            {para}
+                          </p>
+                        );
+                      })}
+                    </div>
+                    
+                    <hr className="my-6 opacity-25" />
+                    
+                    <h3 className="font-semibold text-amber-200 text-lg mb-4">{copy.noteToParentsTitle}</h3>
+                    
+                    <div className="space-y-4 text-sm text-neutral-300 leading-relaxed">
+                      {copy.noteToParents.map((para, i) => (
+                        <p key={i} className="whitespace-pre-line">{para}</p>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                {/* Section 2: Piano to Bitcoin Journey */}
+                <AccordionItem value="section-journey" id="section-journey" className="border border-cyan-500/20 rounded-xl overflow-hidden">
+                  <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
+                    <span className="flex items-center gap-2 text-cyan-200">
+                      <FileText className="w-4 h-4" />
+                      {copy.accordionJourney}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4">
+                    <p className="text-neutral-400 text-sm mb-4">
+                      {copy.parentBridgeText}
+                    </p>
+                    <a 
+                      href={lang === "zh" ? thinkingRecordPdfZh : thinkingRecordPdfEn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-200 transition-colors"
+                      data-testid="link-journey-pdf"
+                    >
+                      <FileText className="w-4 h-4" />
+                      {copy.journeyPdfLink}
+                    </a>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                {/* Section 3: Elephant Noise (Outro/Poem) */}
+                <AccordionItem value="section-elephant" id="section-elephant" className="border border-purple-500/20 rounded-xl overflow-hidden">
+                  <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
+                    <span className="flex items-center gap-2 text-purple-200">
+                      <FileText className="w-4 h-4" />
+                      {copy.accordionElephant}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4">
+                    <p className="text-neutral-400 text-sm mb-4 italic">
+                      {copy.elephantNoiseTitle}
+                    </p>
+                    <a 
+                      href={lang === "zh" ? elephantNoisePdfZh : elephantNoisePdfEn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-200 transition-colors"
+                      data-testid="link-elephant-noise-pdf"
+                    >
+                      <FileText className="w-4 h-4" />
+                      {copy.elephantNoisePdfLink}
+                    </a>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                {/* Section 4: Archive of the Unspoken */}
+                <AccordionItem value="section-archive" id="section-archive" className="border border-rose-500/20 rounded-xl overflow-hidden">
+                  <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
+                    <span className="flex items-center gap-2 text-rose-200">
+                      <FileText className="w-4 h-4" />
+                      {copy.accordionArchive}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4">
+                    <h3 className="font-semibold text-rose-200 text-lg mb-2">{copy.archiveTitle}</h3>
+                    <p className="text-neutral-500 text-xs mb-4">{copy.archiveSubtitle}</p>
+                    
+                    <p className="text-neutral-400 text-sm mb-4">
+                      {copy.archiveFraming}
+                    </p>
+                    
+                    {/* Hendrix coder & AI synthesis images */}
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <figure>
+                        <img 
+                          src={hendrixCoderImage} 
+                          alt="Human-AI synthesis"
+                          className="w-full h-auto rounded-lg"
+                          loading="lazy"
+                        />
+                      </figure>
+                      <figure>
+                        <img 
+                          src={aiSynthesisImage} 
+                          alt="AI synthesis visualization"
+                          className="w-full h-auto rounded-lg"
+                          loading="lazy"
+                        />
+                      </figure>
+                    </div>
+                    
+                    <p className="text-neutral-500 text-xs mb-4 italic">
+                      {copy.archiveAudienceLine}
+                    </p>
+                    
+                    <a 
+                      href={lang === "zh" ? archiveOfUnspokenPdfZh : archiveOfUnspokenPdfEn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-200 transition-colors"
+                      data-testid="link-archive-pdf"
+                    >
+                      <FileText className="w-4 h-4" />
+                      {copy.archivePdfLink}
+                    </a>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                {/* Section 5: Settings */}
+                <AccordionItem value="section-settings" id="section-settings" className="border border-white/10 rounded-xl overflow-hidden">
+                  <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
+                    <span className="flex items-center gap-2 text-neutral-300">
+                      <Settings className="w-4 h-4" />
+                      {copy.accordionSettings}
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-4 space-y-4">
+                    {/* PIN Settings */}
+                    <div>
+                      <h4 className="font-semibold text-neutral-200 mb-2">{copy.parentSettingsTitle}</h4>
+                      <div className="flex gap-2">
+                        <Input 
+                          type="password"
+                          value={newPinInput}
+                          onChange={(e) => setNewPinInput(e.target.value)}
+                          placeholder={lang === "zh" ? "新PIN码" : "New PIN"}
+                          data-testid="input-new-pin"
+                          className="bg-neutral-800 border-white/10 text-white"
+                        />
+                        <Button onClick={updatePin} className="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-200 border-cyan-500/20">
+                          {copy.parentSetPinBtn}
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    {/* Export Journey */}
+                    <div>
+                      <Button 
+                        onClick={exportNotes} 
+                        variant="outline" 
+                        className="w-full justify-center gap-2 border-white/10 text-neutral-300"
+                        data-testid="button-export-journey"
+                      >
+                        <Download className="w-4 h-4" />
+                        {copy.exportJourneyBtn}
+                      </Button>
+                    </div>
+                    
+                    {/* Observation tools - Three-piano ladder */}
+                    <div className="rounded-lg border border-white/10 p-3" style={{ background: "rgba(11,12,16,.35)" }}>
+                      <h5 className="font-semibold text-sm mb-2">{copy.parentObservingTitle}</h5>
+                      <div className="text-xs space-y-1">
+                        <div className="grid grid-cols-3 gap-2 p-2 rounded bg-neutral-800/50 text-neutral-400">
+                          <span>{copy.parentInstrument}</span>
+                          <span>{copy.parentAccess}</span>
+                          <span>{copy.parentAttachment}</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 p-2 rounded border border-white/5">
+                          <span>{copy.parentToyPiano}</span>
+                          <span>{copy.parentToyAccess}</span>
+                          <span>{copy.parentToyAttachment}</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 p-2 rounded border border-white/5">
+                          <span>{copy.parent37Key}</span>
+                          <span>{copy.parent37Access}</span>
+                          <span>{copy.parent37Attachment}</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 p-2 rounded border border-white/5">
+                          <span>{copy.parentBigPiano}</span>
+                          <span>{copy.parentBigAccess}</span>
+                          <span>{copy.parentBigAttachment}</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-neutral-500 mt-2">{copy.parentKeyPoint}</p>
+                    </div>
+                    
+                    {/* How to ask & Contrarian prompts */}
+                    <details className="text-sm">
+                      <summary className="cursor-pointer text-neutral-400 hover:text-neutral-200">{copy.parentAskingTitle}</summary>
+                      <ul className="mt-2 text-neutral-300 list-disc ml-4 space-y-1 text-xs">
+                        <li>{copy.parentAskNeutral}</li>
+                        <li>{copy.parentAskReflect}</li>
+                        <li>{copy.parentAskStuck}</li>
+                        <li>{copy.parentAskAvoid}</li>
+                      </ul>
+                    </details>
+                    
+                    <details className="text-sm">
+                      <summary className="cursor-pointer text-neutral-400 hover:text-neutral-200">{copy.parentContrarianTitle}</summary>
+                      <ul className="mt-2 text-neutral-300 list-disc ml-4 space-y-1 text-xs">
+                        <li>{copy.parentContrarian1}</li>
+                        <li>{copy.parentContrarian2}</li>
+                        <li>{copy.parentContrarian3}</li>
+                        <li>{copy.parentContrarian4}</li>
+                      </ul>
+                    </details>
+                  </AccordionContent>
+                </AccordionItem>
+                
+              </Accordion>
             </div>
           )}
         </DialogContent>
