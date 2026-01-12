@@ -69,6 +69,35 @@ export interface StoryContent {
   pinSetupTitle: string;
   pinSetupText: string;
   pinSetupBtn: string;
+  // Elephant Gate
+  elephantGateTitle: string;
+  elephantGateLine1: string;
+  elephantGateLine2: string;
+  elephantGateTapHint: string;
+  elephantGateIvorySnippet: string;
+  elephantNoiseTitle: string;
+  // Archive of the Unspoken
+  archiveTitle: string;
+  archiveSubtitle: string;
+  archiveFraming: string;
+  archiveAudienceLine: string;
+  archivePdfLink: string;
+  // Piano to Bitcoin Journey
+  journeyTitle: string;
+  journeyPdfLink: string;
+  // Elephant Noise outro
+  elephantNoiseOutroTitle: string;
+  elephantNoisePdfLink: string;
+  // Time vessel PIN
+  pinWhisperText: string;
+  // Export Journey
+  exportJourneyBtn: string;
+  // Accordion section titles
+  accordionStory: string;
+  accordionJourney: string;
+  accordionElephant: string;
+  accordionArchive: string;
+  accordionSettings: string;
 }
 
 export const COPY: Record<Lang, StoryContent> = {
@@ -175,6 +204,35 @@ export const COPY: Record<Lang, StoryContent> = {
     pinSetupTitle: "Set Your PIN",
     pinSetupText: "Create a 4-digit PIN. Write it down somewhere safe. Don't share it with anyone. Not your PIN, not your app. If you forget it, you can reset it - but only you can do this.",
     pinSetupBtn: "Set PIN & Enter",
+    // Elephant Gate
+    elephantGateTitle: "Why did the elephant make a noise?",
+    elephantGateLine1: "One evening at bath time, my child asked me this question.",
+    elephantGateLine2: "What follows is not an answer. It is the thinking that led to this app.",
+    elephantGateTapHint: "Tap to continue",
+    elephantGateIvorySnippet: "The piano's white keys were once made from elephant ivory. The trade was banned in 1989.",
+    elephantNoiseTitle: "Elephant Noise",
+    // Archive of the Unspoken
+    archiveTitle: "Archive of the Unspoken",
+    archiveSubtitle: "The Conversation That Built This",
+    archiveFraming: "This is not documentation. It is a preserved record of human-AI thinking — the method that created this app.",
+    archiveAudienceLine: "For builders, thinkers, and your future child.",
+    archivePdfLink: "Read the full archive (PDF)",
+    // Piano to Bitcoin Journey
+    journeyTitle: "Piano to Bitcoin Journey",
+    journeyPdfLink: "Read the journey (PDF)",
+    // Elephant Noise outro
+    elephantNoiseOutroTitle: "Elephant Noise (Outro)",
+    elephantNoisePdfLink: "Read the poem (PDF)",
+    // Time vessel PIN
+    pinWhisperText: "This PIN unlocks what you leave behind.",
+    // Export Journey
+    exportJourneyBtn: "Export Journey",
+    // Accordion section titles
+    accordionStory: "The Story",
+    accordionJourney: "Piano to Bitcoin",
+    accordionElephant: "Elephant Noise",
+    accordionArchive: "Archive of the Unspoken",
+    accordionSettings: "Settings",
   },
   zh: {
     storyTitle: "《大钢琴》",
@@ -279,6 +337,35 @@ export const COPY: Record<Lang, StoryContent> = {
     pinSetupTitle: "设置您的PIN码",
     pinSetupText: "创建一个4位PIN码。把它写在安全的地方。不要与任何人分享。不是你的PIN码，就不是你的应用。如果忘记了，你可以重置——但只有你能做到这一点。",
     pinSetupBtn: "设置PIN码并进入",
+    // Elephant Gate
+    elephantGateTitle: "大象为什么发出声音？",
+    elephantGateLine1: "一个洗澡的夜晚，我的孩子问了我这个问题。",
+    elephantGateLine2: "接下来的，不是一个答案。而是通向这个应用的思考过程。",
+    elephantGateTapHint: "点击继续",
+    elephantGateIvorySnippet: "钢琴的白键曾由象牙制成。这项贸易于1989年被禁止。",
+    elephantNoiseTitle: "大象的声音",
+    // Archive of the Unspoken
+    archiveTitle: "默境存真",
+    archiveSubtitle: "构建这一切的对话",
+    archiveFraming: "这不是文档。这是一份被保存下来的人机思维记录——创造这个应用的方法。",
+    archiveAudienceLine: "献给建造者、思考者，以及你未来的孩子。",
+    archivePdfLink: "阅读完整记录 (PDF)",
+    // Piano to Bitcoin Journey
+    journeyTitle: "从钢琴到比特币",
+    journeyPdfLink: "阅读旅程 (PDF)",
+    // Elephant Noise outro
+    elephantNoiseOutroTitle: "大象的声音（尾声）",
+    elephantNoisePdfLink: "阅读诗篇 (PDF)",
+    // Time vessel PIN
+    pinWhisperText: "这串密码，解锁你留给他们的一切。",
+    // Export Journey
+    exportJourneyBtn: "导出旅程",
+    // Accordion section titles
+    accordionStory: "故事",
+    accordionJourney: "从钢琴到比特币",
+    accordionElephant: "大象的声音",
+    accordionArchive: "默境存真",
+    accordionSettings: "设置",
   }
 };
 
