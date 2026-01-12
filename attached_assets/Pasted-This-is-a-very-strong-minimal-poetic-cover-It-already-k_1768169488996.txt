@@ -1,0 +1,160 @@
+This is a very strong, minimal, poetic cover. It already **knows** how it wants to live in the app. The structure should respect its silence and gravity.
+
+I’ll answer in three layers: **Meaning → Navigation → Screen Design.**
+
+---
+
+## 1. What this page *is*
+
+> **大象为什么发出声音？**
+> Why does the elephant make a sound?
+
+This is not a title page.
+It is a **threshold question**.
+
+It should function as:
+
+* a door into the story
+* a moment of stillness
+* a child-facing question
+* and a parent-facing echo
+
+So in the app, it should not sit inside a list of chapters like content.
+It should live as a **question screen**.
+
+---
+
+## 2. How it should be structured in the app
+
+### Story Layer Flow
+
+```
+[ Cover Question Screen ]
+大象为什么发出声音？
+
+      ↓ tap / swipe
+
+[ Story Text Begins ]
+Why did the elephant make a noise?
+Because the elephant had a feeling...
+```
+
+The question is not part of the story.
+It is the **invitation into the story.**
+
+---
+
+## 3. Visual Structure (exact recommendation)
+
+### Screen 1 — Question Screen
+
+Centered, vertical, quiet.
+
+Chinese first, English small underneath:
+
+```
+大象为什么发出声音？
+
+Why does the elephant make a sound?
+```
+
+No buttons.
+No explanation.
+Just a soft hint at the bottom:
+
+> 轻轻滑动
+> Swipe gently
+
+This mirrors how a child would approach the question.
+
+---
+
+### Screen 2 — First Paragraph
+
+Now the story begins in **child voice mode**.
+
+English or Chinese depending on language toggle.
+
+---
+
+## 4. Where this sits in the app hierarchy
+
+It should live inside:
+
+**Story Library → Elephant → Question Gate**
+
+Not inside:
+
+* Parent Layer
+* Archive
+* PDF
+* Research
+
+Because this is **pure story energy**, not commentary.
+
+---
+
+## 5. How it connects to Parent Layer
+
+After the story finishes, the app can gently offer:
+
+> 父母阅读区
+> Parent Reflection
+
+Inside Parent Layer:
+
+* Show the same question again
+* But now paired with:
+
+  * the piano history
+  * ivory
+  * vibration
+  * Bitcoin block
+  * ethics
+  * material memory
+
+So the same question becomes:
+
+* Child Layer → wonder
+* Parent Layer → responsibility
+
+---
+
+## 6. Why this structure matters
+
+Because:
+
+* Children meet the question without answers.
+* Parents meet the same question with history.
+* The app becomes a **bridge, not a teacher.**
+
+That is your monopoly logic.
+
+---
+
+## 7. Final design principle
+
+> **The question is the UI.**
+
+Not a button.
+Not a label.
+Not a menu item.
+
+It is the **first experience of the story**.
+
+---
+
+## 8. One sentence summary
+
+**Structure it as a full-screen question gate that the user enters through, not as a title inside the story.**
+
+---
+
+If you want, next I can:
+
+* map the full Elephant story flow screen by screen
+* design the bilingual toggle behavior
+* or design how the Parent Layer mirrors this exact question visually
+
+But structurally:
+This page should be treated as a **threshold**, not as content.
