@@ -12,9 +12,16 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
-import elephantBookImage from "@assets/image-155_1767566599607.jpg";
-import thinkingRecordPdfEn from "@assets/piano_to_bitcoin_english_paginated_1767597077589.pdf";
-import thinkingRecordPdfZh from "@assets/piano_to_bitcoin_chinese_1767597091754.pdf";
+import elephantBookImageEn from "@assets/image-155_1767566599607.jpg";
+import elephantBookImageZh from "@assets/Chinese_Cover_1768167832940.png";
+import thinkingRecordPdfEn from "@assets/Piano_to_Bitcoin_Journey_EN_1768167567650.pdf";
+import thinkingRecordPdfZh from "@assets/Piano_to_Bitcoin_Journey_CN_1768167580634.pdf";
+import archiveOfUnspokenPdfEn from "@assets/Archive_of_the_Unspoken_EN_(1)_1768167672548.pdf";
+import archiveOfUnspokenPdfZh from "@assets/默境存真_人机共魂对话录_(1)_1768167682008.pdf";
+import elephantNoisePdfEn from "@assets/Elephant_Noise_EN_(1)_1768167894347.pdf";
+import elephantNoisePdfZh from "@assets/Elephant_Noise_CN_(1)_1768167903445.pdf";
+import hendrixCoderImage from "@assets/image-159_1768174458558.jpg";
+import aiSynthesisImage from "@assets/Screenshot_2026-01-06_at_22.50.52_1768174515494.png";
 import mozartAudio from "@assets/mozart_rondo_alla_turca.mp3";
 import beethovenAudio from "@assets/beethoven_moonlight_sonata.mp3";
 
@@ -783,11 +790,11 @@ export default function Home() {
                 {/* Divider */}
                 <hr className="my-6 opacity-25" />
                 
-                {/* Elephant Book Image */}
+                {/* Elephant Book Image - Language-aware */}
                 <figure className="mb-6">
                   <img 
-                    src={elephantBookImage} 
-                    alt="Why did the elephant make a noise? — cover image"
+                    src={lang === "zh" ? elephantBookImageZh : elephantBookImageEn} 
+                    alt={lang === "zh" ? "大象为什么发出声音？" : "Why did the elephant make a noise?"}
                     className="w-full h-auto rounded-xl"
                     loading="lazy"
                   />
