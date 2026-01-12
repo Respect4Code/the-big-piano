@@ -15,8 +15,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
 import elephantBookImageEn from "@assets/image-155_1767566599607.jpg";
 import elephantBookImageZh from "@assets/Chinese_Cover_1768167832940.png";
-import thinkingRecordPdfEn from "@assets/Piano_to_Bitcoin_Journey_EN_1768167567650.pdf";
-import thinkingRecordPdfZh from "@assets/Piano_to_Bitcoin_Journey_CN_1768167580634.pdf";
+import journeyPdfEn from "@assets/Piano_to_Bitcoin_Journey_EN_1768167567650.pdf";
+import journeyPdfZh from "@assets/Piano_to_Bitcoin_Journey_CN_1768167580634.pdf";
 import archiveOfUnspokenPdfEn from "@assets/Archive_of_the_Unspoken_EN_(1)_1768167672548.pdf";
 import archiveOfUnspokenPdfZh from "@assets/默境存真_人机共魂对话录_(1)_1768167682008.pdf";
 import elephantNoisePdfEn from "@assets/Elephant_Noise_EN_(1)_1768167894347.pdf";
@@ -308,6 +308,9 @@ export default function Home() {
       setHintInput("");
       setShowPinSetup(false);
       setParentUnlocked(true);
+      setElephantGatePassed(true);
+      setShowPinWhisper(true);
+      setTimeout(() => setShowPinWhisper(false), 4000);
       showToast(lang === "zh" ? "PIN已设置" : "PIN set");
     } else {
       showToast(lang === "zh" ? "PIN需至少4位" : "PIN must be at least 4 digits");
@@ -654,7 +657,15 @@ export default function Home() {
       </main>
 
       {/* Parent Modal */}
-      <Dialog open={parentOpen} onOpenChange={setParentOpen}>
+      <Dialog open={parentOpen} onOpenChange={(open) => {
+        setParentOpen(open);
+        if (!open) {
+          setElephantGatePassed(false);
+          setElephantGateFading(false);
+          setShowIvoryContext(false);
+          setShowPinWhisper(false);
+        }
+      }}>
         <DialogContent className="max-w-2xl bg-neutral-900 border-white/10 text-white max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{copy.parentTitle}</DialogTitle>
@@ -788,23 +799,23 @@ export default function Home() {
               
               {/* Quick-nav chips */}
               <div className="flex flex-wrap gap-2 justify-center pb-4">
-                <a href="#section-story" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                <a href="#section-story" data-testid="chip-nav-story" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
                   <BookOpen className="w-3 h-3" />
                   {copy.accordionStory}
                 </a>
-                <a href="#section-journey" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                <a href="#section-journey" data-testid="chip-nav-journey" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
                   <FileText className="w-3 h-3" />
                   {copy.accordionJourney}
                 </a>
-                <a href="#section-elephant" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                <a href="#section-elephant" data-testid="chip-nav-elephant" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
                   <FileText className="w-3 h-3" />
                   {copy.accordionElephant}
                 </a>
-                <a href="#section-archive" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                <a href="#section-archive" data-testid="chip-nav-archive" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
                   <FileText className="w-3 h-3" />
                   {copy.accordionArchive}
                 </a>
-                <a href="#section-settings" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
+                <a href="#section-settings" data-testid="chip-nav-settings" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
                   <Settings className="w-3 h-3" />
                   {copy.accordionSettings}
                 </a>
@@ -896,7 +907,7 @@ export default function Home() {
                       {copy.parentBridgeText}
                     </p>
                     <a 
-                      href={lang === "zh" ? thinkingRecordPdfZh : thinkingRecordPdfEn}
+                      href={lang === "zh" ? journeyPdfZh : journeyPdfEn}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-200 transition-colors"
