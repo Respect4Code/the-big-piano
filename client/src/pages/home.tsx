@@ -15,12 +15,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
 import elephantBookImageEn from "@assets/image-155_1767566599607.jpg";
 import elephantBookImageZh from "@assets/Chinese_Cover_1768167832940.png";
-import journeyPdfEn from "@assets/Piano_to_Bitcoin_Journey_EN_1768167567650.pdf";
-import journeyPdfZh from "@assets/Piano_to_Bitcoin_Journey_CN_1768167580634.pdf";
-import archiveOfUnspokenPdfEn from "@assets/Archive_of_the_Unspoken_EN_(1)_1768167672548.pdf";
-import archiveOfUnspokenPdfZh from "@assets/默境存真_人机共魂对话录_(1)_1768167682008.pdf";
-import elephantNoisePdfEn from "@assets/Elephant_Noise_EN_(1)_1768167894347.pdf";
-import elephantNoisePdfZh from "@assets/Elephant_Noise_CN_(1)_1768167903445.pdf";
 import hendrixCoderImage from "@assets/image-159_1768174458558.jpg";
 import aiSynthesisImage from "@assets/Screenshot_2026-01-06_at_22.50.52_1768174515494.png";
 import mozartAudio from "@assets/mozart_rondo_alla_turca.mp3";
@@ -919,7 +913,7 @@ export default function Home() {
                   </AccordionContent>
                 </AccordionItem>
                 
-                {/* Section 2: Piano to Bitcoin Journey */}
+                {/* Section 2: Piano to Bitcoin Journey - Now opens HTML instead of PDF */}
                 <AccordionItem value="section-journey" id="section-journey" className="border border-cyan-500/20 rounded-xl overflow-hidden">
                   <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
                     <span className="flex items-center gap-2 text-cyan-200">
@@ -932,11 +926,11 @@ export default function Home() {
                       {copy.parentBridgeText}
                     </p>
                     <a 
-                      href={lang === "zh" ? journeyPdfZh : journeyPdfEn}
+                      href="/piano-bitcoin-journey.html"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-200 transition-colors"
-                      data-testid="link-journey-pdf"
+                      data-testid="link-journey-html"
                     >
                       <FileText className="w-4 h-4" />
                       {copy.journeyPdfLink}
@@ -944,7 +938,7 @@ export default function Home() {
                   </AccordionContent>
                 </AccordionItem>
                 
-                {/* Section 3: Elephant Noise (Outro/Poem) */}
+                {/* Section 3: Elephant Noise - Links to Elephant Gate section of HTML */}
                 <AccordionItem value="section-elephant" id="section-elephant" className="border border-purple-500/20 rounded-xl overflow-hidden">
                   <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
                     <span className="flex items-center gap-2 text-purple-200">
@@ -957,11 +951,11 @@ export default function Home() {
                       {copy.elephantNoiseTitle}
                     </p>
                     <a 
-                      href={lang === "zh" ? elephantNoisePdfZh : elephantNoisePdfEn}
+                      href="/piano-bitcoin-journey.html#elephant-gate"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-200 transition-colors"
-                      data-testid="link-elephant-noise-pdf"
+                      data-testid="link-elephant-noise-html"
                     >
                       <FileText className="w-4 h-4" />
                       {copy.elephantNoisePdfLink}
@@ -969,7 +963,7 @@ export default function Home() {
                   </AccordionContent>
                 </AccordionItem>
                 
-                {/* Section 4: Archive of the Unspoken */}
+                {/* Section 4: Archive of the Unspoken - Links to Archive section of HTML */}
                 <AccordionItem value="section-archive" id="section-archive" className="border border-rose-500/20 rounded-xl overflow-hidden">
                   <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
                     <span className="flex items-center gap-2 text-rose-200">
@@ -1010,11 +1004,11 @@ export default function Home() {
                     </p>
                     
                     <a 
-                      href={lang === "zh" ? archiveOfUnspokenPdfZh : archiveOfUnspokenPdfEn}
+                      href="/piano-bitcoin-journey.html#philosophy"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-200 transition-colors"
-                      data-testid="link-archive-pdf"
+                      data-testid="link-archive-html"
                     >
                       <FileText className="w-4 h-4" />
                       {copy.archivePdfLink}
