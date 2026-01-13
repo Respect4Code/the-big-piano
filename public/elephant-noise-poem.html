@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐘🎹 Why Did The Elephant Make A Noise? | 大象为什么发出声音？</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --text: #333;
+            --bg: #fff;
+            --surface: #f8f9fa;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                         "Microsoft YaHei", "微软雅黑", "Noto Sans CJK SC", "Source Han Sans SC",
+                         "Segoe UI", Georgia, serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--bg);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .lang-toggle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            padding: 12px 20px;
+            border-bottom: 2px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lang-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            background: var(--bg);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 44px;
+        }
+        
+        .lang-btn.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 100px 30px 60px;
+        }
+        
+        .poem-title {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary);
+            line-height: 1.4;
+        }
+        
+        .stanza {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .line {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 0;
+            color: var(--text);
+        }
+        
+        .line.indent {
+            padding-left: 30px;
+        }
+        
+        .line.emphasis {
+            font-style: italic;
+            color: var(--accent);
+        }
+        
+        .separator {
+            text-align: center;
+            font-size: 24px;
+            margin: 30px 0;
+            color: var(--accent);
+        }
+        
+        #english-content, #chinese-content {
+            display: none;
+        }
+        
+        #english-content.active, #chinese-content.active {
+            display: block;
+        }
+        
+        body[data-lang="zh"] .line {
+            font-size: 20px;
+            line-height: 1.7;
+            letter-spacing: 0.05em;
+        }
+        
+        body[data-lang="zh"] .poem-title {
+            font-size: 28px;
+            letter-spacing: 0.1em;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #3498db;
+                --text: #e0e0e0;
+                --bg: #121212;
+                --surface: #1e1e1e;
+                --border: #333;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 80px 20px 40px;
+            }
+            
+            .poem-title {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+            
+            .line {
+                font-size: 16px;
+            }
+            
+            body[data-lang="zh"] .line {
+                font-size: 18px;
+            }
+            
+            body[data-lang="zh"] .poem-title {
+                font-size: 22px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 70px 15px 30px;
+            }
+            
+            .poem-title {
+                font-size: 20px;
+            }
+            
+            .line {
+                font-size: 15px;
+            }
+            
+            .line.indent {
+                padding-left: 20px;
+            }
+        }
+    </style>
+</head>
+<body data-lang="en">
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+    </div>
+    
+    <div id="english-content" class="active">
+        <div class="container">
+            <h1 class="poem-title">Why Did The Elephant Make A Noise?</h1>
+            
+            <div class="stanza">
+                <div class="line">Because the elephant had a feeling inside that needed to get out.</div>
+                <div class="line">It was a rumble from its feet to its trunk.</div>
+                <div class="line">It was saying:</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line indent">"Here I am.</div>
+                <div class="line indent">This is me.</div>
+                <div class="line indent">The forest hears me.</div>
+                <div class="line indent">You can, too."</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line">The elephant made a noise for the same reason the piano makes a sound when you press a key:</div>
+                <div class="line emphasis">vibration seeking witness.</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line">And sometimes, you will hear somewhere in that noise is the whole unspoken history of ivory —</div>
+                <div class="line indent">from tusk to key,</div>
+                <div class="line indent">from animal to artifact,</div>
+                <div class="line indent">from wildness to music,</div>
+                <div class="line indent">from scarcity to ledger.</div>
+            </div>
+            
+            <div class="separator">⋯</div>
+            
+            <div class="stanza">
+                <div class="line">You could even say Satoshi's first block was a noise, too.</div>
+                <div class="line">A rumble in the jungle</div>
+                <div class="line">A rumble through the network:</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line indent">"Here I am.</div>
+                <div class="line indent">This is me.</div>
+                <div class="line indent">The chain hears me.</div>
+                <div class="line indent">You can, too."</div>
+            </div>
+            
+            <div class="separator">⋯</div>
+            
+            <div class="stanza">
+                <div class="line">So —</div>
+                <div class="line">Why did the elephant make a noise?</div>
+                <div class="line">To remember, it's ancestors, to remember that some things come before and they are used.</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line">And sometimes, you will hear somewhere in that noise is the whole unspoken history of ivory —</div>
+                <div class="line indent">from tusk to key,</div>
+                <div class="line indent">from animal to artifact,</div>
+                <div class="line indent">from wildness to music,</div>
+                <div class="line indent">from scarcity to ledger.</div>
+            </div>
+            
+            <div class="separator">⋯</div>
+            
+            <div class="stanza">
+                <div class="line">So —</div>
+                <div class="line">If you ever come across a piano, where the keys are made of ivory.</div>
+                <div class="line emphasis">Ivory remembers the noise.</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line">So —</div>
+                <div class="line">Remember the sound.</div>
+                <div class="line">Because the elephant had a feeling inside that needed to get out.</div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="chinese-content">
+        <div class="container">
+            <h1 class="poem-title">大象为什么发出声音？</h1>
+            
+            <div class="stanza">
+                <div class="line">因为大象心里有一种感觉，需要出来。</div>
+                <div class="line">那是一种从脚底传到长鼻的轰隆隆。</div>
+                <div class="line">它在说：</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line indent">"我在这里。</div>
+                <div class="line indent">这就是我。</div>
+                <div class="line indent">森林听得见我。</div>
+                <div class="line indent">你也可以。"</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line">大象发出声音，和你按下琴键时钢琴发出声响，道理是一样的：</div>
+                <div class="line emphasis">振动在寻找见证。</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line">有时，你会从那声音里的某个地方，听见象牙未被言说的全部历史——</div>
+                <div class="line indent">从长牙到琴键，</div>
+                <div class="line indent">从生命到器物，</div>
+                <div class="line indent">从野性到音乐，</div>
+                <div class="line indent">从稀缺到账本。</div>
+            </div>
+            
+            <div class="separator">⋯</div>
+            
+            <div class="stanza">
+                <div class="line">你甚至可以说，中本聪的第一个区块也是一种声响。</div>
+                <div class="line">丛林中的一阵轰隆，</div>
+                <div class="line">网络间的一次震荡：</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line indent">"我在这里。</div>
+                <div class="line indent">这就是我。</div>
+                <div class="line indent">链听得见我。</div>
+                <div class="line indent">你也可以。"</div>
+            </div>
+            
+            <div class="separator">⋯</div>
+            
+            <div class="stanza">
+                <div class="line">所以——</div>
+                <div class="line">大象为什么发出声音？</div>
+                <div class="line">为了记得它的祖先，</div>
+                <div class="line">为了记得有些事物在未被使用之前，就已存在。</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line">有时，你会从那声音里的某个地方，听见象牙未被言说的全部历史——</div>
+                <div class="line indent">从长牙到琴键，</div>
+                <div class="line indent">从生命到器物，</div>
+                <div class="line indent">从野性到音乐，</div>
+                <div class="line indent">从稀缺到账本。</div>
+            </div>
+            
+            <div class="separator">⋯</div>
+            
+            <div class="stanza">
+                <div class="line">所以——</div>
+                <div class="line">如果你曾遇过一架琴键由象牙制成的钢琴，</div>
+                <div class="line emphasis">象牙记得那声音。</div>
+            </div>
+            
+            <div class="stanza">
+                <div class="line">所以——</div>
+                <div class="line">记住那声响。</div>
+                <div class="line">因为大象心里有一种感觉，需要出来。</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const lang = btn.dataset.lang;
+                    document.body.dataset.lang = lang;
+                    
+                    document.getElementById('english-content').classList.remove('active');
+                    document.getElementById('chinese-content').classList.remove('active');
+                    
+                    if (lang === 'en') {
+                        document.getElementById('english-content').classList.add('active');
+                    } else {
+                        document.getElementById('chinese-content').classList.add('active');
+                    }
+                    
+                    localStorage.setItem('preferredLanguage', lang);
+                });
+            });
+            
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.querySelector(`[data-lang="${savedLang}"]`).click();
+        });
+    </script>
+</body>
+</html>

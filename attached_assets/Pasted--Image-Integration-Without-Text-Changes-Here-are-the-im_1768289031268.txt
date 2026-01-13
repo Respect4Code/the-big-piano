@@ -1,0 +1,88 @@
+# **Image Integration Without Text Changes**
+
+Here are the **image-only modifications** for your HTML file, **without altering any text content**:
+
+## **Modern Chinese Version - Image Replacements:**
+
+**Replace at Page 7:**
+```html
+<!-- REPLACE THIS: -->
+<div class="section-title">[图像位置 1：私密练习]在此放置Grok的可视化图像——一个有着狂野头发的人在夜晚编码，旁边放着吉他——捕捉"抱着吉他睡觉"和氛围编码作为个人练习的精髓</div>
+
+<!-- WITH THIS: -->
+<img src="private_practice.jpg" alt="一个有着狂野头发的人在夜晚编码，旁边放着吉他" class="archive-image">
+```
+
+**Replace at Page 7:**
+```html
+<!-- REPLACE THIS: -->
+<div class="section-title">[图像位置 2：迷幻演出]在此放置Grok的可视化图像，展示代码变成音乐的爆炸性、迷幻时刻——解码阶段作为创造性突破</div>
+
+<!-- WITH THIS: -->
+<img src="psychedelic_performance.jpg" alt="展示代码变成音乐的爆炸性、迷幻时刻" class="archive-image">
+```
+
+## **Classical Chinese Version - Image Replacements:**
+
+**Replace at Page 7:**
+```html
+<!-- REPLACE THIS: -->
+<div class="section-title">[图像占位1：私密练习]此处放置Grok可视化——狂野发者夜编码，旁有吉他——捕"与吉他同眠"与心流编码为个人练习之髓</div>
+
+<!-- WITH THIS: -->
+<img src="private_practice.jpg" alt="狂野发者夜编码，旁有吉他" class="archive-image">
+```
+
+**Replace at Page 7:**
+```html
+<!-- REPLACE THIS: -->
+<div class="section-title">[图像占位2：迷幻演出]此处放置Grok可视化，示代码成音之爆炸性、迷幻刻——解码阶段为创造性突破</div>
+
+<!-- WITH THIS: -->
+<img src="psychedelic_performance.jpg" alt="示代码成音之爆炸性、迷幻刻" class="archive-image">
+```
+
+## **CSS Additions (Add to your existing style block):**
+
+```css
+/* Image styling - add this to your existing CSS */
+.archive-image {
+    display: block;
+    max-width: 90%;
+    height: auto;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border);
+}
+
+/* Classical version image styling */
+body[data-lang="classical"] .archive-image {
+    border: 2px solid #8B7355;
+    filter: sepia(0.15);
+    box-shadow: 0 8px 25px rgba(139, 115, 85, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .archive-image {
+        max-width: 95%;
+        margin: 30px auto;
+    }
+}
+```
+
+## **Image File Requirements:**
+
+Place these two images in the **same directory** as your HTML file:
+1. `private_practice.jpg` (私密练习图像)
+2. `psychedelic_performance.jpg` (迷幻演出图像)
+
+## **Summary of Changes:**
+- **Only image placeholders replaced** with actual `<img>` tags
+- **Zero text content altered** - all dialogue remains exactly as is
+- **CSS added** for proper image styling
+- **Alt-text preserved** from your original descriptions
+- **Both language versions** receive identical images with appropriate alt-text
+
+**The text content remains 100% untouched** - only the image placeholders have been converted to actual image tags with your provided images.
