@@ -822,9 +822,9 @@ export default function Home() {
                       </p>
                       <p className="whitespace-pre-line">
                         {lang === "zh" ? (
-                          <>我告诉他们，我明天晚上再讲。<a href="/elephant-noise-poem.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">（我最终在Deepseek AI的帮助下写了这首诗。）</a></>
+                          <>我告诉他们，我明天晚上再讲。<a href="/elephant-noise-poem-zh.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">（我最终在Deepseek AI的帮助下写了这首诗。）</a></>
                         ) : (
-                          <>I told them I would tell it the following night. <a href="/elephant-noise-poem.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">(I eventually wrote the poem with the help of Deepseek AI.)</a></>
+                          <>I told them I would tell it the following night. <a href="/elephant-noise-poem-en.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">(I eventually wrote the poem with the help of Deepseek AI.)</a></>
                         )}
                       </p>
                       <p className="whitespace-pre-line">
@@ -846,6 +846,11 @@ export default function Home() {
                         {lang === "zh"
                           ? "它是一份被保存下来的思考记录，\n留待未来的某一天。"
                           : "It is a preserved record of thinking,\nkept here for a day in the future."}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh"
+                          ? "它始于Meta AI。我选择Meta AI，是因为当时它是最弱的，也是我认为最不了解我思维模式的那一个。"
+                          : "It started with Meta AI, I choose Meta AI because at the time is was the least powerful and the one I thought new less about my patterns of thought."}
                       </p>
                       <p className="whitespace-pre-line">
                         <a 

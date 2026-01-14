@@ -228,7 +228,7 @@ export const COPY: Record<Lang, StoryContent> = {
     // Export Journey
     exportJourneyBtn: "Export Journey",
     // Accordion section titles
-    accordionStory: "The Story",
+    accordionStory: "What Is a Piano?",
     accordionJourney: "Piano to Bitcoin",
     accordionElephant: "Elephant Noise",
     accordionArchive: "Archive of the Unspoken",
@@ -361,7 +361,7 @@ export const COPY: Record<Lang, StoryContent> = {
     // Export Journey
     exportJourneyBtn: "导出旅程",
     // Accordion section titles
-    accordionStory: "故事",
+    accordionStory: "什么是钢琴？",
     accordionJourney: "从钢琴到比特币",
     accordionElephant: "大象的声音",
     accordionArchive: "默境存真",
