@@ -13,10 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import coverImage from "@assets/man_the_big_paino_2_image-145_1767059586840.jpg";
-import elephantBookImageEn from "@assets/image-155_1767566599607.jpg";
-import elephantBookImageZh from "@assets/Chinese_Cover_1768167832940.png";
-import hendrixCoderImage from "@assets/image-159_1768174458558.jpg";
-import aiSynthesisImage from "@assets/Screenshot_2026-01-06_at_22.50.52_1768174515494.png";
 import mozartAudio from "@assets/mozart_rondo_alla_turca.mp3";
 import beethovenAudio from "@assets/beethoven_moonlight_sonata.mp3";
 
@@ -51,11 +47,6 @@ export default function Home() {
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [showForgotPin, setShowForgotPin] = useState(false);
   
-  // Elephant Gate state
-  const [elephantGatePassed, setElephantGatePassed] = useState(false);
-  const [elephantGateFading, setElephantGateFading] = useState(false);
-  const [showIvoryContext, setShowIvoryContext] = useState(false);
-  const [showPinWhisper, setShowPinWhisper] = useState(false);
 
   // Classical music player state
   const [musicPlaying, setMusicPlaying] = useState(false);
@@ -302,9 +293,6 @@ export default function Home() {
       setHintInput("");
       setShowPinSetup(false);
       setParentUnlocked(true);
-      setElephantGatePassed(true);
-      setShowPinWhisper(true);
-      setTimeout(() => setShowPinWhisper(false), 4000);
       showToast(lang === "zh" ? "PIN已设置" : "PIN set");
     } else {
       showToast(lang === "zh" ? "PIN需至少4位" : "PIN must be at least 4 digits");
@@ -676,15 +664,7 @@ export default function Home() {
       </main>
 
       {/* Parent Modal */}
-      <Dialog open={parentOpen} onOpenChange={(open) => {
-        setParentOpen(open);
-        if (!open) {
-          setElephantGatePassed(false);
-          setElephantGateFading(false);
-          setShowIvoryContext(false);
-          setShowPinWhisper(false);
-        }
-      }}>
+      <Dialog open={parentOpen} onOpenChange={setParentOpen}>
         <DialogContent className="max-w-2xl bg-neutral-900 border-white/10 text-white max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{copy.parentTitle}</DialogTitle>
@@ -745,67 +725,14 @@ export default function Home() {
                   {lang === "zh" ? "忘记PIN码？" : "Forgot PIN?"}
                 </button>
               )}
-            </div>
-          ) : !elephantGatePassed ? (
-            /* Elephant Question Gate - Full-screen threshold */
-            <div 
-              className={`flex flex-col items-center justify-center min-h-[60vh] text-center transition-opacity duration-700 ${elephantGateFading ? "opacity-0" : "opacity-100"}`}
-              onClick={() => {
-                setElephantGateFading(true);
-                setTimeout(() => {
-                  setElephantGatePassed(true);
-                  setShowPinWhisper(true);
-                  setTimeout(() => setShowPinWhisper(false), 4000);
-                }, 700);
-              }}
-              data-testid="elephant-gate"
-            >
-              {/* Elephant silhouette fade-in */}
-              <div className="w-24 h-24 mb-8 opacity-30">
-                <svg viewBox="0 0 100 100" fill="currentColor" className="text-neutral-500">
-                  <path d="M85 45c0-5-2-10-5-14-2-3-5-5-8-6V15c0-2-2-4-4-4s-4 2-4 4v8h-8V15c0-2-2-4-4-4s-4 2-4 4v8H30c-11 0-20 9-20 20v25c0 11 9 20 20 20h40c11 0 20-9 20-20V52c0-2-1-5-5-7zm-45 35c-6 0-10-4-10-10h20c0 6-4 10-10 10zm30 0c-6 0-10-4-10-10h20c0 6-4 10-10 10z"/>
-                </svg>
-              </div>
-              
-              <h2 className="text-2xl md:text-3xl font-semibold text-amber-100 mb-6">
-                {copy.elephantGateTitle}
-              </h2>
-              
-              <p className="text-neutral-400 text-sm md:text-base mb-3 max-w-md">
-                {copy.elephantGateLine1}
+              <p className="text-xs text-neutral-500 mt-4 leading-relaxed">
+                {lang === "zh" 
+                  ? "「这个PIN码解锁你留下的东西」将安全转化为传承。它是一种继承机制，一个时间容器，将自我托管哲学与家庭传承连接起来。不是你的PIN码？不是你的应用！"
+                  : "\"This PIN unlocks what you leave behind\" transforms security into legacy. It is an inheritance mechanism, a time vessel, which connects self-custody philosophy, to family legacy. Not your PIN? Not your app!"}
               </p>
-              <p className="text-neutral-500 text-xs md:text-sm mb-8 max-w-md italic">
-                {copy.elephantGateLine2}
-              </p>
-              
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowIvoryContext(!showIvoryContext);
-                }}
-                className="text-xs text-neutral-600 hover:text-neutral-400 transition-colors mb-4"
-                data-testid="button-ivory-context"
-              >
-                {showIvoryContext ? "" : copy.elephantGateTapHint}
-              </button>
-              
-              {showIvoryContext && (
-                <p className="text-xs text-neutral-500 max-w-sm p-3 rounded-lg border border-white/5 bg-white/5">
-                  {copy.elephantGateIvorySnippet}
-                </p>
-              )}
             </div>
           ) : (
             <div className="space-y-4" style={{ maxWidth: "680px", margin: "0 auto" }}>
-              {/* PIN Whisper - Post-unlock framing */}
-              {showPinWhisper && (
-                <div className="text-center py-4 transition-opacity duration-1000">
-                  <p className="text-sm text-neutral-500 italic">
-                    {copy.pinWhisperText}
-                  </p>
-                </div>
-              )}
-              
               {/* Parent Layer Header */}
               <header className="text-center py-4">
                 <h1 className="text-xl md:text-2xl font-semibold text-amber-100 mb-2">
@@ -816,29 +743,6 @@ export default function Home() {
                 </p>
               </header>
               
-              {/* Quick-nav chips */}
-              <div className="flex flex-wrap gap-2 justify-center pb-4">
-                <a href="#section-story" data-testid="chip-nav-story" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
-                  <BookOpen className="w-3 h-3" />
-                  {copy.accordionStory}
-                </a>
-                <a href="#section-journey" data-testid="chip-nav-journey" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
-                  <FileText className="w-3 h-3" />
-                  {copy.accordionJourney}
-                </a>
-                <a href="#section-elephant" data-testid="chip-nav-elephant" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
-                  <FileText className="w-3 h-3" />
-                  {copy.accordionElephant}
-                </a>
-                <a href="#section-archive" data-testid="chip-nav-archive" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
-                  <FileText className="w-3 h-3" />
-                  {copy.accordionArchive}
-                </a>
-                <a href="#section-settings" data-testid="chip-nav-settings" className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 transition-colors">
-                  <Settings className="w-3 h-3" />
-                  {copy.accordionSettings}
-                </a>
-              </div>
               
               {/* Accordion sections */}
               <Accordion type="single" collapsible defaultValue="section-story" className="space-y-2">
@@ -852,16 +756,6 @@ export default function Home() {
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    {/* Elephant Book Image - Language-aware */}
-                    <figure className="mb-6">
-                      <img 
-                        src={lang === "zh" ? elephantBookImageZh : elephantBookImageEn} 
-                        alt={lang === "zh" ? "大象为什么发出声音？" : "Why did the elephant make a noise?"}
-                        className="w-full h-auto rounded-xl"
-                        loading="lazy"
-                      />
-                    </figure>
-                    
                     <h3 className="font-semibold text-amber-200 text-lg mb-4">{copy.whatIsAPianoTitle}</h3>
                     
                     <div className="space-y-4 text-sm text-neutral-300 leading-relaxed">
@@ -906,117 +800,76 @@ export default function Home() {
                     <h3 className="font-semibold text-amber-200 text-lg mb-4">{copy.noteToParentsTitle}</h3>
                     
                     <div className="space-y-4 text-sm text-neutral-300 leading-relaxed">
-                      {copy.noteToParents.map((para, i) => (
-                        <p key={i} className="whitespace-pre-line">{para}</p>
-                      ))}
+                      <p className="whitespace-pre-line">
+                        {lang === "zh" 
+                          ? "接下来你将读到的（在本应用其他地方），是一位父亲的思考记录。"
+                          : "What you are about to read next (elsewhere in this app) is a record of my thinking as a father."}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh"
+                          ? "一个洗澡的夜晚，我的孩子问我：\n「为什么大象会发出声音？」"
+                          : "One evening at bath time, my child asked me,\n\"Why did the elephant make a noise?\""}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh"
+                          ? "他们站在浴缸里，看着水龙头旁的玩具大象。\n他们把它拿起来，抚摸它，摆弄它的象牙和长鼻子，\n等着我给他们讲一个故事。"
+                          : "They were standing in the bath, looking at their toy elephant by the taps.\nThey picked it up, stroked it, played with its tusks and long trunk,\nand waited for me to tell them a story."}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh"
+                          ? "在那一刻，我意识到他们并非在寻求一个答案。\n他们在思考。\n他们在建构故事。\n或者说，在邀请我编一个名叫《为什么大象会发出声音》的故事。"
+                          : "In that moment, I realised they weren't asking for an answer.\nThey were thinking.\nThey were storytelling.\nOr asking me to make up a story called Why the Elephant Made a Noise."}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh" ? (
+                          <>我告诉他们，我明天晚上再讲。<a href="/elephant-noise-poem.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">（我最终在Deepseek AI的帮助下写了这首诗。）</a></>
+                        ) : (
+                          <>I told them I would tell it the following night. <a href="/elephant-noise-poem.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">(I eventually wrote the poem with the help of Deepseek AI.)</a></>
+                        )}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh"
+                          ? "与此同时，他们对大象的爱迫使我直面钢琴琴键的历史。\n我感到困惑。"
+                          : "In the meantime, their love for elephants forced me to confront the history of piano keys.\nI was perplexed."}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh"
+                          ? "我需要一个安静、不受评判的空间来整理思绪——\n从材料到伦理，\n从技术到价值。"
+                          : "I needed a quiet, non-judgmental space to sort out my thoughts —\nfrom materials to ethics,\nfrom technology to value."}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh"
+                          ? "接下来的内容不是一堂课。\n它未经打磨。\n它并不完整。"
+                          : "What comes next is not a lesson.\nIt is not polished.\nIt is not complete."}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh"
+                          ? "它是一份被保存下来的思考记录，\n留待未来的某一天。"
+                          : "It is a preserved record of thinking,\nkept here for a day in the future."}
+                      </p>
+                      <p className="whitespace-pre-line">
+                        <a 
+                          href="/piano-bitcoin-journey.html" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 font-semibold"
+                          data-testid="link-journey"
+                        >
+                          {lang === "zh" ? "「构建这一切的对话。」" : "\"The Conversation That Built This.\""}
+                        </a>
+                      </p>
+                      <p className="whitespace-pre-line">
+                        {lang === "zh" ? (
+                          <>这是集体智慧的综合——六个AI模型汇聚成一个连贯而深刻的愿景。我们共同创造了一个用于<a href="/archive-of-the-unspoken-zh.html" target="_blank" rel="noopener noreferrer" className="text-rose-300 hover:text-rose-200 underline underline-offset-2" data-testid="link-archive">代际传承</a>的哲学工具。</>
+                        ) : (
+                          <>It is a synthesis of collective intelligence—six AI models converging on a coherent, profound vision. Together we created a philosophical instrument for <a href="/archive-of-the-unspoken-en.html" target="_blank" rel="noopener noreferrer" className="text-rose-300 hover:text-rose-200 underline underline-offset-2" data-testid="link-archive">intergenerational transmission</a>.</>
+                        )}
+                      </p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
                 
-                {/* Section 2: Piano to Bitcoin Journey - Now opens HTML instead of PDF */}
-                <AccordionItem value="section-journey" id="section-journey" className="border border-cyan-500/20 rounded-xl overflow-hidden">
-                  <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
-                    <span className="flex items-center gap-2 text-cyan-200">
-                      <FileText className="w-4 h-4" />
-                      {copy.accordionJourney}
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p className="text-neutral-400 text-sm mb-4">
-                      {copy.parentBridgeText}
-                    </p>
-                    <a 
-                      href="/piano-bitcoin-journey.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-200 transition-colors"
-                      data-testid="link-journey-html"
-                    >
-                      <FileText className="w-4 h-4" />
-                      {copy.journeyPdfLink}
-                    </a>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                {/* Section 3: Elephant Noise - Links to Elephant Gate section of HTML */}
-                <AccordionItem value="section-elephant" id="section-elephant" className="border border-purple-500/20 rounded-xl overflow-hidden">
-                  <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
-                    <span className="flex items-center gap-2 text-purple-200">
-                      <FileText className="w-4 h-4" />
-                      {copy.accordionElephant}
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <p className="text-neutral-400 text-sm mb-4 italic">
-                      {copy.elephantNoiseTitle}
-                    </p>
-                    <a 
-                      href="/piano-bitcoin-journey.html#elephant-gate"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-200 transition-colors"
-                      data-testid="link-elephant-noise-html"
-                    >
-                      <FileText className="w-4 h-4" />
-                      {copy.elephantNoisePdfLink}
-                    </a>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                {/* Section 4: Archive of the Unspoken - Links to Archive section of HTML */}
-                <AccordionItem value="section-archive" id="section-archive" className="border border-rose-500/20 rounded-xl overflow-hidden">
-                  <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
-                    <span className="flex items-center gap-2 text-rose-200">
-                      <FileText className="w-4 h-4" />
-                      {copy.accordionArchive}
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-4 pb-4">
-                    <h3 className="font-semibold text-rose-200 text-lg mb-2">{copy.archiveTitle}</h3>
-                    <p className="text-neutral-500 text-xs mb-4">{copy.archiveSubtitle}</p>
-                    
-                    <p className="text-neutral-400 text-sm mb-4">
-                      {copy.archiveFraming}
-                    </p>
-                    
-                    {/* Hendrix coder & AI synthesis images */}
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <figure>
-                        <img 
-                          src={hendrixCoderImage} 
-                          alt="Human-AI synthesis"
-                          className="w-full h-auto rounded-lg"
-                          loading="lazy"
-                        />
-                      </figure>
-                      <figure>
-                        <img 
-                          src={aiSynthesisImage} 
-                          alt="AI synthesis visualization"
-                          className="w-full h-auto rounded-lg"
-                          loading="lazy"
-                        />
-                      </figure>
-                    </div>
-                    
-                    <p className="text-neutral-500 text-xs mb-4 italic">
-                      {copy.archiveAudienceLine}
-                    </p>
-                    
-                    <a 
-                      href="/piano-bitcoin-journey.html#philosophy"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-200 transition-colors"
-                      data-testid="link-archive-html"
-                    >
-                      <FileText className="w-4 h-4" />
-                      {copy.archivePdfLink}
-                    </a>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                {/* Section 5: Settings */}
+                {/* Settings */}
                 <AccordionItem value="section-settings" id="section-settings" className="border border-white/10 rounded-xl overflow-hidden">
                   <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
                     <span className="flex items-center gap-2 text-neutral-300">

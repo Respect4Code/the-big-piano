@@ -1,0 +1,65 @@
+**Final Corrected Answers + Clarification Request for Replit:**
+
+---
+
+**Q1: Should I rename archive-of-the-unspoken-zh.html to archive-of-the-unspoken.html?**
+
+**Answer:** NO. Keep both files as they are:
+- `archive-of-the-unspoken-zh.html` (Chinese with Modern/Classical toggle + images)
+- `archive-of-the-unspoken-en.html` (English version)
+
+**Linking logic:**
+- Chinese version of app → links to `archive-of-the-unspoken-zh.html`
+- English version of app → links to `archive-of-the-unspoken-en.html`
+
+---
+
+**Q2: Should hyperlinks open in same tab or new tab?**
+
+**Answer:** NEW TAB (`target="_blank"`)
+
+---
+
+**Q3: Is "What Is a Piano?" content already in the app?**
+
+**Answer:** YES. Both sections already exist:
+- "What Is a Piano?" section (no hyperlinks needed here)
+- "A Note to Parents" section (add 3 hyperlinks here)
+
+---
+
+**CLARIFICATION NEEDED FROM REPLIT:**
+
+**Before you proceed, please confirm you understand:**
+
+1. **WHERE hyperlinks go:**
+   - ✅ Hyperlinks go in "A Note to Parents" section
+   - ❌ NO hyperlinks in "What Is a Piano?" section
+   - Can you confirm this is clear?
+
+2. **Which files are bilingual toggles:**
+   - `elephant-noise-poem.html` = YES, bilingual (EN/中文 toggle) - works for both English and Chinese app
+   - `piano-bitcoin-journey.html` = YES, bilingual (EN/中文 toggle) - works for both English and Chinese app
+   - `archive-of-the-unspoken-zh.html` = Chinese only (现代/文言 toggle)
+   - `archive-of-the-unspoken-en.html` = English only
+   - Can you confirm this is correct?
+
+3. **The 3 hyperlinks to add in "A Note to Parents":**
+   - "(I eventually wrote the poem with the help of Deepseek AI.)" → `/elephant-noise-poem.html` (bilingual file, works for both EN and ZH versions)
+   - "The Conversation That Built This." → `/piano-bitcoin-journey.html` (bilingual file, works for both EN and ZH versions)
+   - "intergenerational transmission" → 
+     - In English app: `/archive-of-the-unspoken-en.html`
+     - In Chinese app: `/archive-of-the-unspoken-zh.html`
+
+4. **Your tasks:**
+   - Remove elephant gate screen
+   - Remove navigation menu
+   - Add PIN security text
+   - Add 3 hyperlinks to "A Note to Parents" section (NOT "What Is a Piano?")
+   - All files already exist in public folder from yesterday
+
+**Please reply: "I confirm I understand. Hyperlinks go in 'A Note to Parents' section only. Files are already in public folder. Ready to proceed."**
+
+---
+
+**Send this to Replit and wait for their confirmation before they start.**
