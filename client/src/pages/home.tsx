@@ -756,8 +756,6 @@ export default function Home() {
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="px-4 pb-4">
-                    <h3 className="font-semibold text-amber-200 text-lg mb-4">{copy.whatIsAPianoTitle}</h3>
-                    
                     <div className="space-y-4 text-sm text-neutral-300 leading-relaxed">
                       {copy.whatIsAPiano.map((para, i) => {
                         const isBold = para.startsWith("**") && para.endsWith("**");
@@ -854,7 +852,7 @@ export default function Home() {
                       </p>
                       <p className="whitespace-pre-line">
                         <a 
-                          href="/piano-bitcoin-journey.html" 
+                          href={lang === "zh" ? "/piano-bitcoin-journey-zh.html" : "/piano-bitcoin-journey.html"}
                           target="_blank" 
                           rel="noopener noreferrer" 
                           className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 font-semibold"
