@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大象为什么发出声音？</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --text: #333;
+            --bg: #fff;
+            --surface: #f8f9fa;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                         "Microsoft YaHei", "微软雅黑", "Noto Sans CJK SC", "Source Han Sans SC",
+                         "Segoe UI", Georgia, serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--bg);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            padding: 14px 20px;
+            border-bottom: 2px solid var(--border);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 80px 30px 60px;
+        }
+        
+        .poem-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary);
+            line-height: 1.4;
+            letter-spacing: 0.1em;
+        }
+        
+        .stanza {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .line {
+            font-size: 20px;
+            line-height: 1.7;
+            margin-bottom: 0;
+            color: var(--text);
+            letter-spacing: 0.05em;
+        }
+        
+        .line.indent {
+            padding-left: 30px;
+        }
+        
+        .line.emphasis {
+            font-style: italic;
+            color: var(--accent);
+        }
+        
+        .separator {
+            text-align: center;
+            font-size: 24px;
+            margin: 30px 0;
+            color: var(--accent);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #3498db;
+                --text: #e0e0e0;
+                --bg: #121212;
+                --surface: #1e1e1e;
+                --border: #333;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 70px 20px 40px;
+            }
+            
+            .poem-title {
+                font-size: 22px;
+                margin-bottom: 30px;
+            }
+            
+            .line {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 60px 15px 30px;
+            }
+            
+            .poem-title {
+                font-size: 20px;
+            }
+            
+            .line {
+                font-size: 16px;
+            }
+            
+            .line.indent {
+                padding-left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        <div class="header-title">大钢琴</div>
+    </div>
+    
+    <div class="container">
+        <h1 class="poem-title">大象为什么发出声音？</h1>
+        
+        <div class="stanza">
+            <div class="line">因为大象心里有一种感觉，需要出来。</div>
+            <div class="line">那是一种从脚底传到长鼻的轰隆隆。</div>
+            <div class="line">它在说：</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line indent">"我在这里。</div>
+            <div class="line indent">这就是我。</div>
+            <div class="line indent">森林听得见我。</div>
+            <div class="line indent">你也可以。"</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line">大象发出声音，和你按下琴键时钢琴发出声响，道理是一样的：</div>
+            <div class="line emphasis">振动在寻找见证。</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line">有时，你会从那声音里的某个地方，听见象牙未被言说的全部历史——</div>
+            <div class="line indent">从长牙到琴键，</div>
+            <div class="line indent">从生命到器物，</div>
+            <div class="line indent">从野性到音乐，</div>
+            <div class="line indent">从稀缺到账本。</div>
+        </div>
+        
+        <div class="separator">⋯</div>
+        
+        <div class="stanza">
+            <div class="line">你甚至可以说，中本聪的第一个区块也是一种声响。</div>
+            <div class="line">丛林中的一阵轰隆，</div>
+            <div class="line">网络间的一次震荡：</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line indent">"我在这里。</div>
+            <div class="line indent">这就是我。</div>
+            <div class="line indent">链听得见我。</div>
+            <div class="line indent">你也可以。"</div>
+        </div>
+        
+        <div class="separator">⋯</div>
+        
+        <div class="stanza">
+            <div class="line">所以——</div>
+            <div class="line">大象为什么发出声音？</div>
+            <div class="line">为了记得它的祖先，</div>
+            <div class="line">为了记得有些事物在未被使用之前，就已存在。</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line">有时，你会从那声音里的某个地方，听见象牙未被言说的全部历史——</div>
+            <div class="line indent">从长牙到琴键，</div>
+            <div class="line indent">从生命到器物，</div>
+            <div class="line indent">从野性到音乐，</div>
+            <div class="line indent">从稀缺到账本。</div>
+        </div>
+        
+        <div class="separator">⋯</div>
+        
+        <div class="stanza">
+            <div class="line">所以——</div>
+            <div class="line">如果你曾遇过一架琴键由象牙制成的钢琴，</div>
+            <div class="line emphasis">象牙记得那声音。</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line">所以——</div>
+            <div class="line">记住那声响。</div>
+            <div class="line">因为大象心里有一种感觉，需要出来。</div>
+        </div>
+    </div>
+</body>
+</html>
