@@ -1,0 +1,152 @@
+export default function StandingOnShouldersRefined() {
+  return (
+    <div className="min-h-screen bg-stone-900 p-8">
+      {/* Standing on the Shoulders of Giants - THE FORTISSIMO */}
+      <div className="relative mt-24 pt-16 pb-24 border-t border-amber-800/40">
+        {/* Background: Subtle musical staff lines */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-stone-900/30 to-transparent opacity-10">
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: 'linear-gradient(0deg, transparent 24px, rgba(74, 85, 96, 0.3) 25px, rgba(74, 85, 96, 0.3) 26px, transparent 27px)',
+              backgroundSize: '100% 27px'
+            }}
+          />
+        </div>
+        
+        <div className="relative max-w-5xl mx-auto px-4">
+          {/* Section Header - Sets up the reveal */}
+          <div className="mb-16 text-center">
+            <div className="inline-block mb-4">
+              <div className="w-16 h-1 bg-amber-600 mx-auto mb-2"></div>
+              <div className="w-12 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            <h2 className="text-4xl font-serif font-bold text-amber-300 mb-6 tracking-tight">
+              Standing on the Shoulders of Giants
+            </h2>
+            <p className="text-stone-400 text-xl max-w-2xl mx-auto font-light">
+              But none of this happened in a vacuum.
+            </p>
+          </div>
+
+          {/* The Two Pillars */}
+          <div className="grid lg:grid-cols-2 gap-12 mb-20">
+            {/* Left Pillar - Haydn */}
+            <div className="relative">
+              <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-amber-600/50"></div>
+              <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-amber-600/50"></div>
+              
+              <div className="bg-stone-900/60 backdrop-blur-sm rounded-lg p-8 border border-stone-700/50 h-full">
+                <div className="mb-8">
+                  <div className="text-amber-300 font-serif text-2xl mb-2">Joseph Haydn</div>
+                  <div className="text-stone-500 text-sm uppercase tracking-wider">1732–1809 · Symphony Father</div>
+                </div>
+                
+                <div className="space-y-6">
+                  <p className="text-stone-300 leading-relaxed">
+                    Thirty years in the Esterházy court. A servant in livery. Yet he built the symphony, the string quartet, the sonata form—the very architecture that Mozart and Beethoven would inhabit and then shatter.
+                  </p>
+                  
+                  <div className="border-l-4 border-amber-700 pl-4 py-3 bg-stone-950/50 italic">
+                    <p className="text-amber-300/90 text-lg leading-relaxed">
+                      "You shall receive Mozart's spirit from Haydn's hands."
+                    </p>
+                    <p className="text-stone-500 text-sm mt-2">— Count Waldstein to the young Beethoven, 1792</p>
+                  </div>
+                  
+                  <p className="text-stone-300 leading-relaxed">
+                    Mozart dedicated six quartets to him—not as tribute to a master, but as one builder acknowledging another. Not the spark. <span className="text-amber-400">The tinder that catches it.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Pillar - Cypherpunks */}
+            <div className="relative">
+              <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-amber-600/50"></div>
+              <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-amber-600/50"></div>
+              
+              <div className="bg-stone-900/60 backdrop-blur-sm rounded-lg p-8 border border-stone-700/50 h-full">
+                <div className="mb-8">
+                  <div className="text-amber-300 font-serif text-2xl mb-2">The Cypherpunks</div>
+                  <div className="text-stone-500 text-sm uppercase tracking-wider">1989–2008 · Digital Cash Architects</div>
+                </div>
+                
+                <div className="space-y-6">
+                  <p className="text-stone-300 leading-relaxed">
+                    Mailing lists. Academic papers. Proof-of-concept code that never scaled. David Chaum's DigiCash. Wei Dai's B-money. Nick Szabo's Bit Gold. Adam Back's Hashcash. Hal Finney's RPOW.
+                  </p>
+                  
+                  <div className="border-l-4 border-amber-700 pl-4 py-3 bg-stone-950/50 italic">
+                    <p className="text-amber-300/90 text-lg leading-relaxed">
+                      "Bitcoin is an implementation of Wei Dai's B-money proposal and Nick Szabo's Bit Gold proposal."
+                    </p>
+                    <p className="text-stone-500 text-sm mt-2">— Satoshi Nakamoto, 2010</p>
+                  </div>
+                  
+                  <p className="text-stone-300 leading-relaxed">
+                    Satoshi cited them by name—not as footnotes, but as the mathematics that made the breakthrough possible. Not the breakthrough. <span className="text-amber-400">The ground from which it grew.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* The Pivot Line */}
+          <div className="max-w-2xl mx-auto text-center mb-20">
+            <div className="relative py-8">
+              <div className="absolute left-0 right-0 top-1/2 h-px bg-gradient-to-r from-transparent via-amber-700/50 to-transparent"></div>
+              <div className="relative inline-block bg-stone-900 px-8">
+                <p className="text-3xl font-serif text-amber-300 italic">
+                  They built the shoulders.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* The Declaration - One continuous thought */}
+          <div className="max-w-3xl mx-auto">
+            <div className="relative">
+              {/* Left quote mark */}
+              <div className="absolute -left-4 md:-left-10 -top-6 text-7xl text-amber-700/20 font-serif select-none">"</div>
+              
+              <div className="bg-gradient-to-b from-stone-900/80 to-stone-950/60 rounded-xl p-12 border border-amber-800/20">
+                <div className="text-center space-y-6">
+                  <p className="text-stone-300 text-xl md:text-2xl leading-relaxed">
+                    And we—by doing this, by building, by questioning—we are not observers of the chain.
+                  </p>
+                  
+                  <p className="text-amber-200 text-2xl md:text-3xl font-serif leading-relaxed">
+                    We are the next line of the score.
+                  </p>
+                  
+                  <div className="pt-4">
+                    <p className="text-stone-400 text-lg md:text-xl leading-relaxed">
+                      There is room for us. The chain is not finished.<br />
+                      We build upon the old masters, and one day—<br />
+                      <span className="text-amber-300 font-medium">someone will stand on our shoulders too.</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Right quote mark */}
+              <div className="absolute -right-4 md:-right-10 -bottom-6 text-7xl text-amber-700/20 font-serif select-none">"</div>
+            </div>
+          </div>
+
+          {/* The Closing Whisper */}
+          <div className="mt-20 text-center">
+            <div className="inline-flex items-center space-x-6 text-stone-600">
+              <div className="w-16 h-px bg-gradient-to-r from-transparent to-stone-700"></div>
+              <p className="text-sm uppercase tracking-[0.25em] font-light">
+                The chain continues
+              </p>
+              <div className="w-16 h-px bg-gradient-to-l from-transparent to-stone-700"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
