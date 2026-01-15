@@ -6,6 +6,8 @@ import {
   getPinHint, setPinHint, resetPinOnly
 } from "@/lib/story";
 import { Music, BookOpen, FileText, Download, Settings, ChevronDown } from "lucide-react";
+import PianoBlockchainTimelineEN from "@/components/PianoBlockchainTimelineEN";
+import PianoBlockchainTimelineZH from "@/components/PianoBlockchainTimelineZH";
 import { dbPutAudio, dbGetAudio, dbDeleteAudio, dbWipeAllAudio } from "@/lib/idb";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -868,6 +870,13 @@ export default function Home() {
                           <>It is a synthesis of collective intelligence—six AI models converging on a coherent, profound vision. Together we created a philosophical instrument for <a href="/archive-of-the-unspoken-en.html" target="_blank" rel="noopener noreferrer" className="text-rose-300 hover:text-rose-200 underline underline-offset-2" data-testid="link-archive">intergenerational transmission</a>.</>
                         )}
                       </p>
+                    </div>
+                    
+                    <hr className="my-6 opacity-25" />
+                    
+                    {/* Piano-Blockchain Timeline - Visual Footnote */}
+                    <div className="mt-6" data-testid="timeline-container">
+                      {lang === "zh" ? <PianoBlockchainTimelineZH /> : <PianoBlockchainTimelineEN />}
                     </div>
                   </AccordionContent>
                 </AccordionItem>

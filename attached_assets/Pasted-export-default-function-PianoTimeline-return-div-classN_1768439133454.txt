@@ -1,0 +1,61 @@
+export default function PianoTimeline() {
+  return (
+    <div className="min-h-screen bg-stone-100 p-8">
+      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h3 className="text-xl font-bold text-stone-800 mb-8 text-center border-b-2 border-amber-600 pb-4">
+          Piano Innovation Genealogy: Collaborative Evolution of Composers and Manufacturers
+        </h3>
+        
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-16 top-0 bottom-0 w-0.5 bg-amber-600"></div>
+          
+          {/* 1770s */}
+          <div className="flex mb-8 relative">
+            <div className="w-32 flex-shrink-0">
+              <span className="inline-block bg-amber-600 text-white px-3 py-1 rounded font-bold text-sm">
+                1770s
+              </span>
+            </div>
+            <div className="flex-1 bg-stone-50 p-4 rounded-lg border-l-4 border-amber-600 ml-4">
+              <strong className="text-stone-800 block mb-2">Mozart + Stein/Walter</strong>
+              <p className="text-stone-600 text-sm">
+                Advanced the "fortepiano" concept, expanded range to 5-6 octaves, emphasized expressive dynamics
+              </p>
+            </div>
+          </div>
+          
+          {/* 1810s */}
+          <div className="flex mb-8 relative">
+            <div className="w-32 flex-shrink-0">
+              <span className="inline-block bg-amber-600 text-white px-3 py-1 rounded font-bold text-sm">
+                1810s
+              </span>
+            </div>
+            <div className="flex-1 bg-stone-50 p-4 rounded-lg border-l-4 border-amber-600 ml-4">
+              <strong className="text-stone-800 block mb-2">Beethoven + Broadwood/Érard</strong>
+              <p className="text-stone-600 text-sm">
+                Demanded greater volume and range (1818 Broadwood piano), promoted cast-iron frames, heavier strings, pedal systems
+              </p>
+            </div>
+          </div>
+          
+          {/* 1830s+ */}
+          <div className="flex relative">
+            <div className="w-32 flex-shrink-0">
+              <span className="inline-block bg-amber-600 text-white px-3 py-1 rounded font-bold text-sm">
+                1830s+
+              </span>
+            </div>
+            <div className="flex-1 bg-stone-50 p-4 rounded-lg border-l-4 border-amber-600 ml-4">
+              <strong className="text-stone-800 block mb-2">Chopin, Liszt, Brahms, Debussy</strong>
+              <p className="text-stone-600 text-sm">
+                Utilized expanded piano capabilities to create works requiring new techniques and timbres, solidifying the piano's status as a primary solo instrument
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

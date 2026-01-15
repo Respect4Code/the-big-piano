@@ -1,0 +1,215 @@
+/**
+ * Piano-Blockchain Timeline Component (English)
+ * 
+ * Color Metaphor:
+ * - stone palette = piano wood warmth (oak, walnut, mahogany casings)
+ * - amber palette = aged ivory keys, brass hardware, golden age of composition
+ * - gradient = evolution from harpsichord lightness to modern piano depth
+ * 
+ * For production: Consider extending Tailwind config with semantic colors:
+ * piano: { 800: '#292524', 900: '#1c1917' }
+ * ivory: { 300: '#fef3c7' }
+ * ebony: { 900: '#0c0a09' }
+ */
+
+export default function PianoBlockchainTimeline() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-stone-900 to-stone-800 p-8">
+      {/* stone-900 to stone-800 = aged piano wood grain */}
+      <div className="max-w-3xl mx-auto">
+        
+        {/* Header with the key insight */}
+        <div className="text-center mb-10">
+          <h2 className="text-2xl font-bold text-amber-400 mb-3">
+            What Is a Piano?
+          </h2>
+          <p className="text-stone-300 italic text-lg max-w-xl mx-auto">
+            Just as Satoshi Nakamoto used the blockchain to ask "What is money?", 
+            Mozart and Beethoven decentralised sound by asking "What is a piano?"
+          </p>
+        </div>
+
+        {/* The Analogy Key */}
+        {/* amber-600/30 border = brass piano hinges and pedal hardware */}
+        <div className="bg-stone-800/50 rounded-lg p-4 mb-8 border border-amber-600/30">
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="text-stone-400">
+              <span className="text-amber-400 font-semibold">Blockchain</span> = Musical Innovation Network
+            </div>
+            <div className="text-stone-400">
+              <span className="text-amber-400 font-semibold">Composers</span> = Miners (validating new sounds)
+            </div>
+            <div className="text-stone-400">
+              <span className="text-amber-400 font-semibold">Scores</span> = Code (BTC Whitepaper)
+            </div>
+            <div className="text-stone-400">
+              <span className="text-amber-400 font-semibold">Paper</span> = The Internet (decentralised thought)
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline */}
+        <div className="relative">
+          {/* Vertical line - amber gradient = evolution of piano's golden age */}
+          <div className="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-amber-600 to-amber-800"></div>
+          
+          {/* 1770s - Mozart: The Genesis Block */}
+          <div className="relative mb-10 pl-16">
+            {/* amber-400 = brightest ivory, earliest innovation */}
+            <div className="absolute left-4 w-5 h-5 bg-amber-400 rounded-full border-4 border-stone-900"></div>
+            <div className="bg-stone-800 rounded-lg p-5 border border-stone-700">
+              <div className="flex justify-between items-start mb-3">
+                <span className="bg-amber-600 text-white px-3 py-1 rounded text-sm font-bold">1770s</span>
+                <span className="text-stone-500 text-xs italic">The Genesis Block</span>
+              </div>
+              
+              {/* Bidirectional relationship */}
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <div className="text-right">
+                  <div className="text-amber-300 font-bold">Mozart</div>
+                  <div className="text-stone-500 text-xs">Composer</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className="text-amber-400">→</span>
+                  <span className="text-xs text-stone-500">pushed</span>
+                  <span className="text-amber-400">←</span>
+                  <span className="text-xs text-stone-500">enabled</span>
+                </div>
+                <div className="text-left">
+                  <div className="text-amber-300 font-bold">Stein / Walter</div>
+                  <div className="text-stone-500 text-xs">Manufacturers</div>
+                </div>
+              </div>
+              
+              <p className="text-stone-300 text-sm mb-3">
+                Questioned the fortepiano's limits. Extended range to 5-6 octaves. 
+                Composed for instruments that <em>didn't exist yet</em>—forcing makers to catch up.
+              </p>
+              
+              <div className="bg-stone-900/50 rounded p-3 text-xs">
+                <span className="text-amber-400 font-semibold">Blockchain parallel:</span>
+                <span className="text-stone-400"> Like Satoshi writing rules for a system that would grow beyond him</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 1810s - Beethoven: The Hard Fork */}
+          <div className="relative mb-10 pl-16">
+            {/* amber-500 = slightly darker, heavier strings era */}
+            <div className="absolute left-4 w-5 h-5 bg-amber-500 rounded-full border-4 border-stone-900"></div>
+            <div className="bg-stone-800 rounded-lg p-5 border border-stone-700">
+              <div className="flex justify-between items-start mb-3">
+                <span className="bg-amber-600 text-white px-3 py-1 rounded text-sm font-bold">1810s</span>
+                <span className="text-stone-500 text-xs italic">The Hard Fork</span>
+              </div>
+              
+              {/* Bidirectional relationship */}
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <div className="text-right">
+                  <div className="text-amber-300 font-bold">Beethoven</div>
+                  <div className="text-stone-500 text-xs">Composer</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className="text-amber-400">→</span>
+                  <span className="text-xs text-stone-500">broke pianos</span>
+                  <span className="text-amber-400">←</span>
+                  <span className="text-xs text-stone-500">built stronger</span>
+                </div>
+                <div className="text-left">
+                  <div className="text-amber-300 font-bold">Broadwood / Érard</div>
+                  <div className="text-stone-500 text-xs">Manufacturers</div>
+                </div>
+              </div>
+              
+              <p className="text-stone-300 text-sm mb-3">
+                Literally broke pianos with his playing. Demanded cast-iron frames, heavier strings, 
+                pedal systems. Wrote code (scores) while deaf—trusting the system without "hearing" it.
+              </p>
+              
+              <div className="bg-stone-900/50 rounded p-3 text-xs mb-3">
+                <span className="text-amber-400 font-semibold">Blockchain parallel:</span>
+                <span className="text-stone-400"> A hard fork from Mozart's elegance—same foundational code, radically different execution</span>
+              </div>
+              
+              <div className="border-t border-stone-700 pt-3">
+                <span className="text-stone-500 text-xs">Proof of Work:</span>
+                <span className="text-amber-300 text-sm ml-2">"Hammerklavier" Sonatas</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 1830s+ - The Miners */}
+          <div className="relative mb-10 pl-16">
+            {/* amber-600 = mature golden age, full piano development */}
+            <div className="absolute left-4 w-5 h-5 bg-amber-600 rounded-full border-4 border-stone-900"></div>
+            <div className="bg-stone-800 rounded-lg p-5 border border-stone-700">
+              <div className="flex justify-between items-start mb-3">
+                <span className="bg-amber-600 text-white px-3 py-1 rounded text-sm font-bold">1830s+</span>
+                <span className="text-stone-500 text-xs italic">The Miners</span>
+              </div>
+              
+              <h4 className="text-amber-300 font-bold text-center mb-4">
+                Composers as Self-Regulating Validators
+              </h4>
+              
+              <p className="text-stone-300 text-sm mb-4">
+                No longer needed to trust piano makers—they validated the sound themselves with their own ears. 
+                This led to greater adoption of the piano in people's homes.
+              </p>
+              
+              {/* The miners grid */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <div className="bg-stone-900/50 rounded p-3">
+                  <div className="text-amber-300 font-semibold text-sm">Chopin</div>
+                  <div className="text-stone-400 text-xs">Proof of Work: Études</div>
+                </div>
+                <div className="bg-stone-900/50 rounded p-3">
+                  <div className="text-amber-300 font-semibold text-sm">Liszt</div>
+                  <div className="text-stone-400 text-xs">Proof of Work: La Campanella</div>
+                </div>
+                <div className="bg-stone-900/50 rounded p-3">
+                  <div className="text-amber-300 font-semibold text-sm">Brahms</div>
+                  <div className="text-stone-400 text-xs">Proof of Work: Intermezzi</div>
+                </div>
+                <div className="bg-stone-900/50 rounded p-3">
+                  <div className="text-amber-300 font-semibold text-sm">Debussy</div>
+                  <div className="text-stone-400 text-xs">Proof of Work: Clair de Lune</div>
+                </div>
+              </div>
+              
+              <div className="bg-stone-900/50 rounded p-3 text-xs">
+                <span className="text-amber-400 font-semibold">Blockchain parallel:</span>
+                <span className="text-stone-400"> Like BTC miners rewarded for keeping the blockchain transparent—these composers were "rewarded" via musical impact for pushing boundaries</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Modern Day - The Score Persists */}
+          <div className="relative pl-16">
+            {/* amber-700 = deepest tone, where past meets present */}
+            <div className="absolute left-4 w-5 h-5 bg-amber-700 rounded-full border-4 border-stone-900"></div>
+            <div className="bg-stone-800/50 rounded-lg p-5 border border-dashed border-stone-600">
+              <div className="flex justify-between items-start mb-3">
+                <span className="bg-stone-600 text-white px-3 py-1 rounded text-sm font-bold">Today</span>
+                <span className="text-stone-500 text-xs italic">The Score Persists</span>
+              </div>
+              
+              <p className="text-stone-400 text-sm italic">
+                Just like the BTC whitepaper is still here, so are Mozart and Beethoven's written scores. 
+                They are the code—decentralised, unstoppable, inspiring new forks.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer insight */}
+        <div className="mt-10 text-center">
+          <p className="text-stone-500 text-sm max-w-lg mx-auto">
+            Paper was their internet. The Industrial Revolution that created paper led to ink and pencil—
+            writing became the decentralisation of recording human thought, and cannot be stopped by anyone.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
