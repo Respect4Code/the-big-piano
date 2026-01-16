@@ -214,6 +214,156 @@
                 font-size: 0.9rem;
             }
         }
+        
+        /* Mobile responsive styles for finale sections */
+        .analogy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            font-size: 0.875rem;
+        }
+        
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+        
+        .finale-title {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+        
+        .finale-subtitle {
+            font-size: 1.5rem;
+        }
+        
+        .giants-title {
+            font-size: 2rem;
+        }
+        
+        .dawn-title {
+            font-size: 3.75rem;
+        }
+        
+        .dawn-figure-text {
+            font-size: 1.875rem;
+        }
+        
+        .dawn-insight-small {
+            font-size: 2.25rem;
+        }
+        
+        .dawn-insight-large {
+            font-size: 3rem;
+        }
+        
+        .dawn-finale-text {
+            font-size: 3.75rem;
+        }
+        
+        .genesis-text {
+            font-size: 1.5rem;
+        }
+        
+        .dawn-finale-large {
+            font-size: 4.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .analogy-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .pillars-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .finale-title {
+                font-size: 2rem;
+            }
+            
+            .finale-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .giants-title {
+                font-size: 1.5rem;
+            }
+            
+            .dawn-title {
+                font-size: 2.5rem;
+            }
+            
+            .dawn-figure-text {
+                font-size: 1.5rem;
+            }
+            
+            .dawn-insight-small {
+                font-size: 1.5rem;
+            }
+            
+            .dawn-insight-large {
+                font-size: 2rem;
+            }
+            
+            .dawn-finale-text {
+                font-size: 2.5rem;
+            }
+            
+            .genesis-text {
+                font-size: 1.125rem;
+            }
+            
+            .dawn-finale-large {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .finale-title {
+                font-size: 1.6rem;
+            }
+            
+            .finale-subtitle {
+                font-size: 1rem;
+            }
+            
+            .giants-title {
+                font-size: 1.3rem;
+            }
+            
+            .dawn-title {
+                font-size: 2rem;
+            }
+            
+            .dawn-figure-text {
+                font-size: 1.25rem;
+            }
+            
+            .dawn-insight-small {
+                font-size: 1.25rem;
+            }
+            
+            .dawn-insight-large {
+                font-size: 1.5rem;
+            }
+            
+            .dawn-finale-text {
+                font-size: 2rem;
+            }
+            
+            .genesis-text {
+                font-size: 1rem;
+            }
+            
+            .dawn-finale-large {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -645,7 +795,7 @@
 
                 <!-- 类比图解 -->
                 <div style="background: rgba(41,37,36,0.5); border-radius: 8px; padding: 16px; margin-bottom: 24px; border: 1px solid rgba(217,119,6,0.3);">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.875rem;">
+                    <div class="analogy-grid">
                         <div style="color: #a8a29e;"><span style="color: #fbbf24; font-weight: 600;">区块链</span> = 音乐创新网络</div>
                         <div style="color: #a8a29e;"><span style="color: #fbbf24; font-weight: 600;">作曲家</span> = 矿工（验证新声音）</div>
                         <div style="color: #a8a29e;"><span style="color: #fbbf24; font-weight: 600;">乐谱</span> = 代码（BTC 白皮书）</div>
@@ -808,7 +958,7 @@
                         <div style="width: 64px; height: 4px; background: #d97706; margin: 0 auto 8px;"></div>
                         <div style="width: 48px; height: 4px; background: #f59e0b; margin: 0 auto;"></div>
                     </div>
-                    <h2 style="font-size: 2rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; font-weight: bold; color: #fcd34d; margin-bottom: 24px; letter-spacing: 0.05em;">
+                    <h2 class="giants-title" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; font-weight: bold; color: #fcd34d; margin-bottom: 24px; letter-spacing: 0.05em;">
                         站在巨人的肩膀上
                     </h2>
                     <p style="color: #a8a29e; font-size: 1.25rem; max-width: 600px; margin: 0 auto; font-weight: 300;">
@@ -817,7 +967,7 @@
                 </div>
 
                 <!-- 两根支柱 -->
-                <div style="display: grid; grid-template-columns: 1fr; gap: 32px; margin-bottom: 56px;">
+                <div class="pillars-grid" style="margin-bottom: 56px;">
                     
                     <!-- 左柱 - 海顿 -->
                     <div style="position: relative;">
@@ -946,7 +1096,7 @@
                 
                 <!-- 如蚀刻般的标题 -->
                 <div style="text-align: center; margin-bottom: 144px;">
-                    <h2 style="font-size: 3.75rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; font-weight: 300; color: #fef3c7; letter-spacing: 0.05em; margin-bottom: 24px;">
+                    <h2 class="dawn-title" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; font-weight: 300; color: #fef3c7; letter-spacing: 0.05em; margin-bottom: 24px;">
                         破晓
                     </h2>
                     <div style="height: 2px; width: 96px; margin: 0 auto 32px; background: linear-gradient(to right, transparent, rgba(217, 119, 6, 0.5), transparent);"></div>
@@ -962,10 +1112,10 @@
                         <div style="width: 48px; height: 1px; background: rgba(217, 119, 6, 0.6);"></div>
                         <span style="color: rgba(245, 158, 11, 0.7); font-size: 0.875rem; letter-spacing: 0.3em;">莫扎特</span>
                     </div>
-                    <p style="font-size: 1.875rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #fef3c7; line-height: 1.4;">
+                    <p class="dawn-figure-text" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #fef3c7; line-height: 1.4;">
                         他没有请求一架更好的钢琴
                     </p>
-                    <p style="font-size: 1.875rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; color: rgba(254, 243, 199, 0.8); line-height: 1.4; margin-top: 8px;">
+                    <p class="dawn-figure-text" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; color: rgba(254, 243, 199, 0.8); line-height: 1.4; margin-top: 8px;">
                         他谱写了<span style="font-style: italic;">需要它的声音</span>
                     </p>
                 </div>
@@ -976,10 +1126,10 @@
                         <div style="width: 48px; height: 1px; background: rgba(225, 29, 72, 0.6);"></div>
                         <span style="color: rgba(244, 63, 94, 0.7); font-size: 0.875rem; letter-spacing: 0.3em;">贝多芬</span>
                     </div>
-                    <p style="font-size: 1.875rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #ffe4e6; line-height: 1.4;">
+                    <p class="dawn-figure-text" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #ffe4e6; line-height: 1.4;">
                         他没有与寂静抗争
                     </p>
-                    <p style="font-size: 1.875rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; color: rgba(255, 228, 230, 0.8); line-height: 1.4; margin-top: 8px;">
+                    <p class="dawn-figure-text" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; color: rgba(255, 228, 230, 0.8); line-height: 1.4; margin-top: 8px;">
                         他在其中建造了<span style="font-style: italic;">一座圣殿</span>
                     </p>
                 </div>
@@ -990,7 +1140,7 @@
                         <div style="width: 48px; height: 1px; background: rgba(8, 145, 178, 0.6);"></div>
                         <span style="color: rgba(6, 182, 212, 0.7); font-size: 0.875rem; letter-spacing: 0.3em;">中本聪</span>
                     </div>
-                    <p style="font-size: 1.875rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #cffafe; line-height: 1.4; margin-bottom: 32px;">
+                    <p class="dawn-figure-text" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #cffafe; line-height: 1.4; margin-bottom: 32px;">
                         他们没有抗议救市
                     </p>
                     
@@ -1004,7 +1154,7 @@
                                 </p>
                             </div>
                             <div style="background: rgba(0, 0, 0, 0.8); border: 1px solid rgba(21, 94, 117, 0.3); border-radius: 8px; padding: 40px; backdrop-filter: blur(4px);">
-                                <p style="font-family: monospace; color: #67e8f9; font-size: 1.5rem; line-height: 1.6; letter-spacing: 0.05em;">
+                                <p class="genesis-text" style="font-family: monospace; color: #67e8f9; line-height: 1.6; letter-spacing: 0.05em;">
                                     "The Times 03/Jan/2009<br />
                                     Chancellor on brink of second bailout for banks"
                                 </p>
@@ -1020,7 +1170,7 @@
                         </div>
                     </div>
 
-                    <p style="font-size: 1.875rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; color: rgba(207, 250, 254, 0.8); line-height: 1.4;">
+                    <p class="dawn-figure-text" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; color: rgba(207, 250, 254, 0.8); line-height: 1.4;">
                         他们建造了<span style="font-style: italic;">令旧账本过时的新账本</span>
                     </p>
                 </div>
@@ -1029,10 +1179,10 @@
                 <div style="max-width: 672px; margin: 0 auto 96px; text-align: center;">
                     <div style="height: 1px; width: 128px; margin: 0 auto 48px; background: linear-gradient(to right, transparent, rgba(217, 119, 6, 0.5), transparent);"></div>
                     
-                    <p style="font-size: 2.25rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #fef3c7; line-height: 1.4; margin-bottom: 32px;">
+                    <p class="dawn-insight-small" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #fef3c7; line-height: 1.4; margin-bottom: 32px;">
                         这一刀非暴力
                     </p>
-                    <p style="font-size: 3rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #fffbeb; font-weight: 300; line-height: 1.4; margin-bottom: 48px;">
+                    <p class="dawn-insight-large" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; color: #fffbeb; font-weight: 300; line-height: 1.4; margin-bottom: 48px;">
                         它是<span style="font-style: italic;">此在</span>与<span style="font-style: italic;">可能</span>的分界线
                     </p>
                     
@@ -1041,11 +1191,11 @@
 
                 <!-- 终句：黎明 -->
                 <div style="text-align: center;">
-                    <p style="font-size: 3.75rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; font-weight: 300; letter-spacing: 0.05em; line-height: 1.2; background: linear-gradient(135deg, #fbbf24 0%, #f472b6 50%, #22d3ee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    <p class="dawn-finale-text" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; font-weight: 300; letter-spacing: 0.05em; line-height: 1.2; background: linear-gradient(135deg, #fbbf24 0%, #f472b6 50%, #22d3ee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                         黎明<br />
                         不是进攻
                     </p>
-                    <p style="font-size: 4.5rem; font-family: 'Songti SC', 'SimSun', Georgia, serif; font-weight: 300; letter-spacing: 0.05em; line-height: 1.2; margin-top: 16px; background: linear-gradient(135deg, #fbbf24 0%, #f472b6 50%, #22d3ee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    <p class="dawn-finale-large" style="font-family: 'Songti SC', 'SimSun', Georgia, serif; font-weight: 300; letter-spacing: 0.05em; line-height: 1.2; margin-top: 16px; background: linear-gradient(135deg, #fbbf24 0%, #f472b6 50%, #22d3ee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                         它只是<br />
                         到来
                     </p>
