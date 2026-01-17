@@ -23,6 +23,36 @@
             --emoji-size: 1.2em;
         }
         
+        .close-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            background: var(--secondary-color);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: background 0.2s, transform 0.2s;
+        }
+        
+        .close-button:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .close-button svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            stroke-width: 2;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.7;
@@ -349,6 +379,11 @@
     </style>
 </head>
 <body>
+    <button class="close-button" onclick="window.history.back()" aria-label="Close" data-testid="button-close">
+        <svg viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
     <header>
         <h1>Complete Transcription:<br>The Piano-to-Bitcoin Philosophical Journey</h1>
         <p class="subtitle">A Meta AI Conversation</p>

@@ -1,0 +1,100 @@
+Workers & Pages
+the-big-piano
+Deployments
+Metrics
+Custom domains
+Settings
+Production
+
+Visit
+Automatic deployments enabled
+Domains:
+the-big-piano.pages.dev
+main
+5d47d3f
+a599f2d6.the-big-piano.pages.dev
+
+25 minutes ago
+View details
+All deployments
+Environment	Source	Deployment	Status		
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+No deployment available
+
+15 minutes ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+a599f2d6.the-big-piano.pages.dev
+
+25 minutes ago
+View details
+
+main
+6dcefe5
+Update deployment script to include all necessary static files Reconfigure the build and deployment process to ensure all static assets are correctly included and published to the Cloudflare network. Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: c785d2ac-ebe7-428c-b22f-e8affecb5f9c Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/YUAAuPn Replit-Helium-Checkpoint-Created: true
+5c218aba.the-big-piano.pages.dev
+
+25 minutes ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+3c488b1f.the-big-piano.pages.dev
+
+29 minutes ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+1d62c659.the-big-piano.pages.dev
+
+36 minutes ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+0eec510f.the-big-piano.pages.dev
+
+40 minutes ago
+View details
+
+main
+41e9556
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 7722bc77-ee0d-4fa7-b79d-34f087899830 Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/YUAAuPn Replit-Helium-Checkpoint-Created: true
+197351bb.the-big-piano.pages.dev
+
+43 minutes ago
+View details
+
+main
+d9b82f8
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 2a00b96f-a59c-4c43-bb00-5939d5fbfed2 Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/YUAAuPn Replit-Helium-Checkpoint-Created: true
+8cfd38e9.the-big-piano.pages.dev
+
+an hour ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+9b9c8900.the-big-piano.pages.dev
+
+an hour ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+ad69d61a.the-big-piano.pages.dev
+
+2 hours ago
+View details
+

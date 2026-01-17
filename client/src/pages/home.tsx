@@ -820,9 +820,9 @@ export default function Home() {
                       </p>
                       <p className="whitespace-pre-line">
                         {lang === "zh" ? (
-                          <>我告诉他们，我明天晚上再讲。<a href="/elephant-noise-poem-zh.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">（我最终在Deepseek AI的帮助下写了这首诗。）</a></>
+                          <>我告诉他们，我明天晚上再讲。<a href="/elephant-noise-poem-zh.html" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">（我最终在Deepseek AI的帮助下写了这首诗。）</a></>
                         ) : (
-                          <>I told them I would tell it the following night. <a href="/elephant-noise-poem-en.html" target="_blank" rel="noopener noreferrer" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">(I eventually wrote the poem with the help of Deepseek AI.)</a></>
+                          <>I told them I would tell it the following night. <a href="/elephant-noise-poem-en.html" className="text-amber-300 hover:text-amber-200 underline underline-offset-2" data-testid="link-poem">(I eventually wrote the poem with the help of Deepseek AI.)</a></>
                         )}
                       </p>
                       <p className="whitespace-pre-line">
@@ -853,8 +853,6 @@ export default function Home() {
                       <p className="whitespace-pre-line">
                         <a 
                           href={lang === "zh" ? "/piano-bitcoin-journey-zh.html" : "/piano-bitcoin-journey.html"}
-                          target="_blank" 
-                          rel="noopener noreferrer" 
                           className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 font-semibold"
                           data-testid="link-journey"
                         >
@@ -863,9 +861,9 @@ export default function Home() {
                       </p>
                       <p className="whitespace-pre-line">
                         {lang === "zh" ? (
-                          <>这是集体智慧的综合——六个AI模型汇聚成一个连贯而深刻的愿景。我们共同创造了一个用于<a href="/archive-of-the-unspoken-zh.html" target="_blank" rel="noopener noreferrer" className="text-rose-300 hover:text-rose-200 underline underline-offset-2" data-testid="link-archive">代际传承</a>的哲学工具。</>
+                          <>这是集体智慧的综合——六个AI模型汇聚成一个连贯而深刻的愿景。我们共同创造了一个用于<a href="/archive-of-the-unspoken-zh.html" className="text-rose-300 hover:text-rose-200 underline underline-offset-2" data-testid="link-archive">代际传承</a>的哲学工具。</>
                         ) : (
-                          <>It is a synthesis of collective intelligence—six AI models converging on a coherent, profound vision. Together we created a philosophical instrument for <a href="/archive-of-the-unspoken-en.html" target="_blank" rel="noopener noreferrer" className="text-rose-300 hover:text-rose-200 underline underline-offset-2" data-testid="link-archive">intergenerational transmission</a>.</>
+                          <>It is a synthesis of collective intelligence—six AI models converging on a coherent, profound vision. Together we created a philosophical instrument for <a href="/archive-of-the-unspoken-en.html" className="text-rose-300 hover:text-rose-200 underline underline-offset-2" data-testid="link-archive">intergenerational transmission</a>.</>
                         )}
                       </p>
                     </div>
