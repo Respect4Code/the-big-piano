@@ -1,0 +1,64 @@
+20:43:09.898	Cloning repository...
+20:43:11.921	From https://github.com/Respect4Code/the-big-piano
+20:43:11.921	 * branch            5d47d3f555d99dd983c505ca45d13aff72c3a111 -> FETCH_HEAD
+20:43:11.921	
+20:43:12.237	HEAD is now at 5d47d3f Saved progress at the end of the loop
+20:43:12.238	
+20:43:12.312	
+20:43:12.312	Using v2 root directory strategy
+20:43:12.331	Success: Finished cloning repository files
+20:43:14.272	Checking for configuration in a Wrangler configuration file (BETA)
+20:43:14.273	
+20:43:15.391	No wrangler.toml file found. Continuing.
+20:43:15.456	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+20:43:15.457	Installing project dependencies: npm clean-install --progress=false
+20:43:23.871	
+20:43:23.871	added 480 packages, and audited 481 packages in 8s
+20:43:23.872	
+20:43:23.872	67 packages are looking for funding
+20:43:23.872	  run `npm fund` for details
+20:43:23.881	
+20:43:23.881	3 high severity vulnerabilities
+20:43:23.881	
+20:43:23.881	To address all issues, run:
+20:43:23.882	  npm audit fix
+20:43:23.882	
+20:43:23.882	Run `npm audit` for details.
+20:43:23.907	Executing user command: npm run build
+20:43:24.266	
+20:43:24.266	> rest-express@1.0.0 build
+20:43:24.266	> tsx script/build.ts
+20:43:24.266	
+20:43:25.212	building client...
+20:43:25.286	vite v7.3.0 building client environment for production...
+20:43:25.905	transforming...
+20:43:26.860	
+20:43:26.861	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+20:43:28.792	✓ 1711 modules transformed.
+20:43:28.991	rendering chunks...
+20:43:29.015	computing gzip size...
+20:43:29.028	../dist/public/index.html                                                            2.01 kB │ gzip:   0.77 kB
+20:43:29.028	../dist/public/assets/man_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg     270.09 kB
+20:43:29.028	../dist/public/assets/beethoven_moonlight_sonata-CLnbowyC.mp3                   14,662.87 kB
+20:43:29.028	../dist/public/assets/mozart_rondo_alla_turca-r_P-6gIh.mp3                      18,553.50 kB
+20:43:29.029	../dist/public/assets/index-B02f4nFw.css                                            89.39 kB │ gzip:  14.34 kB
+20:43:29.029	../dist/public/assets/index-CY8H_4ki.js                                            345.47 kB │ gzip: 118.07 kB
+20:43:29.029	✓ built in 3.51s
+20:43:29.029	building server...
+20:43:29.100	
+20:43:29.100	  dist/index.cjs  827.1kb
+20:43:29.100	
+20:43:29.100	⚡ Done in 54ms
+20:43:29.165	Finished
+20:43:30.030	Checking for configuration in a Wrangler configuration file (BETA)
+20:43:30.030	
+20:43:31.140	No wrangler.toml file found. Continuing.
+20:43:31.141	Note: No functions dir at /functions found. Skipping.
+20:43:31.141	Validating asset output directory
+20:43:34.420	Deploying your site to Cloudflare's global network...
+20:43:36.621	Uploading... (7/7)
+20:43:36.622	✨ Success! Uploaded 0 files (7 already uploaded) (0.30 sec)
+20:43:36.622	
+20:43:36.995	✨ Upload complete!
+20:43:40.418	Success: Assets published!
+20:43:41.947	Success: Your site was deployed!
