@@ -133,7 +133,7 @@ export default function Home() {
       setIsRecording(true);
     } catch (err) {
       console.error("Recording error:", err);
-      showToast("Microphone access denied");
+      showToast(lang === "zh" ? "麦克风访问被拒绝" : "Microphone access denied");
     }
   };
 
@@ -410,7 +410,7 @@ export default function Home() {
               The Big Piano
             </h2>
             <p className="mt-4 text-amber-100/60 text-xs md:text-sm tracking-widest uppercase">
-              A story about what makes things special
+              {copy.splashSubtitle}
             </p>
           </div>
           
@@ -420,7 +420,7 @@ export default function Home() {
             className="absolute bottom-8 right-8 px-4 py-2 text-sm text-amber-100/70 hover:text-amber-100 transition-colors rounded-full border border-amber-100/30 hover:border-amber-100/50"
             style={{ backdropFilter: "blur(4px)", background: "rgba(0,0,0,0.3)" }}
           >
-            Skip
+            {copy.skipBtn}
           </button>
         </div>
       )}
@@ -429,8 +429,8 @@ export default function Home() {
       <header className="sticky top-0 z-10 flex items-center justify-between gap-4 px-4 py-3 border-b border-white/10" 
               style={{ background: "rgba(11,12,16,.7)", backdropFilter: "blur(10px)" }}>
         <div>
-          <h1 className="text-lg font-bold text-white" data-testid="text-app-title">The Big Piano</h1>
-          <p className="text-xs text-neutral-400">Story → One Question → Local Timeline</p>
+          <h1 className="text-lg font-bold text-white" data-testid="text-app-title">{copy.appTitle}</h1>
+          <p className="text-xs text-neutral-400">{copy.appSubtitle}</p>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex rounded-full border border-white/10 p-1" style={{ background: "rgba(18,19,26,.6)" }}>
@@ -458,7 +458,7 @@ export default function Home() {
             data-testid="button-parent"
             className="px-3 py-1.5 text-sm text-neutral-300 hover:text-white transition-colors"
           >
-            Parent
+            {copy.parentBtn}
           </button>
         </div>
       </header>
@@ -496,7 +496,7 @@ export default function Home() {
                   className="flex-1 bg-white/10 hover:bg-white/20 text-white border-white/20"
                   size="sm"
                 >
-                  Start
+                  {copy.startBtn}
                 </Button>
                 <Button 
                   onClick={stopRecording} 
@@ -505,7 +505,7 @@ export default function Home() {
                   className="flex-1 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-200 border-cyan-500/30"
                   size="sm"
                 >
-                  Stop
+                  {copy.stopBtn}
                 </Button>
               </div>
               {recordedUrl && (
@@ -562,7 +562,7 @@ export default function Home() {
                 data-testid="button-clear-icons"
                 className="text-xs text-neutral-400 hover:text-white mt-2"
               >
-                Clear
+                {copy.clearBtn}
               </button>
             </div>
           </div>
@@ -621,8 +621,8 @@ export default function Home() {
                     <span className="text-xs text-neutral-400">{formatDate(entry.createdAt)}</span>
                     <span className="text-xs text-neutral-400">
                       {entry.lang === "zh" ? "中文" : "English"}
-                      {entry.childAge && ` • Age: ${entry.childAge}`}
-                      {entry.hasAudio && " • Audio"}
+                      {entry.childAge && ` • ${copy.agePrefix}${entry.childAge}`}
+                      {entry.hasAudio && copy.hasAudioLabel}
                     </span>
                   </div>
                   <p className="mt-2 text-sm text-neutral-200">
@@ -646,14 +646,14 @@ export default function Home() {
                         onClick={() => playEntryAudio(entry.id)}
                         className="text-xs text-cyan-300 hover:text-cyan-200"
                       >
-                        {playingEntryId === entry.id ? "Playing..." : "Play audio"}
+                        {playingEntryId === entry.id ? copy.playingText : copy.playAudioBtn}
                       </button>
                     )}
                     <button 
                       onClick={() => deleteEntry(entry.id)}
                       className="text-xs text-red-300 hover:text-red-200"
                     >
-                      Delete
+                      {copy.deleteBtn}
                     </button>
                   </div>
                 </div>

@@ -1,6 +1,19 @@
 export type Lang = "en" | "zh";
 
 export interface StoryContent {
+  appTitle: string;
+  appSubtitle: string;
+  parentBtn: string;
+  skipBtn: string;
+  startBtn: string;
+  stopBtn: string;
+  clearBtn: string;
+  playAudioBtn: string;
+  playingText: string;
+  deleteBtn: string;
+  splashSubtitle: string;
+  hasAudioLabel: string;
+  agePrefix: string;
   storyTitle: string;
   storyHint: string;
   questionTitle: string;
@@ -102,6 +115,19 @@ export interface StoryContent {
 
 export const COPY: Record<Lang, StoryContent> = {
   en: {
+    appTitle: "The Big Piano",
+    appSubtitle: "Story → One Question → Local Timeline",
+    parentBtn: "Parent",
+    skipBtn: "Skip",
+    startBtn: "Start",
+    stopBtn: "Stop",
+    clearBtn: "Clear",
+    playAudioBtn: "Play audio",
+    playingText: "Playing...",
+    deleteBtn: "Delete",
+    splashSubtitle: "A story about what makes things special",
+    hasAudioLabel: " • Audio",
+    agePrefix: "Age: ",
     storyTitle: "The Big Piano",
     storyHint: "Read together.",
     questionTitle: "One Question",
@@ -235,6 +261,19 @@ export const COPY: Record<Lang, StoryContent> = {
     accordionSettings: "Settings",
   },
   zh: {
+    appTitle: "《大钢琴》",
+    appSubtitle: "故事 → 一个问题 → 本地时间线",
+    parentBtn: "家长",
+    skipBtn: "跳过",
+    startBtn: "开始",
+    stopBtn: "停止",
+    clearBtn: "清除",
+    playAudioBtn: "播放录音",
+    playingText: "播放中...",
+    deleteBtn: "删除",
+    splashSubtitle: "一个关于什么让事物变得特别的故事",
+    hasAudioLabel: " • 录音",
+    agePrefix: "年龄：",
     storyTitle: "《大钢琴》",
     storyHint: "一起读。",
     questionTitle: "一个问题",
