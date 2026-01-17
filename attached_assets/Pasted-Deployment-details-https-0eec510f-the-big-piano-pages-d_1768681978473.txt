@@ -1,0 +1,98 @@
+Deployment details
+https://0eec510f.the-big-piano.pages.dev
+Repository:
+
+Respect4Code/the-big-piano
+Branch:
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+Status:
+Success
+8:32PM January 17, 2026
+Duration:
+35s
+Build settings
+Build log
+Functions
+Redirects
+Headers
+Build log
+Initializing build environment
+2s
+Cloning git repository
+3s
+Building application
+22s
+Deploying to Cloudflare's global network
+8s
+20:31:54.916	Cloning repository...
+20:31:56.814	From https://github.com/Respect4Code/the-big-piano
+20:31:56.814	 * branch            5d47d3f555d99dd983c505ca45d13aff72c3a111 -> FETCH_HEAD
+20:31:56.814	
+20:31:57.133	HEAD is now at 5d47d3f Saved progress at the end of the loop
+20:31:57.133	
+20:31:57.207	
+20:31:57.208	Using v2 root directory strategy
+20:31:57.229	Success: Finished cloning repository files
+20:31:59.066	Checking for configuration in a Wrangler configuration file (BETA)
+20:31:59.067	
+20:32:00.168	No wrangler.toml file found. Continuing.
+20:32:00.235	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+20:32:00.236	Installing project dependencies: npm clean-install --progress=false
+20:32:08.853	
+20:32:08.853	added 480 packages, and audited 481 packages in 8s
+20:32:08.854	
+20:32:08.854	67 packages are looking for funding
+20:32:08.854	  run `npm fund` for details
+20:32:08.862	
+20:32:08.862	3 high severity vulnerabilities
+20:32:08.863	
+20:32:08.863	To address all issues, run:
+20:32:08.863	  npm audit fix
+20:32:08.863	
+20:32:08.863	Run `npm audit` for details.
+20:32:08.890	Executing user command: npm run build
+20:32:09.262	
+20:32:09.262	> rest-express@1.0.0 build
+20:32:09.262	> tsx script/build.ts
+20:32:09.262	
+20:32:10.088	building client...
+20:32:10.160	vite v7.3.0 building client environment for production...
+20:32:10.706	transforming...
+20:32:11.523	
+20:32:11.523	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+20:32:13.538	✓ 1711 modules transformed.
+20:32:13.723	rendering chunks...
+20:32:13.746	computing gzip size...
+20:32:13.758	../dist/public/index.html                                                            2.01 kB │ gzip:   0.77 kB
+20:32:13.758	../dist/public/assets/man_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg     270.09 kB
+20:32:13.758	../dist/public/assets/beethoven_moonlight_sonata-CLnbowyC.mp3                   14,662.87 kB
+20:32:13.759	../dist/public/assets/mozart_rondo_alla_turca-r_P-6gIh.mp3                      18,553.50 kB
+20:32:13.759	../dist/public/assets/index-B02f4nFw.css                                            89.39 kB │ gzip:  14.34 kB
+20:32:13.759	../dist/public/assets/index-CY8H_4ki.js                                            345.47 kB │ gzip: 118.07 kB
+20:32:13.759	✓ built in 3.42s
+20:32:13.759	building server...
+20:32:13.852	
+20:32:13.852	  dist/index.cjs  827.1kb
+20:32:13.852	
+20:32:13.852	⚡ Done in 73ms
+20:32:13.928	Finished
+20:32:14.837	Checking for configuration in a Wrangler configuration file (BETA)
+20:32:14.838	
+20:32:15.929	No wrangler.toml file found. Continuing.
+20:32:15.930	Note: No functions dir at /functions found. Skipping.
+20:32:15.930	Validating asset output directory
+20:32:20.099	Deploying your site to Cloudflare's global network...
+20:32:22.700	Uploading... (7/7)
+20:32:22.701	✨ Success! Uploaded 0 files (7 already uploaded) (0.36 sec)
+20:32:22.701	
+20:32:23.022	✨ Upload complete!
+20:32:26.458	Success: Assets published!
+20:32:28.132	Success: Your site was deployed!
+Support
+System Status
+Careers
+Terms of Use
+Report Security Issues
+Priva

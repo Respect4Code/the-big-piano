@@ -1,0 +1,43 @@
+20:32:08.863	
+20:32:08.863	To address all issues, run:
+20:32:08.863	  npm audit fix
+20:32:08.863	
+20:32:08.863	Run `npm audit` for details.
+20:32:08.890	Executing user command: npm run build
+20:32:09.262	
+20:32:09.262	> rest-express@1.0.0 build
+20:32:09.262	> tsx script/build.ts
+20:32:09.262	
+20:32:10.088	building client...
+20:32:10.160	vite v7.3.0 building client environment for production...
+20:32:10.706	transforming...
+20:32:11.523	
+20:32:11.523	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+20:32:13.538	✓ 1711 modules transformed.
+20:32:13.723	rendering chunks...
+20:32:13.746	computing gzip size...
+20:32:13.758	../dist/public/index.html                                                            2.01 kB │ gzip:   0.77 kB
+20:32:13.758	../dist/public/assets/man_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg     270.09 kB
+20:32:13.758	../dist/public/assets/beethoven_moonlight_sonata-CLnbowyC.mp3                   14,662.87 kB
+20:32:13.759	../dist/public/assets/mozart_rondo_alla_turca-r_P-6gIh.mp3                      18,553.50 kB
+20:32:13.759	../dist/public/assets/index-B02f4nFw.css                                            89.39 kB │ gzip:  14.34 kB
+20:32:13.759	../dist/public/assets/index-CY8H_4ki.js                                            345.47 kB │ gzip: 118.07 kB
+20:32:13.759	✓ built in 3.42s
+20:32:13.759	building server...
+20:32:13.852	
+20:32:13.852	  dist/index.cjs  827.1kb
+20:32:13.852	
+20:32:13.852	⚡ Done in 73ms
+20:32:13.928	Finished
+20:32:14.837	Checking for configuration in a Wrangler configuration file (BETA)
+20:32:14.838	
+20:32:15.929	No wrangler.toml file found. Continuing.
+20:32:15.930	Note: No functions dir at /functions found. Skipping.
+20:32:15.930	Validating asset output directory
+20:32:20.099	Deploying your site to Cloudflare's global network...
+20:32:22.700	Uploading... (7/7)
+20:32:22.701	✨ Success! Uploaded 0 files (7 already uploaded) (0.36 sec)
+20:32:22.701	
+20:32:23.022	✨ Upload complete!
+20:32:26.458	Success: Assets published!
+20:32:28.132	Success: Your site was deployed!
