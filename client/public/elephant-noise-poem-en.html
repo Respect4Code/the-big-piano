@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Did The Elephant Make A Noise?</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --text: #333;
+            --bg: #fff;
+            --surface: #f8f9fa;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Georgia, serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--bg);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            padding: 14px 20px;
+            border-bottom: 2px solid var(--border);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 80px 30px 60px;
+        }
+        
+        .poem-title {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary);
+            line-height: 1.4;
+        }
+        
+        .stanza {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .line {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 0;
+            color: var(--text);
+        }
+        
+        .line.indent {
+            padding-left: 30px;
+        }
+        
+        .line.emphasis {
+            font-style: italic;
+            color: var(--accent);
+        }
+        
+        .separator {
+            text-align: center;
+            font-size: 24px;
+            margin: 30px 0;
+            color: var(--accent);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #3498db;
+                --text: #e0e0e0;
+                --bg: #121212;
+                --surface: #1e1e1e;
+                --border: #333;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 70px 20px 40px;
+            }
+            
+            .poem-title {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+            
+            .line {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 60px 15px 30px;
+            }
+            
+            .poem-title {
+                font-size: 20px;
+            }
+            
+            .line {
+                font-size: 15px;
+            }
+            
+            .line.indent {
+                padding-left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        <div class="header-title">The Big Piano</div>
+    </div>
+    
+    <div class="container">
+        <h1 class="poem-title">Why Did The Elephant Make A Noise?</h1>
+        
+        <div class="stanza">
+            <div class="line">Because the elephant had a feeling inside that needed to get out.</div>
+            <div class="line">It was a rumble from its feet to its trunk.</div>
+            <div class="line">It was saying:</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line indent">"Here I am.</div>
+            <div class="line indent">This is me.</div>
+            <div class="line indent">The forest hears me.</div>
+            <div class="line indent">You can, too."</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line">The elephant made a noise for the same reason the piano makes a sound when you press a key:</div>
+            <div class="line emphasis">vibration seeking witness.</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line">And sometimes, you will hear somewhere in that noise is the whole unspoken history of ivory —</div>
+            <div class="line indent">from tusk to key,</div>
+            <div class="line indent">from animal to artifact,</div>
+            <div class="line indent">from wildness to music,</div>
+            <div class="line indent">from scarcity to ledger.</div>
+        </div>
+        
+        <div class="separator">⋯</div>
+        
+        <div class="stanza">
+            <div class="line">You could even say Satoshi's first block was a noise, too.</div>
+            <div class="line">A rumble in the jungle</div>
+            <div class="line">A rumble through the network:</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line indent">"Here I am.</div>
+            <div class="line indent">This is me.</div>
+            <div class="line indent">The chain hears me.</div>
+            <div class="line indent">You can, too."</div>
+        </div>
+        
+        <div class="separator">⋯</div>
+        
+        <div class="stanza">
+            <div class="line">So —</div>
+            <div class="line">Why did the elephant make a noise?</div>
+            <div class="line">To remember, it's ancestors, to remember that some things come before and they are used.</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line">And sometimes, you will hear somewhere in that noise is the whole unspoken history of ivory —</div>
+            <div class="line indent">from tusk to key,</div>
+            <div class="line indent">from animal to artifact,</div>
+            <div class="line indent">from wildness to music,</div>
+            <div class="line indent">from scarcity to ledger.</div>
+        </div>
+        
+        <div class="separator">⋯</div>
+        
+        <div class="stanza">
+            <div class="line">So —</div>
+            <div class="line">If you ever come across a piano, where the keys are made of ivory.</div>
+            <div class="line emphasis">Ivory remembers the noise.</div>
+        </div>
+        
+        <div class="stanza">
+            <div class="line">So —</div>
+            <div class="line">Remember the sound.</div>
+            <div class="line">Because the elephant had a feeling inside that needed to get out.</div>
+        </div>
+    </div>
+</body>
+</html>
