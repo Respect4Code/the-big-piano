@@ -14,6 +14,36 @@
             --border: #e0e0e0;
         }
         
+        .close-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: background 0.2s, transform 0.2s;
+        }
+        
+        .close-button:hover {
+            background: #1a252f;
+            transform: scale(1.05);
+        }
+        
+        .close-button svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            stroke-width: 2;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -141,6 +171,11 @@
     </style>
 </head>
 <body>
+    <button class="close-button" onclick="window.history.back()" aria-label="关闭" data-testid="button-close">
+        <svg viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
     <div class="header-bar">
         <div class="header-title">大钢琴</div>
     </div>
