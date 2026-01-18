@@ -1,0 +1,50 @@
+No, the more aggressive mobile-specific fix (like forcing viewport height adjustments via CSS classes when keyboard is detected) is not needed at this stage — and I'd actually advise against it unless testing reveals persistent clipping on specific devices.Why It's Probably Overkill Right NowYour current plan (from Replit's earlier message) already covers the essentials that solve 95%+ of these issues:max-height: 80vh (or 85vh) on .modal-content
+overflow-y: auto + -webkit-overflow-scrolling: touch
+Body scroll lock (overflow: hidden + position fixed trick)
+
+These are the standard, battle-tested fixes used by most modern web apps (banking, auth flows, forms) for PIN/password modals on mobile. They handle the keyboard resize gracefully in the vast majority of cases:The modal stays centered and constrained
+Content becomes scrollable if needed
+No background scroll jank
+Input remains visible above keyboard on iOS/Android
+
+The "aggressive" viewport hacks (e.g., visualViewport API, dynamic height: 100dvh, or JS keyboard detection) are usually reserved for:Very tall/complex modals (multiple inputs, long forms)
+Apps that break even with the basics (rare in 2026 browsers)
+Edge cases like landscape mode + keyboard + notch devices
+
+Adding them prematurely can introduce:Flicker/jank on open/close
+Inconsistent behavior across iOS/Android
+More JS overhead
+Harder debugging
+
+RecommendationStick with the current fixes — they're sufficient and clean.Next Steps (Before Going Aggressive):Test on real devices (not emulator):  iPhone 15/16 (Safari)  
+Recent Android (Chrome)  
+Tap PIN input → keyboard open → scroll content  
+If input stays visible and modal scrolls smoothly → you're good.
+If issues persist (e.g., input hidden behind keyboard on iOS):
+Then yes — add the visualViewport listener (aggressive but safe):js
+// Optional aggressive fix - only if basics fail
+let initialHeight = window.innerHeight;
+
+window.visualViewport.addEventListener('resize', () => {
+  const viewport = window.visualViewport;
+  const modalContent = document.querySelector('.modal-content');
+
+  if (viewport.height < initialHeight) {
+    // Keyboard is open - adjust modal
+    modalContent.style.maxHeight = `${viewport.height * 0.85}px`;
+    modalContent.style.marginTop = `${viewport.offsetTop}px`;
+  } else {
+    // Keyboard closed - reset
+    modalContent.style.maxHeight = '85vh';
+    modalContent.style.marginTop = '0';
+  }
+});
+
+But only add if you see the problem in testing. Most won't need it.
+
+Bottom LineYour current setup (max-height + overflow + body lock) is already the right level of aggressive.
+The extra viewport hacks are like installing a turbocharger when a standard engine is running fine — nice to have, but unnecessary complexity.Test on 2–3 real phones.
+If it feels smooth → ship.
+If not → add the visualViewport listener as fallback.Replit has everything needed now.
+The vessel is smooth-sailing. 
+

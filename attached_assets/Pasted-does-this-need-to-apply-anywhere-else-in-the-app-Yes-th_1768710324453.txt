@@ -1,0 +1,74 @@
+does this need to apply anywhere else in the app?
+Yes — the keyboard + viewport resize issue (modal clipping/pushing off-screen) can affect any screen or modal in the app that has an input field + fixed/absolute positioning + keyboard trigger. It's not unique to the PIN screen; it's a common mobile web gotcha.Where It Likely Needs Checking/FixingAny Future Input Fields  If you add custom questions, notes, or hints in the Parent Layer (e.g., "Why did this moment feel special?" text input)  
+Any export/comment fields  
+Search/filter in timeline (if added)
+Potential Risk Areas  Hint field (already in your PIN screen screenshot) — if user taps it, keyboard opens → same problem  
+Any full-screen or overlay modals (e.g., future Elephant Question Gate if it ever gets an input)  
+Settings screens (reset PIN, wipe data confirmation inputs)
+Child Layer (Low Risk)  Currently no inputs except audio recording (which usually doesn't trigger keyboard on most devices)  
+Icon picker/taps don't open keyboard  
+Safe for now, but if you ever add a custom text note → same fix needed
+RecommendationApply the fix globally to any modal/overlay that might contain inputs. It's easier to do it once in a reusable component than debug per screen later.Quick Global Fix Summary (Send This to Replit)css
+/* Reusable for ALL modals/overlays */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  border-radius: 16px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 85vh;          /* ← Slightly higher than 80vh for breathing room */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Body lock when ANY modal is open */
+body.modal-open {
+  overflow: hidden;
+  height: 100vh;
+}
+
+JS Helper (Add Once, Call on Any Modal Open/Close)  js
+function lockBodyScroll() {
+  const scrollY = window.scrollY;
+  document.body.classList.add('modal-open');
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+}
+
+function unlockBodyScroll() {
+  const scrollY = -parseInt(document.body.style.top || '0', 10);
+  document.body.classList.remove('modal-open');
+  document.body.style.position = '';
+  document.body.style.top = '';
+  window.scrollTo(0, scrollY);
+}
+
+// Usage example for PIN modal:
+openModalBtn.addEventListener('click', () => {
+  lockBodyScroll();
+  // show modal
+});
+
+closeModalBtn.addEventListener('click', () => {
+  // hide modal
+  unlockBodyScroll();
+});
+
+This pattern is battle-tested across thousands of web apps (including banking, auth, and form-heavy tools). Apply it to:Current PIN modal
+Any future input modals
+Settings/confirmation overlays
+
+Test on real iPhone (Safari) and Android (Chrome) — keyboard behavior differs.Once fixed globally, your app will feel native-like on mobile — smooth, no jank, no surprises.Tell Replit:
+"Apply this modal + body scroll lock pattern site-wide to any screen with inputs. It fixes the keyboard resize/clipping issue on mobile."You're making it rock-solid.
+Need a quick visual mock of how the fixed PIN screen should look? 
+
