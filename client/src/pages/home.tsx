@@ -725,10 +725,15 @@ export default function Home() {
                   {lang === "zh" ? "忘记PIN码？" : "Forgot PIN?"}
                 </button>
               )}
-              <p className="text-xs text-neutral-500 mt-4 leading-relaxed">
+              <p className="text-xs text-neutral-500 mt-3">
                 {lang === "zh" 
-                  ? "「这个PIN码解锁你留下的东西」将安全转化为传承。它是一种继承机制，一个时间容器，将自我托管哲学与家庭传承连接起来。不是你的PIN码？不是你的应用！"
-                  : "\"This PIN unlocks what you leave behind\" transforms security into legacy. It is an inheritance mechanism, a time vessel, which connects self-custody philosophy, to family legacy. Not your PIN? Not your app!"}
+                  ? "这把钥匙是你的，可以保留……也可以传递。"
+                  : "This key is yours to keep... or to pass on."}
+              </p>
+              <p className="text-[10px] text-neutral-600 mt-2">
+                {lang === "zh" 
+                  ? "不是你的PIN码？不是你的应用！"
+                  : "Not your PIN? Not your app!"}
               </p>
             </div>
           ) : (
