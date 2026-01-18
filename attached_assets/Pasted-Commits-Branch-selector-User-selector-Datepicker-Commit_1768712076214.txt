@@ -1,0 +1,194 @@
+Commits
+Branch selector
+User selector
+Datepicker
+Commit History
+Commits on Jan 18, 2026
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+21 minutes ago
+·
+Remove catch-all redirect rule
+author
+cyclone-media
+committed
+22 minutes ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+40 minutes ago
+·
+Improve modal display and scrolling on mobile devices
+author
+cyclone-media
+committed
+40 minutes ago
+Update PIN screen text to reflect new messaging
+author
+cyclone-media
+committed
+4 hours ago
+·
+Commits on Jan 17, 2026
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+4 hours ago
+·
+Add a close button to the poem pages for easier navigation
+author
+cyclone-media
+committed
+4 hours ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+5 hours ago
+·
+Add close buttons and update links to improve navigation within the application
+author
+cyclone-media
+committed
+5 hours ago
+Update deployment script to include all necessary static files
+author
+cyclone-media
+committed
+8 hours ago
+·
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+8 hours ago
+Transitioned from Plan to Build mode
+author
+cyclone-media
+committed
+8 hours ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+8 hours ago
+·
+Move static HTML and redirect files to the correct public directory
+author
+cyclone-media
+committed
+8 hours ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+8 hours ago
+·
+Add redirects to enable access to static HTML pages
+author
+cyclone-media
+committed
+8 hours ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+19 hours ago
+·
+Add Chinese translations for application interface elements
+author
+cyclone-media
+committed
+19 hours ago
+Transitioned from Plan to Build mode
+author
+cyclone-media
+committed
+19 hours ago
+Commits on Jan 16, 2026
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+yesterday
+Add responsive styles for various text elements across sections
+author
+cyclone-media
+committed
+yesterday
+Transitioned from Plan to Build mode
+author
+cyclone-media
+committed
+yesterday
+Commits on Jan 15, 2026
+Make all sections of the piano journey use a pure black background
+author
+cyclone-media
+committed
+2 days ago
+Add visible separation between content sections on the journey page
+author
+cyclone-media
+committed
+2 days ago
+Add visual separation between distinct story sections
+author
+cyclone-media
+committed
+2 days ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+2 days ago
+Add whitespace between story sections for better visual distinction
+author
+cyclone-media
+committed
+2 days ago
+Transitioned from Plan to Build mode
+author
+cyclone-media
+committed
+2 days ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+2 days ago
+Remove unnecessary section and adjust spacing between content blocks
+author
+cyclone-media
+committed
+2 days ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+2 days ago
+Add a new section exploring the parallel between music and money
+author
+cyclone-media
+committed
+2 days ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+2 days ago
+Apply consistent solid black backgrounds to story sections
+author
+cyclone-media
+committed
+2 days ago
+Saved progress at the end of the loop
+author
+cyclone-media
+committed
+2 days ago
+Pagination

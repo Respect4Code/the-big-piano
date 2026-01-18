@@ -1,0 +1,56 @@
+2026-01-18T04:39:32.896077035Z	Cloning repository...
+2026-01-18T04:39:34.696779386Z	From https://github.com/Respect4Code/the-big-piano
+2026-01-18T04:39:34.697422201Z	 * branch            7d897cac8045ce672e6f8a2d8c8d88ac987f6dcf -> FETCH_HEAD
+2026-01-18T04:39:35.055564907Z	HEAD is now at 7d897ca Saved progress at the end of the loop
+2026-01-18T04:39:35.056203671Z	
+2026-01-18T04:39:35.131800462Z	
+2026-01-18T04:39:35.132124392Z	Using v2 root directory strategy
+2026-01-18T04:39:35.154704176Z	Success: Finished cloning repository files
+2026-01-18T04:39:37.037823158Z	Checking for configuration in a Wrangler configuration file (BETA)
+2026-01-18T04:39:37.03830625Z	
+2026-01-18T04:39:38.151635802Z	No wrangler.toml file found. Continuing.
+2026-01-18T04:39:38.226694697Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+2026-01-18T04:39:38.227147748Z	Installing project dependencies: npm clean-install --progress=false
+2026-01-18T04:39:47.694562244Z	
+2026-01-18T04:39:47.694773641Z	added 480 packages, and audited 481 packages in 9s
+2026-01-18T04:39:47.694911783Z	
+2026-01-18T04:39:47.69502019Z	67 packages are looking for funding
+2026-01-18T04:39:47.695278998Z	  run `npm fund` for details
+2026-01-18T04:39:47.705419073Z	
+2026-01-18T04:39:47.70581478Z	3 high severity vulnerabilities
+2026-01-18T04:39:47.705822287Z	
+2026-01-18T04:39:47.705917755Z	To address all issues, run:
+2026-01-18T04:39:47.705923723Z	  npm audit fix
+2026-01-18T04:39:47.705927074Z	
+2026-01-18T04:39:47.705945091Z	Run `npm audit` for details.
+2026-01-18T04:39:47.738534066Z	Executing user command: npm run build
+2026-01-18T04:39:48.139326922Z	
+2026-01-18T04:39:48.139727442Z	> rest-express@1.0.0 build
+2026-01-18T04:39:48.140011545Z	> tsx script/build.ts
+2026-01-18T04:39:48.140078847Z	
+2026-01-18T04:39:49.704143391Z	transforming...
+2026-01-18T04:39:50.645473198Z	
+2026-01-18T04:39:50.645507816Z	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2026-01-18T04:39:49.704143391Z	transforming...
+2026-01-18T04:39:50.645473198Z	
+2026-01-18T04:39:50.645507816Z	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2026-01-18T04:39:52.707669553Z	[32m✓[39m 1711 modules transformed.
+2026-01-18T04:39:52.931486277Z	rendering chunks...
+2026-01-18T04:39:52.955771328Z	computing gzip size...
+2026-01-18T04:39:52.968679753Z	[2m../dist/public/[22m[32mindex.html                                                       [39m[1m[2m     2.01 kB[22m[1m[22m[2m │ gzip:   0.77 kB[22m
+2026-01-18T04:39:52.968987269Z	[2m../dist/public/[22m[2massets/[22m[32mman_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg  [39m[1m[2m   270.09 kB[22m[1m[22m
+2026-01-18T04:39:52.969245359Z	[2m../dist/public/[22m[2massets/[22m[32mbeethoven_moonlight_sonata-CLnbowyC.mp3                   [39m[1m[2m14,662.87 kB[22m[1m[22m
+2026-01-18T04:39:52.969257444Z	[2m../dist/public/[22m[2massets/[22m[32mmozart_rondo_alla_turca-r_P-6gIh.mp3                      [39m[1m[2m18,553.50 kB[22m[1m[22m
+2026-01-18T04:39:52.969406311Z	[2m../dist/public/[22m[2massets/[22m[35mindex-By9F8lUe.css                                        [39m[1m[2m    89.48 kB[22m[1m[22m[2m │ gzip:  14.35 kB[22m
+2026-01-18T04:39:52.969656553Z	[2m../dist/public/[22m[2massets/[22m[36mindex-B5gq9lSd.js                                         [39m[1m[2m   345.13 kB[22m[1m[22m[2m │ gzip: 117.92 kB[22m
+2026-01-18T04:39:52.969888405Z	[32m✓ built in 3.63s[39m
+2026-01-18T04:39:52.970020603Z	building server...
+2026-01-18T04:39:53.052991901Z	
+2026-01-18T04:39:53.053859778Z	  dist/index.cjs  827.1kb
+2026-01-18T04:39:53.053884163Z	
+2026-01-18T04:39:53.054510457Z	⚡ Done in 68ms
+2026-01-18T04:39:53.126590262Z	Finished
+2026-01-18T04:39:54.100442672Z	Checking for configuration in a Wrangler configuration file (BETA)
+2026-01-18T04:39:54.100474171Z	
+2026-01-18T04:39:58.97129586Z	Parsed 7 valid redirect rules.
+2026-01-18T04:40:00.835222506Z	✨ Upload complete!

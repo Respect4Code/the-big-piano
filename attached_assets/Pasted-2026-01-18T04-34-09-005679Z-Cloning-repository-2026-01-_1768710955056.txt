@@ -1,0 +1,68 @@
+2026-01-18T04:34:09.005679Z	Cloning repository...
+2026-01-18T04:34:11.072977Z	From https://github.com/Respect4Code/the-big-piano
+2026-01-18T04:34:11.073402Z	 * branch            7d897cac8045ce672e6f8a2d8c8d88ac987f6dcf -> FETCH_HEAD
+2026-01-18T04:34:11.073492Z	
+2026-01-18T04:34:11.409236Z	HEAD is now at 7d897ca Saved progress at the end of the loop
+2026-01-18T04:34:11.409682Z	
+2026-01-18T04:34:11.478056Z	
+2026-01-18T04:34:11.478503Z	Using v2 root directory strategy
+2026-01-18T04:34:11.498161Z	Success: Finished cloning repository files
+2026-01-18T04:34:13.333723Z	Checking for configuration in a Wrangler configuration file (BETA)
+2026-01-18T04:34:13.334309Z	
+2026-01-18T04:34:14.460597Z	No wrangler.toml file found. Continuing.
+2026-01-18T04:34:14.524857Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+2026-01-18T04:34:14.52556Z	Installing project dependencies: npm clean-install --progress=false
+2026-01-18T04:34:22.828645Z	
+2026-01-18T04:34:22.828854Z	added 480 packages, and audited 481 packages in 8s
+2026-01-18T04:34:22.829152Z	
+2026-01-18T04:34:22.829317Z	67 packages are looking for funding
+2026-01-18T04:34:22.829443Z	  run `npm fund` for details
+2026-01-18T04:34:22.837193Z	
+2026-01-18T04:34:22.837404Z	3 high severity vulnerabilities
+2026-01-18T04:34:22.837571Z	
+2026-01-18T04:34:22.8377Z	To address all issues, run:
+2026-01-18T04:34:22.837838Z	  npm audit fix
+2026-01-18T04:34:22.837964Z	
+2026-01-18T04:34:22.838106Z	Run `npm audit` for details.
+2026-01-18T04:34:22.864334Z	Executing user command: npm run build
+2026-01-18T04:34:23.222772Z	
+2026-01-18T04:34:23.222977Z	> rest-express@1.0.0 build
+2026-01-18T04:34:23.223134Z	> tsx script/build.ts
+2026-01-18T04:34:23.223249Z	
+2026-01-18T04:34:24.075009Z	building client...
+2026-01-18T04:34:24.143959Z	[36mvite v7.3.0 [32mbuilding client environment for production...[36m[39m
+2026-01-18T04:34:24.660148Z	transforming...
+2026-01-18T04:34:25.499393Z	
+2026-01-18T04:34:25.499634Z	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2026-01-18T04:34:27.316047Z	[32m✓[39m 1711 modules transformed.
+2026-01-18T04:34:27.493359Z	rendering chunks...
+2026-01-18T04:34:27.516564Z	computing gzip size...
+2026-01-18T04:34:27.528787Z	[2m../dist/public/[22m[32mindex.html                                                       [39m[1m[2m     2.01 kB[22m[1m[22m[2m │ gzip:   0.77 kB[22m
+2026-01-18T04:34:27.529169Z	[2m../dist/public/[22m[2massets/[22m[32mman_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg  [39m[1m[2m   270.09 kB[22m[1m[22m
+2026-01-18T04:34:27.52927Z	[2m../dist/public/[22m[2massets/[22m[32mbeethoven_moonlight_sonata-CLnbowyC.mp3                   [39m[1m[2m14,662.87 kB[22m[1m[22m
+2026-01-18T04:34:27.529332Z	[2m../dist/public/[22m[2massets/[22m[32mmozart_rondo_alla_turca-r_P-6gIh.mp3                      [39m[1m[2m18,553.50 kB[22m[1m[22m
+2026-01-18T04:34:27.529445Z	[2m../dist/public/[22m[2massets/[22m[35mindex-By9F8lUe.css                                        [39m[1m[2m    89.48 kB[22m[1m[22m[2m │ gzip:  14.35 kB[22m
+2026-01-18T04:34:27.529601Z	[2m../dist/public/[22m[2massets/[22m[36mindex-B5gq9lSd.js                                         [39m[1m[2m   345.13 kB[22m[1m[22m[2m │ gzip: 117.92 kB[22m
+2026-01-18T04:34:27.529803Z	[32m✓ built in 3.21s[39m
+2026-01-18T04:34:27.529995Z	building server...
+2026-01-18T04:34:27.60024Z	
+2026-01-18T04:34:27.600541Z	  dist/index.cjs  827.1kb
+2026-01-18T04:34:27.600674Z	
+2026-01-18T04:34:27.600798Z	⚡ Done in 56ms
+2026-01-18T04:34:27.66754Z	Finished
+2026-01-18T04:34:28.525965Z	Checking for configuration in a Wrangler configuration file (BETA)
+2026-01-18T04:34:28.526519Z	
+2026-01-18T04:34:29.626078Z	No wrangler.toml file found. Continuing.
+2026-01-18T04:34:29.626742Z	Note: No functions dir at /functions found. Skipping.
+2026-01-18T04:34:29.626867Z	Validating asset output directory
+2026-01-18T04:34:32.411586Z	Deploying your site to Cloudflare's global network...
+2026-01-18T04:34:33.433306Z	Parsed 7 valid redirect rules.
+2026-01-18T04:34:33.433892Z	Found invalid redirect lines:
+2026-01-18T04:34:33.434097Z	  - #8: /*  /index.html  200
+2026-01-18T04:34:33.434188Z	    Infinite loop detected in this rule and has been ignored. This will cause a redirect to strip `.html` or `/index` and end up triggering this rule again. Please fix or remove this rule to silence this warning.
+2026-01-18T04:34:34.823206Z	Uploading... (20/20)
+2026-01-18T04:34:34.823952Z	✨ Success! Uploaded 0 files (20 already uploaded) (0.31 sec)
+2026-01-18T04:34:34.824088Z	
+2026-01-18T04:34:35.23089Z	✨ Upload complete!
+2026-01-18T04:34:38.780697Z	Success: Assets published!
+2026-01-18T04:34:40.454025Z	Success: Your site was deployed!
