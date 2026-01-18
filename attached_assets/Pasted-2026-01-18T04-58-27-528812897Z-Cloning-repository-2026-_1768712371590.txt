@@ -1,0 +1,73 @@
+2026-01-18T04:58:27.528812897Z	Cloning repository...
+2026-01-18T04:58:29.54937171Z	From https://github.com/Respect4Code/the-big-piano
+2026-01-18T04:58:29.549719581Z	 * branch            7d897cac8045ce672e6f8a2d8c8d88ac987f6dcf -> FETCH_HEAD
+2026-01-18T04:58:29.549889741Z	
+2026-01-18T04:58:29.88148494Z	HEAD is now at 7d897ca Saved progress at the end of the loop
+2026-01-18T04:58:29.881683388Z	
+2026-01-18T04:58:29.950866145Z	
+2026-01-18T04:58:29.951266473Z	Using v2 root directory strategy
+2026-01-18T04:58:29.971440792Z	Success: Finished cloning repository files
+2026-01-18T04:58:31.912718654Z	Checking for configuration in a Wrangler configuration file (BETA)
+2026-01-18T04:58:31.913216861Z	
+2026-01-18T04:58:33.015920618Z	No wrangler.toml file found. Continuing.
+2026-01-18T04:58:33.080257812Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+2026-01-18T04:58:33.080686205Z	Installing project dependencies: npm clean-install --progress=false
+2026-01-18T04:58:41.360938941Z	
+2026-01-18T04:58:41.361320008Z	added 480 packages, and audited 481 packages in 8s
+2026-01-18T04:58:41.361360058Z	
+2026-01-18T04:58:41.361461165Z	67 packages are looking for funding
+2026-01-18T04:58:41.36154426Z	  run `npm fund` for details
+2026-01-18T04:58:41.370272686Z	
+2026-01-18T04:58:41.370290186Z	3 high severity vulnerabilities
+2026-01-18T04:58:41.370294212Z	
+2026-01-18T04:58:41.370297159Z	To address all issues, run:
+2026-01-18T04:58:41.370300643Z	  npm audit fix
+2026-01-18T04:58:41.370303882Z	
+2026-01-18T04:58:41.370307023Z	Run `npm audit` for details.
+2026-01-18T04:58:41.397669103Z	Executing user command: npm run build
+2026-01-18T04:58:41.787383472Z	
+2026-01-18T04:58:41.787531246Z	> rest-express@1.0.0 build
+2026-01-18T04:58:41.787543335Z	> tsx script/build.ts
+2026-01-18T04:58:41.787654921Z	
+2026-01-18T04:58:42.622886762Z	building client...
+2026-01-18T04:58:42.692733557Z	[36mvite v7.3.0 [32mbuilding client environment for production...[36m[39m
+2026-01-18T04:58:44.144517924Z	
+2026-01-18T04:58:44.144925533Z	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2026-01-18T04:58:44.144517924Z	
+2026-01-18T04:58:44.144925533Z	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+2026-01-18T04:58:46.21229161Z	computing gzip size...
+2026-01-18T04:58:46.22388327Z	[2m../dist/public/[22m[32mindex.html                                                       [39m[1m[2m     2.01 kB[22m[1m[22m[2m │ gzip:   0.77 kB[22m
+2026-01-18T04:58:46.224164525Z	[2m../dist/public/[22m[2massets/[22m[32mman_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg  [39m[1m[2m   270.09 kB[22m[1m[22m
+2026-01-18T04:58:46.224221159Z	[2m../dist/public/[22m[2massets/[22m[32mbeethoven_moonlight_sonata-CLnbowyC.mp3                   [39m[1m[2m14,662.87 kB[22m[1m[22m
+2026-01-18T04:58:46.224369446Z	[2m../dist/public/[22m[2massets/[22m[32mmozart_rondo_alla_turca-r_P-6gIh.mp3                      [39m[1m[2m18,553.50 kB[22m[1m[22m
+2026-01-18T04:58:46.224558647Z	[2m../dist/public/[22m[2massets/[22m[35mindex-By9F8lUe.css                                        [39m[1m[2m    89.48 kB[22m[1m[22m[2m │ gzip:  14.35 kB[22m
+2026-01-18T04:58:46.224776801Z	[2m../dist/public/[22m[2massets/[22m[36mindex-B5gq9lSd.js                                         [39m[1m[2m   345.13 kB[22m[1m[22m[2m │ gzip: 117.92 kB[22m
+2026-01-18T04:58:46.224814603Z	[32m✓ built in 3.31s[39m
+2026-01-18T04:58:46.224939418Z	building server...
+2026-01-18T04:58:46.21229161Z	computing gzip size...
+2026-01-18T04:58:46.22388327Z	[2m../dist/public/[22m[32mindex.html                                                       [39m[1m[2m     2.01 kB[22m[1m[22m[2m │ gzip:   0.77 kB[22m
+2026-01-18T04:58:46.224164525Z	[2m../dist/public/[22m[2massets/[22m[32mman_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg  [39m[1m[2m   270.09 kB[22m[1m[22m
+2026-01-18T04:58:46.224221159Z	[2m../dist/public/[22m[2massets/[22m[32mbeethoven_moonlight_sonata-CLnbowyC.mp3                   [39m[1m[2m14,662.87 kB[22m[1m[22m
+2026-01-18T04:58:46.224369446Z	[2m../dist/public/[22m[2massets/[22m[32mmozart_rondo_alla_turca-r_P-6gIh.mp3                      [39m[1m[2m18,553.50 kB[22m[1m[22m
+2026-01-18T04:58:46.224558647Z	[2m../dist/public/[22m[2massets/[22m[35mindex-By9F8lUe.css                                        [39m[1m[2m    89.48 kB[22m[1m[22m[2m │ gzip:  14.35 kB[22m
+2026-01-18T04:58:46.224776801Z	[2m../dist/public/[22m[2massets/[22m[36mindex-B5gq9lSd.js                                         [39m[1m[2m   345.13 kB[22m[1m[22m[2m │ gzip: 117.92 kB[22m
+2026-01-18T04:58:46.224814603Z	[32m✓ built in 3.31s[39m
+2026-01-18T04:58:46.224939418Z	building server...
+2026-01-18T04:58:46.298703333Z	
+2026-01-18T04:58:46.298737805Z	  dist/index.cjs  827.1kb
+2026-01-18T04:58:46.298742917Z	
+2026-01-18T04:58:46.298746176Z	⚡ Done in 54ms
+2026-01-18T04:58:46.360394965Z	Finished
+2026-01-18T04:58:47.24696262Z	Checking for configuration in a Wrangler configuration file (BETA)
+2026-01-18T04:58:47.247300134Z	
+2026-01-18T04:58:48.344767482Z	No wrangler.toml file found. Continuing.
+2026-01-18T04:58:48.345549964Z	Note: No functions dir at /functions found. Skipping.
+2026-01-18T04:58:48.345865722Z	Validating asset output directory
+2026-01-18T04:58:51.189034535Z	Deploying your site to Cloudflare's global network...
+2026-01-18T04:58:52.261921549Z	Parsed 7 valid redirect rules.
+2026-01-18T04:58:53.727878641Z	Uploading... (20/20)
+2026-01-18T04:58:53.728525529Z	✨ Success! Uploaded 0 files (20 already uploaded) (0.36 sec)
+2026-01-18T04:58:53.728780069Z	
+2026-01-18T04:58:54.119767747Z	✨ Upload complete!
+2026-01-18T04:58:57.950771Z	Success: Assets published!
+2026-01-18T04:58:59.57258Z	Success: Your site was deployed!

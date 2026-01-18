@@ -1,0 +1,104 @@
+Deployment details
+https://c0e6b05f.the-big-piano.pages.dev
+Aliases:
+thebigpiano.com
+Repository:
+
+Respect4Code/the-big-piano
+Branch:
+main
+7d897ca
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 1c2cb63d-efb1-4db7-89cc-68c2ba5a01ef Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/AMk0A9r Replit-Helium-Checkpoint-Created: true
+Status:
+Success
+4:58AM January 18, 2026
+Duration:
+34s
+Build settings
+Build log
+Assets uploaded
+Functions
+Redirects
+Headers
+Build log
+Initializing build environment
+2s
+Cloning git repository
+3s
+Building application
+20s
+Deploying to Cloudflare's global network
+8s
+04:58:27.528	Cloning repository...
+04:58:29.549	From https://github.com/Respect4Code/the-big-piano
+04:58:29.549	 * branch            7d897cac8045ce672e6f8a2d8c8d88ac987f6dcf -> FETCH_HEAD
+04:58:29.549	
+04:58:29.881	HEAD is now at 7d897ca Saved progress at the end of the loop
+04:58:29.881	
+04:58:29.950	
+04:58:29.951	Using v2 root directory strategy
+04:58:29.971	Success: Finished cloning repository files
+04:58:31.912	Checking for configuration in a Wrangler configuration file (BETA)
+04:58:31.913	
+04:58:33.015	No wrangler.toml file found. Continuing.
+04:58:33.080	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+04:58:33.080	Installing project dependencies: npm clean-install --progress=false
+04:58:41.360	
+04:58:41.361	added 480 packages, and audited 481 packages in 8s
+04:58:41.361	
+04:58:41.361	67 packages are looking for funding
+04:58:41.361	  run `npm fund` for details
+04:58:41.370	
+04:58:41.370	3 high severity vulnerabilities
+04:58:41.370	
+04:58:41.370	To address all issues, run:
+04:58:41.370	  npm audit fix
+04:58:41.370	
+04:58:41.370	Run `npm audit` for details.
+04:58:41.397	Executing user command: npm run build
+04:58:41.787	
+04:58:41.787	> rest-express@1.0.0 build
+04:58:41.787	> tsx script/build.ts
+04:58:41.787	
+04:58:42.622	building client...
+04:58:42.692	vite v7.3.0 building client environment for production...
+04:58:44.144	
+04:58:44.144	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+04:58:44.144	
+04:58:44.144	A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+04:58:46.212	computing gzip size...
+04:58:46.223	../dist/public/index.html                                                            2.01 kB │ gzip:   0.77 kB
+04:58:46.224	../dist/public/assets/man_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg     270.09 kB
+04:58:46.224	../dist/public/assets/beethoven_moonlight_sonata-CLnbowyC.mp3                   14,662.87 kB
+04:58:46.224	../dist/public/assets/mozart_rondo_alla_turca-r_P-6gIh.mp3                      18,553.50 kB
+04:58:46.224	../dist/public/assets/index-By9F8lUe.css                                            89.48 kB │ gzip:  14.35 kB
+04:58:46.224	../dist/public/assets/index-B5gq9lSd.js                                            345.13 kB │ gzip: 117.92 kB
+04:58:46.224	✓ built in 3.31s
+04:58:46.224	building server...
+04:58:46.212	computing gzip size...
+04:58:46.223	../dist/public/index.html                                                            2.01 kB │ gzip:   0.77 kB
+04:58:46.224	../dist/public/assets/man_the_big_paino_2_image-145_1767059586840-CB2LkBAV.jpg     270.09 kB
+04:58:46.224	../dist/public/assets/beethoven_moonlight_sonata-CLnbowyC.mp3                   14,662.87 kB
+04:58:46.224	../dist/public/assets/mozart_rondo_alla_turca-r_P-6gIh.mp3                      18,553.50 kB
+04:58:46.224	../dist/public/assets/index-By9F8lUe.css                                            89.48 kB │ gzip:  14.35 kB
+04:58:46.224	../dist/public/assets/index-B5gq9lSd.js                                            345.13 kB │ gzip: 117.92 kB
+04:58:46.224	✓ built in 3.31s
+04:58:46.224	building server...
+04:58:46.298	
+04:58:46.298	  dist/index.cjs  827.1kb
+04:58:46.298	
+04:58:46.298	⚡ Done in 54ms
+04:58:46.360	Finished
+04:58:47.246	Checking for configuration in a Wrangler configuration file (BETA)
+04:58:47.247	
+04:58:48.344	No wrangler.toml file found. Continuing.
+04:58:48.345	Note: No functions dir at /functions found. Skipping.
+04:58:48.345	Validating asset output directory
+04:58:51.189	Deploying your site to Cloudflare's global network...
+04:58:52.261	Parsed 7 valid redirect rules.
+04:58:53.727	Uploading... (20/20)
+04:58:53.728	✨ Success! Uploaded 0 files (20 already uploaded) (0.36 sec)
+04:58:53.728	
+04:58:54.119	✨ Upload complete!
+04:58:57.950	Success: Assets published!
+04:58:59.572	Success: Your site was deployed!
