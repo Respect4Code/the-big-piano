@@ -1,0 +1,118 @@
+All deployments
+Environment	Source	Deployment	Status		
+main
+7d897ca
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 1c2cb63d-efb1-4db7-89cc-68c2ba5a01ef Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/AMk0A9r Replit-Helium-Checkpoint-Created: true
+c0e6b05f.the-big-piano.pages.dev
+
+4 minutes ago
+View details
+
+main
+9e6b0a0
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 3ca06fc2-60a5-4c36-ad9e-34a6f2be156b Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/AMk0A9r Replit-Helium-Checkpoint-Created: true
+2d1808e4.the-big-piano.pages.dev
+
+6 minutes ago
+View details
+
+main
+7d897ca
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 1c2cb63d-efb1-4db7-89cc-68c2ba5a01ef Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/AMk0A9r Replit-Helium-Checkpoint-Created: true
+9a899932.the-big-piano.pages.dev
+
+23 minutes ago
+View details
+
+main
+7d897ca
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 1c2cb63d-efb1-4db7-89cc-68c2ba5a01ef Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/AMk0A9r Replit-Helium-Checkpoint-Created: true
+2eb0c85e.the-big-piano.pages.dev
+
+29 minutes ago
+View details
+
+main
+d1209f4
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: a8a152ec-c8d3-437e-abed-d2a137ff05fa Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/AMk0A9r Replit-Helium-Checkpoint-Created: true
+c96b5c91.the-big-piano.pages.dev
+
+30 minutes ago
+View details
+
+main
+7d897ca
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 1c2cb63d-efb1-4db7-89cc-68c2ba5a01ef Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/AMk0A9r Replit-Helium-Checkpoint-Created: true
+227c9b88.the-big-piano.pages.dev
+
+an hour ago
+View details
+
+main
+fe04d3c
+Update PIN screen text to reflect new messaging Modify the PIN entry screen in `home.tsx` to replace existing placeholder text with new messaging for the PIN field and add new text at the bottom, also updating the Chinese localization. Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 6de9e264-8522-47fc-ab83-bb50bf8cd408 Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/671YzRq Replit-Helium-Checkpoint-Created: true
+ce27348c.the-big-piano.pages.dev
+
+5 hours ago
+View details
+
+main
+46c89f3
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 9a35f69c-0a12-4403-a6b1-2c9ff3f4fd95 Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/671YzRq Replit-Helium-Checkpoint-Created: true
+ae56c943.the-big-piano.pages.dev
+
+5 hours ago
+View details
+
+main
+2deb6d6
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 2e4a390a-2582-40d9-a192-3484436f1189 Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/671YzRq Replit-Helium-Checkpoint-Created: true
+646c8731.the-big-piano.pages.dev
+
+5 hours ago
+View details
+
+main
+6dcefe5
+Update deployment script to include all necessary static files Reconfigure the build and deployment process to ensure all static assets are correctly included and published to the Cloudflare network. Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: c785d2ac-ebe7-428c-b22f-e8affecb5f9c Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/YUAAuPn Replit-Helium-Checkpoint-Created: true
+25c86b1d.the-big-piano.pages.dev
+
+8 hours ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+No deployment available
+
+8 hours ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+a599f2d6.the-big-piano.pages.dev
+
+8 hours ago
+View details
+
+main
+6dcefe5
+Update deployment script to include all necessary static files Reconfigure the build and deployment process to ensure all static assets are correctly included and published to the Cloudflare network. Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: c785d2ac-ebe7-428c-b22f-e8affecb5f9c Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/YUAAuPn Replit-Helium-Checkpoint-Created: true
+5c218aba.the-big-piano.pages.dev
+
+8 hours ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+3c488b1f.the-big-piano.pages.dev
+
+8 hours ago
+View details
+
+main
+5d47d3f
+Saved progress at the end of the loop Replit-Commit-Author: Agent Replit-Commit-Session-Id: 453bf5dc-1f80-483b-ba92-137379e8500e Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: f6a24a79-751f-498c-be98-8f9fffdbf35d Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/1b7f16b9-400b-4841-a1af-f4f0a67ed9e7/453bf5dc-1f80-483b-ba92-137379e8500e/NpqIukM Replit-Helium-Checkpoint-Created: true
+1d62c659.the-big-piano.pages.dev
