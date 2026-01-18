@@ -1,0 +1,70 @@
+
+Yes, exactly — that's the core of the solution.You're spot on with your approach:  max-height + overflow-y: auto on the modal content makes it scrollable when the keyboard eats up screen real estate.  
+-webkit-overflow-scrolling: touch gives smooth, native-feeling momentum on iOS (very important for a good UX).  
+Body scroll lock (optional but highly recommended) prevents the background page from scrolling underneath, which can cause jank or the modal to get pushed off-screen.
+
+This combination fixes 95%+ of mobile keyboard modal issues without needing complex JS hacks.Recommended Implementation (Copy-Paste Ready)CSS (add to your modal styles):css
+/* Modal overlay - covers full viewport */
+.modal-overlay {
+  position: fixed;
+  inset: 0;                    /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal content - scrollable when needed */
+.modal-content {
+  background: #1a1a1a;         /* or your dark theme */
+  border-radius: 16px;
+  padding: 24px;
+  width: 90%;
+  max-width: 360px;
+  max-height: 80vh;            /* ← Key: limits height to ~80% of viewport */
+  overflow-y: auto;            /* ← Enables vertical scrolling */
+  -webkit-overflow-scrolling: touch;  /* ← Smooth iOS momentum */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* Body scroll lock when modal is open */
+body.modal-open {
+  overflow: hidden;
+  height: 100vh;
+}
+
+JavaScript (simple toggle for body lock):js
+// When opening modal
+function openModal() {
+  document.body.classList.add('modal-open');
+  // Optional: save scroll position if needed
+  const scrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+}
+
+// When closing modal
+function closeModal() {
+  document.body.classList.remove('modal-open');
+  // Restore scroll
+  const scrollY = -parseInt(document.body.style.top || '0', 10);
+  document.body.style.position = '';
+  document.body.style.top = '';
+  window.scrollTo(0, scrollY);
+}
+
+Why This Worksmax-height: 80vh ensures the modal never gets taller than the screen, even with keyboard open.
+overflow-y: auto + -webkit-overflow-scrolling: touch makes the content scroll smoothly inside the modal.
+Body lock prevents double-scroll jank (background page moving underneath).
+Tested pattern — used in most modern web apps (banking, auth modals, etc.).
+
+Quick Test Steps on MobileOpen site on iPhone/Android.
+Trigger PIN modal.
+Tap input → keyboard appears.
+Scroll content inside modal — should feel native and smooth.
+Close modal — page should return to exact scroll position without jump.
+
+If it still clips or jumps on your device, share the current modal CSS snippet — I can pinpoint the exact fix.This should make your PIN screen feel buttery smooth and native-like on mobile.
+Replit will love the clarity — just send them the CSS + JS above.You're almost there — the vessel is ready to feel effortless. 
+

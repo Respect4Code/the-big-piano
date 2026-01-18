@@ -665,7 +665,7 @@ export default function Home() {
 
       {/* Parent Modal */}
       <Dialog open={parentOpen} onOpenChange={setParentOpen}>
-        <DialogContent className="max-w-2xl bg-neutral-900 border-white/10 text-white max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl bg-neutral-900 border-white/10 text-white">
           <DialogHeader>
             <DialogTitle>{copy.parentTitle}</DialogTitle>
           </DialogHeader>
